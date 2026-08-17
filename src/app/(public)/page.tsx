@@ -7,9 +7,11 @@ import { PulseIndicator } from "@/components/ui/PulseIndicator/PulseIndicator";
 import { projectsRepository } from "@/server/repositories/projects.repository";
 import { gardenNotesRepository } from "@/server/repositories/garden-notes.repository";
 import { labExperimentsRepository } from "@/server/repositories/lab-experiments.repository";
+import { nowItemsRepository } from "@/server/repositories/now-items.repository";
 import { projectStatusLabel, projectStatusTone } from "@/lib/project-status";
 import { gardenNoteCategoryLabel, gardenNoteStatusLabel } from "@/lib/garden-note-labels";
 import { formatLabNumber } from "@/lib/format-lab-number";
+import { nowItemCategoryLabel } from "@/lib/now-item-labels";
 import styles from "./page.module.css";
 
 const LAB_STATUS_LABELS: Record<string, string> = {
@@ -19,10 +21,11 @@ const LAB_STATUS_LABELS: Record<string, string> = {
 };
 
 export default async function HomePage() {
-  const [featuredProjects, latestNote, latestExperiment] = await Promise.all([
+  const [featuredProjects, latestNote, latestExperiment, nowItems] = await Promise.all([
     projectsRepository.findFeatured(),
     gardenNotesRepository.findLatestPublished(),
     labExperimentsRepository.findLatestPublished(),
+    nowItemsRepository.findActive(),
   ]);
 
   return (
@@ -34,7 +37,19 @@ export default async function HomePage() {
           Técnico informático y desarrollador centrado en sistemas, automatización,
           desarrollo e inteligencia artificial.
         </p>
-        <PulseIndicator label="Sistema en construcción — Fase 6: Digital Garden" tone="amber" />
+        {nowItems.length > 0 ? (
+          <div className={styles.nowList}>
+            {nowItems.map((item) => (
+              <PulseIndicator
+                key={item.id}
+                label={`${nowItemCategoryLabel(item.category)}: ${item.title}`}
+                tone="amber"
+              />
+            ))}
+          </div>
+        ) : (
+          <PulseIndicator label="Sistema en construcción" tone="amber" />
+        )}
       </Panel>
 
       <div className={styles.grid}>
