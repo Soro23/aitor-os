@@ -1,3 +1,9 @@
+/**
+ * Estilos compartidos por los formularios admin de entidades (Proyectos,
+ * Garden, Lab, Recursos...). Un único módulo importado desde cada
+ * *Form.tsx en vez de duplicar el mismo CSS por entidad.
+ */
+
 .form {
   display: flex;
   flex-direction: column;

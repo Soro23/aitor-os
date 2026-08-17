@@ -6,7 +6,7 @@ import { createProject, updateProject } from "@/server/actions/projects.actions"
 import { MarkdownEditor } from "@/components/admin/MarkdownEditor/MarkdownEditor";
 import { PROJECT_STATUS_VALUES } from "@/lib/validation/project.schema";
 import type { ProjectDTO } from "@/types/dto/project.dto";
-import styles from "./ProjectForm.module.css";
+import styles from "@/styles/admin-form.module.css";
 
 interface FormState {
   error?: string;

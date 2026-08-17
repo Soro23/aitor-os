@@ -5,11 +5,16 @@ import { StatusBadge } from "@/components/ui/StatusBadge/StatusBadge";
 import { ProgressBar } from "@/components/ui/ProgressBar/ProgressBar";
 import { PulseIndicator } from "@/components/ui/PulseIndicator/PulseIndicator";
 import { projectsRepository } from "@/server/repositories/projects.repository";
+import { gardenNotesRepository } from "@/server/repositories/garden-notes.repository";
 import { projectStatusLabel, projectStatusTone } from "@/lib/project-status";
+import { gardenNoteCategoryLabel, gardenNoteStatusLabel } from "@/lib/garden-note-labels";
 import styles from "./page.module.css";
 
 export default async function HomePage() {
-  const featuredProjects = await projectsRepository.findFeatured();
+  const [featuredProjects, latestNote] = await Promise.all([
+    projectsRepository.findFeatured(),
+    gardenNotesRepository.findLatestPublished(),
+  ]);
 
   return (
     <div className={styles.stack}>
@@ -20,7 +25,7 @@ export default async function HomePage() {
           Técnico informático y desarrollador centrado en sistemas, automatización,
           desarrollo e inteligencia artificial.
         </p>
-        <PulseIndicator label="Sistema en construcción — Fase 5: CRUD de proyectos" tone="amber" />
+        <PulseIndicator label="Sistema en construcción — Fase 6: Digital Garden" tone="amber" />
       </Panel>
 
       <div className={styles.grid}>
@@ -47,9 +52,21 @@ export default async function HomePage() {
         ) : (
           <ClipCard eyebrow="Proyecto destacado" title="Todavía no hay proyectos destacados" accent="cyan" />
         )}
-        <ClipCard eyebrow="Última nota — Garden" title="Contenido pendiente de conectar" accent="violet">
-          <StatusBadge label="Growing" tone="violet" />
-        </ClipCard>
+
+        {latestNote ? (
+          <Link href={`/garden/${latestNote.slug}`} className={styles.cardLink}>
+            <ClipCard
+              eyebrow={`Última nota — ${gardenNoteCategoryLabel(latestNote.category)}`}
+              title={latestNote.title}
+              accent="violet"
+            >
+              <StatusBadge label={gardenNoteStatusLabel(latestNote.status)} tone="violet" />
+            </ClipCard>
+          </Link>
+        ) : (
+          <ClipCard eyebrow="Última nota — Garden" title="Todavía no hay notas publicadas" accent="violet" />
+        )}
+
         <ClipCard eyebrow="Último experimento — Lab" title="Contenido pendiente de conectar" accent="green">
           <StatusBadge label="Experiment" tone="green" />
         </ClipCard>

@@ -1,3 +1,8 @@
+/**
+ * Estilos compartidos por las páginas de listado admin (Proyectos, Garden,
+ * Lab, Recursos...). Un único módulo importado desde cada page.tsx.
+ */
+
 .stack {
   display: flex;
   flex-direction: column;

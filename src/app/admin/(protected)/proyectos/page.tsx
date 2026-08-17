@@ -10,7 +10,7 @@ import {
   deleteProject,
 } from "@/server/actions/projects.actions";
 import type { ProjectDTO } from "@/types/dto/project.dto";
-import styles from "./page.module.css";
+import styles from "@/styles/admin-list.module.css";
 
 export default async function AdminProjectsPage() {
   const projects = await projectsRepository.findAll();
