@@ -8,6 +8,17 @@ RUN npm ci
 FROM node:24-alpine AS builder
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
+
+# Next.js sustituye las NEXT_PUBLIC_* por su valor literal dentro del bundle
+# de cliente durante el build, no en runtime — sin estos ARG el navegador
+# recibiria undefined. Solo variables publicas: los ARG quedan visibles en el
+# historial de capas de la imagen, asi que SUPABASE_SERVICE_ROLE_KEY y demas
+# secretos se inyectan unicamente en runtime.
+ARG NEXT_PUBLIC_SUPABASE_URL
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build

@@ -28,14 +28,30 @@ Las migraciones se aplican de forma **explícita** antes de cada despliegue, nun
 
 ## Variables de entorno (Coolify)
 
-| Variable | Dónde se usa | Regla |
-|---|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Cliente browser | Pública, correcto que sea `NEXT_PUBLIC_*` |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Cliente browser | Pública, respeta RLS igualmente |
-| `SUPABASE_SERVICE_ROLE_KEY` | Solo scripts de administración | **Nunca** en el camino de una request pública, nunca `NEXT_PUBLIC_*`, nunca en el bundle de cliente |
-| `GITHUB_TOKEN` | Rate limit de la API de GitHub (proxy `/api/github`) | Opcional, server-side únicamente |
+| Variable | Dónde se usa | Build | Runtime | Regla |
+|---|---|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Cliente browser + server | ✅ | ✅ | Pública, correcto que sea `NEXT_PUBLIC_*` |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Cliente browser + server | ✅ | ✅ | Pública, respeta RLS igualmente |
+| `SUPABASE_SERVICE_ROLE_KEY` | Solo scripts de administración | ❌ | ✅ | **Nunca** en el camino de una request pública, nunca `NEXT_PUBLIC_*`, nunca en el bundle de cliente, nunca como build variable |
+| `GITHUB_USERNAME` | Proxy `/api/github` | ❌ | ✅ | Opcional, server-side únicamente |
+| `GITHUB_TOKEN` | Rate limit de la API de GitHub (proxy `/api/github`) | ❌ | ✅ | Opcional, server-side únicamente |
+
+Las `NEXT_PUBLIC_*` deben marcarse como **build variable** en Coolify además de runtime: Next.js las sustituye por su valor literal dentro del bundle de cliente durante `npm run build`, no las lee en runtime. Sin marcarlas, el build sale con `undefined` y el cliente de navegador (login del admin incluido) falla en producción — sin ningún error visible durante el build. Corolario: cambiar la URL de Supabase obliga a reconstruir la imagen, no basta con editar la variable y reiniciar.
+
+Ningún secreto puede ser build variable. Los `ARG` quedan registrados en el historial de capas de la imagen y son legibles con `docker history`.
 
 Ver también [[environment-secrets-guardian]] si existe esa skill; si no, esta tabla es la referencia mínima.
+
+## Configuración del recurso en Coolify
+
+| Campo | Valor |
+|---|---|
+| Branch | `main` |
+| Build Pack | `Dockerfile` — **no** Nixpacks, que ignoraría `docker/Dockerfile` |
+| Base Directory | `/` |
+| Dockerfile Location | `/docker/Dockerfile` |
+| Port | `3000` |
+| Is it a static site? | No |
 
 ## Dockerfile — expectativas
 
@@ -43,6 +59,7 @@ Ver también [[environment-secrets-guardian]] si existe esa skill; si no, esta t
 - Imagen final pequeña, basada en el output `standalone` de Next.js (no copiar `node_modules` completo a la imagen final).
 - Usuario no root en el stage de runtime.
 - Caché de capas eficiente: copiar `package.json`/`package-lock.json` e instalar dependencias antes de copiar el resto del código fuente.
+- Un par `ARG` + `ENV` en el stage de build por cada `NEXT_PUBLIC_*` que necesite el bundle de cliente. Solo variables públicas — ver la tabla de arriba.
 
 ## Healthcheck
 
