@@ -1,0 +1,36 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  padding: var(--space-1) var(--space-3);
+  border: var(--border-width) solid var(--color-border);
+  border-left-width: 3px;
+  background-color: var(--color-bg-panel);
+  color: var(--color-text-secondary);
+}
+
+.tone-cyan {
+  border-left-color: var(--color-accent-cyan);
+  color: var(--color-accent-cyan);
+}
+
+.tone-violet {
+  border-left-color: var(--color-accent-violet);
+  color: var(--color-accent-violet);
+}
+
+.tone-green {
+  border-left-color: var(--color-accent-green);
+  color: var(--color-accent-green);
+}
+
+.tone-amber {
+  border-left-color: var(--color-accent-amber);
+  color: var(--color-accent-amber);
+}
+
+.tone-red {
+  border-left-color: var(--color-accent-red);
+  color: var(--color-accent-red);
+}

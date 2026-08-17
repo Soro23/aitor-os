@@ -1,0 +1,11 @@
+.title {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-2xl);
+  color: var(--color-text-primary);
+  margin: var(--space-3) 0;
+}
+
+.description {
+  color: var(--color-text-secondary);
+  max-width: 60ch;
+}

@@ -1,0 +1,67 @@
+/**
+ * Tokens de diseño — Aitor OS
+ * Fuente de verdad: design-concept.md (raíz del repo) + skill aitor-os-design-system.
+ *
+ * Breakpoints (referencia — CSS no permite var() dentro de @media sin un plugin
+ * adicional, así que estos valores se usan literales en cada media query):
+ *   mobile:       base, sin media query (mobile-first)
+ *   tablet:       min-width: 768px
+ *   desktop:      min-width: 1024px
+ *   wide desktop: min-width: 1440px
+ */
+
+:root {
+  /* Color — base */
+  --color-bg: #05060a;
+  --color-bg-panel: #0b0e17;
+  --color-border: #1c2333;
+  --color-text-primary: #e8ecf4;
+  --color-text-secondary: #8a93a8;
+
+  /* Color — acentos neón (uso selectivo, nunca simultáneo en un mismo bloque) */
+  --color-accent-cyan: #00f0ff;
+  --color-accent-violet: #b84dff;
+  --color-accent-green: #39ff88;
+  --color-accent-amber: #ffb020;
+  --color-accent-red: #ff3d5a;
+
+  /* Tipografía */
+  --font-mono: var(--font-jetbrains-mono), "Space Mono", ui-monospace, monospace;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.75rem;
+
+  --letter-spacing-chrome: 0.08em;
+
+  /* Spacing (escala base 4px) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* Bordes cortados (clip-path) — tamaño estándar del corte de esquina */
+  --clip-corner: 12px;
+  --clip-corner-sm: 8px;
+  --border-width: 1px;
+
+  /* Glow — usado en barras de progreso, indicadores de pulso, foco */
+  --glow-cyan: 0 0 12px rgba(0, 240, 255, 0.45);
+  --glow-violet: 0 0 12px rgba(184, 77, 255, 0.45);
+  --glow-green: 0 0 12px rgba(57, 255, 136, 0.45);
+  --glow-amber: 0 0 12px rgba(255, 176, 32, 0.45);
+  --glow-red: 0 0 12px rgba(255, 61, 90, 0.45);
+
+  /* Transiciones */
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+}

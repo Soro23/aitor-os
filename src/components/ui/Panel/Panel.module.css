@@ -1,0 +1,34 @@
+.panel {
+  position: relative;
+  background-color: var(--color-bg-panel);
+  border: var(--border-width) solid var(--color-border);
+  padding: var(--space-5);
+  clip-path: polygon(
+    var(--clip-corner) 0,
+    100% 0,
+    100% calc(100% - var(--clip-corner)),
+    calc(100% - var(--clip-corner)) 100%,
+    0 100%,
+    0 var(--clip-corner)
+  );
+}
+
+.accent-cyan {
+  border-color: var(--color-accent-cyan);
+}
+
+.accent-violet {
+  border-color: var(--color-accent-violet);
+}
+
+.accent-green {
+  border-color: var(--color-accent-green);
+}
+
+.accent-amber {
+  border-color: var(--color-accent-amber);
+}
+
+.accent-red {
+  border-color: var(--color-accent-red);
+}
