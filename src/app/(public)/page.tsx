@@ -6,14 +6,23 @@ import { ProgressBar } from "@/components/ui/ProgressBar/ProgressBar";
 import { PulseIndicator } from "@/components/ui/PulseIndicator/PulseIndicator";
 import { projectsRepository } from "@/server/repositories/projects.repository";
 import { gardenNotesRepository } from "@/server/repositories/garden-notes.repository";
+import { labExperimentsRepository } from "@/server/repositories/lab-experiments.repository";
 import { projectStatusLabel, projectStatusTone } from "@/lib/project-status";
 import { gardenNoteCategoryLabel, gardenNoteStatusLabel } from "@/lib/garden-note-labels";
+import { formatLabNumber } from "@/lib/format-lab-number";
 import styles from "./page.module.css";
 
+const LAB_STATUS_LABELS: Record<string, string> = {
+  experiment: "Experiment",
+  working: "Working",
+  archived: "Archived",
+};
+
 export default async function HomePage() {
-  const [featuredProjects, latestNote] = await Promise.all([
+  const [featuredProjects, latestNote, latestExperiment] = await Promise.all([
     projectsRepository.findFeatured(),
     gardenNotesRepository.findLatestPublished(),
+    labExperimentsRepository.findLatestPublished(),
   ]);
 
   return (
@@ -67,9 +76,17 @@ export default async function HomePage() {
           <ClipCard eyebrow="Última nota — Garden" title="Todavía no hay notas publicadas" accent="violet" />
         )}
 
-        <ClipCard eyebrow="Último experimento — Lab" title="Contenido pendiente de conectar" accent="green">
-          <StatusBadge label="Experiment" tone="green" />
-        </ClipCard>
+        {latestExperiment ? (
+          <ClipCard
+            eyebrow={`Último experimento — ${formatLabNumber(latestExperiment.labNumber)}`}
+            title={latestExperiment.title}
+            accent="green"
+          >
+            <StatusBadge label={LAB_STATUS_LABELS[latestExperiment.status]} tone="green" />
+          </ClipCard>
+        ) : (
+          <ClipCard eyebrow="Último experimento — Lab" title="Todavía no hay experimentos publicados" accent="green" />
+        )}
       </div>
     </div>
   );

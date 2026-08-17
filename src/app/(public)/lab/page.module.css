@@ -1,0 +1,38 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+.stack {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.links {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.link {
+  color: var(--color-accent-green);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+}
+
+.link:hover,
+.link:focus-visible {
+  text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
