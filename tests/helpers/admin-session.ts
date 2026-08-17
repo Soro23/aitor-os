@@ -44,12 +44,24 @@ export async function setupAdminSession() {
       email_confirm: true,
     });
     if (error || !created.user) {
-      throw new Error(`No se pudo crear el usuario admin de prueba: ${error?.message}`);
+      // Varios ficheros de test arrancan en paralelo y pueden competir para
+      // crear el mismo usuario: si ya existe (otro worker gano la carrera),
+      // reutilizarlo en vez de fallar.
+      const { data: retry } = await admin.auth.admin.listUsers();
+      const existingId = retry.users.find((u) => u.email === TEST_ADMIN_EMAIL)?.id;
+      if (!existingId) {
+        throw new Error(`No se pudo crear el usuario admin de prueba: ${error?.message}`);
+      }
+      userId = existingId;
+    } else {
+      userId = created.user.id;
     }
-    userId = created.user.id;
   }
 
-  await admin.from("app_admins").upsert({ user_id: userId });
+  const { error: upsertError } = await admin.from("app_admins").upsert({ user_id: userId });
+  if (upsertError) {
+    throw new Error(`No se pudo registrar el admin de prueba en app_admins: ${upsertError.message}`);
+  }
 
   const anon = createSupabaseClient<Database, "asros">(url, anonKey, {
     db: { schema: "asros" },
