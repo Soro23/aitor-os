@@ -4,11 +4,11 @@ Este archivo proporciona contexto a Claude Code (claude.ai/code) al trabajar con
 
 ## Estado actual del repositorio
 
-Fases 1-8 del roadmap completadas: app Next.js 16 (App Router) con tema visual base (Fase 1); los 3 clientes Supabase apuntando al schema `asros` (Fase 2); esquema completo + RLS + tipos (Fase 3); autenticación admin (Fase 4); CRUD completo de Proyectos como slice de referencia (Fase 5); CRUD de Digital Garden con relaciones N:N entre notas (Fase 6); CRUD de Lab Experiments y Resources (Fase 7); Now y Stack como colecciones de edición directa, formulario de Contacto con rate limiting, y agregación de Dashboard/Inicio con proxy de GitHub (`src/lib/github/get-activity.ts`, `GITHUB_USERNAME`/`GITHUB_TOKEN` opcionales — sin ellas el bloque de GitHub simplemente no se muestra) (Fase 8). **Solo falta Docker + despliegue en Coolify** — Fase 9, ver `ARCHITECTURE.md` §6. Toda la superficie de contenido pública/admin del sitio está completa y funcional en cuanto haya una instancia Supabase real. El patrón de Proyectos/Garden/Lab/Resources (`lib/validation/`, `types/dto/`, `server/repositories/`, `server/actions/`, UI admin+pública, tests) es la plantilla que siguió cada entidad. Estilos de formularios/listados admin centralizados en `src/styles/admin-form.module.css` y `src/styles/admin-list.module.css`.
+**Roadmap completo (Fases 1-9) implementado.** App Next.js 16 (App Router) con tema visual base; los 3 clientes Supabase apuntando al schema `asros`; esquema completo + RLS + tipos; autenticación admin; CRUDs de Proyectos (slice de referencia), Digital Garden (con relaciones N:N), Lab Experiments y Resources; Now/Stack como colecciones de edición directa; formulario de Contacto con rate limiting; Dashboard/Inicio agregando datos propios + proxy de GitHub opcional; `docker/Dockerfile`, `.github/workflows/ci.yml` y `supabase/docker-compose.yml` de referencia para Coolify. Toda la superficie de contenido pública/admin del sitio está completa. **Nada de esto se ha verificado en vivo** (sin Docker en esta máquina durante la implementación) — ver la nota de estado del roadmap más abajo antes de desplegar. El patrón de Proyectos/Garden/Lab/Resources (`lib/validation/`, `types/dto/`, `server/repositories/`, `server/actions/`, UI admin+pública, tests) es la plantilla que siguió cada entidad. Estilos de formularios/listados admin centralizados en `src/styles/admin-form.module.css` y `src/styles/admin-list.module.css`.
 
 > Nota de entorno: esta máquina no tiene Docker instalado, así que `npx supabase start`/`db reset` no se han podido ejecutar todavía — todo el código de las Fases 2 en adelante está escrito y pasa `build`/`lint`/`typecheck`/`test:unit`, pero sin verificación en vivo contra una instancia real hasta que Docker esté disponible. `test:integration` y `test:e2e` están escritos pero no ejecutados.
 >
-> Nota técnica: Next.js 16 marca el archivo `middleware.ts` como deprecado en favor de `proxy.ts` (sigue funcionando, solo un aviso en build). Se mantiene `middleware.ts` porque `ARCHITECTURE.md` y varias skills (`auth-security-reviewer`, etc.) lo nombran explícitamente. Revisar si Next.js elimina el soporte antes de la Fase 9.
+> Nota técnica: Next.js 16 marca el archivo `middleware.ts` como deprecado en favor de `proxy.ts` (sigue funcionando, solo un aviso en build). Se mantiene `middleware.ts` porque `ARCHITECTURE.md` y varias skills (`auth-security-reviewer`, etc.) lo nombran explícitamente. Revisar si una versión futura de Next.js elimina el soporte.
 >
 > Nota técnica: `database.types.ts` está escrito a mano (sin Docker no se puede ejecutar `supabase gencode`). Cada tabla necesita un campo `Relationships: []` junto a `Row`/`Insert`/`Update` y el `Database` type necesita la clave `__InternalSupabase: { PostgrestVersion: "13" }` — sin ellos, `@supabase/supabase-js` resuelve `.from(tabla)` como `never` en vez de los tipos reales (typecheck pasa pero sin ningún chequeo real). Si se regenera con la CLI, este problema desaparece solo.
 
@@ -41,6 +41,10 @@ npx supabase start   # levanta Postgres/GoTrue/PostgREST/Storage/Kong/Studio loc
 npx supabase stop    # los detiene
 npx supabase db reset            # reaplica todas las migraciones de supabase/migrations/
 npx supabase gencode typescript --local --schema asros > src/types/dto/database.types.ts
+```
+
+```
+docker build -f docker/Dockerfile -t aitor-os .   # sin verificar — sin Docker en esta máquina
 ```
 
 ## Qué es este proyecto
@@ -114,21 +118,23 @@ GitHub → Pull Request → CI → Tests → Build → Merge
 
 Regla no negociable: las migraciones (`supabase migration up`) se aplican **antes** de desplegar el contenedor nuevo, nunca en su arranque — evita condiciones de carrera con varias instancias (skill `migration-deployment-guardian`). Variables de entorno y topología (app + stack Supabase self-hosted como recursos Coolify separados): skill `coolify-deployment`.
 
-### Roadmap de implementación inicial (aún no empezado)
+### Roadmap de implementación inicial (completado, pendiente de verificación en vivo)
 
-De `ARCHITECTURE.md`, sección 6 — orden previsto para arrancar el proyecto desde cero:
+De `ARCHITECTURE.md`, sección 6 — las 9 fases están implementadas:
 
 ```
-1. Bootstrap Next.js (TS, App Router, tema visual, rutas públicas con placeholder)
-2. Conexión a Supabase self-hosted (clientes, variables de entorno)
-3. Esquema de base de datos + RLS, generación de tipos
-4. Autenticación admin (single-admin, login, middleware, requireAdmin())
-5. CRUD de Proyectos — slice de referencia del patrón completo
-6. CRUD de Digital Garden
-7. CRUD de Lab y Recursos
-8. Now, Stack, Contacto y agregación del Dashboard
-9. Dockerfile y despliegue en Coolify (producción)
+1. Bootstrap Next.js (TS, App Router, tema visual, rutas públicas con placeholder)      ✅
+2. Conexión a Supabase self-hosted (clientes, variables de entorno)                      ✅
+3. Esquema de base de datos + RLS, generación de tipos                                   ✅
+4. Autenticación admin (single-admin, login, middleware, requireAdmin())                 ✅
+5. CRUD de Proyectos — slice de referencia del patrón completo                            ✅
+6. CRUD de Digital Garden                                                                 ✅
+7. CRUD de Lab y Recursos                                                                 ✅
+8. Now, Stack, Contacto y agregación del Dashboard                                        ✅
+9. Dockerfile y despliegue en Coolify (producción)                                        ✅
 ```
+
+Ninguna fase se ha podido verificar contra una instancia real de Supabase ni Docker (esta máquina de desarrollo no tenía ninguno de los dos disponibles durante la implementación) — build/lint/typecheck/`test:unit` sí están verificados en cada fase. Antes de dar el proyecto por terminado: instalar Docker, `npx supabase start`, rellenar `.env.local`/`.env.test`, ejecutar `test:integration` y `test:e2e`, y hacer un `docker build` real del Dockerfile.
 
 ## Convenciones de nomenclatura
 

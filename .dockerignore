@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+.env
+.env.local
+.env.test
+.dockerignore
+docker
+tests
+playwright-report
+test-results
+.claude
+.github
+*.md
+supabase/.branches
+supabase/.temp

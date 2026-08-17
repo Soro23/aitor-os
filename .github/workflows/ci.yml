@@ -1,0 +1,78 @@
+name: CI
+
+# Orden fijo (skill ci-guardian): Install -> Lint -> Typecheck -> Unit
+# Tests -> Integration Tests -> Build -> Security Checks. Si un paso falla,
+# los siguientes no se ejecutan (comportamiento por defecto de GitHub
+# Actions), asi que el orden es tambien el orden de "fail fast".
+#
+# NOTA: los pasos que arrancan Supabase local (npx supabase start/status/
+# db reset) no se han podido ejecutar ni una vez en local — esta maquina de
+# desarrollo no tiene Docker. Revisar el primer run real en GitHub Actions
+# (ubuntu-latest sí trae Docker) antes de confiar en este workflow.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Start local Supabase
+        run: npx supabase start
+
+      - name: Export Supabase connection env vars
+        run: |
+          STATUS=$(npx supabase status -o json)
+          echo "NEXT_PUBLIC_SUPABASE_URL=$(echo "$STATUS" | jq -r '.API_URL')" >> "$GITHUB_ENV"
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=$(echo "$STATUS" | jq -r '.ANON_KEY')" >> "$GITHUB_ENV"
+          echo "SUPABASE_SERVICE_ROLE_KEY=$(echo "$STATUS" | jq -r '.SERVICE_ROLE_KEY')" >> "$GITHUB_ENV"
+
+      - name: Integration tests
+        run: npm run test:integration
+        env:
+          TEST_ADMIN_EMAIL: admin.test@aitor-os.local
+          TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
+
+      - name: Stop local Supabase
+        if: always()
+        run: npx supabase stop
+
+      - name: Build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder
+
+      - name: Security audit
+        run: npm audit --audit-level=high
+
+      - name: Check for leaked secrets in the diff
+        run: |
+          git fetch origin "${{ github.event.pull_request.base.ref || 'main' }}" --depth=1
+          BASE="origin/${{ github.event.pull_request.base.ref || 'main' }}"
+          if git diff "$BASE"...HEAD | grep -EI "SUPABASE_SERVICE_ROLE_KEY\s*=\s*['\"]?[A-Za-z0-9._-]{20,}|sk-[A-Za-z0-9]{20,}"; then
+            echo "::error::Posible secreto filtrado en el diff"
+            exit 1
+          fi
