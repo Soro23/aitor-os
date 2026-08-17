@@ -10,10 +10,11 @@ import type { Database } from "@/types/dto/database.types";
  * server/repositories/* de uso normal.
  */
 export function createAdminClient() {
-  return createSupabaseClient<Database>(
+  return createSupabaseClient<Database, "asros">(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     {
+      db: { schema: "asros" },
       auth: {
         autoRefreshToken: false,
         persistSession: false,
