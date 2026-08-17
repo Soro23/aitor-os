@@ -1,12 +1,17 @@
-import { PlaceholderSection } from "../_components/PlaceholderSection";
+import { Panel } from "@/components/ui/Panel/Panel";
+import { ContactForm } from "./ContactForm";
+import styles from "./page.module.css";
 
 export default function ContactoPage() {
   return (
-    <PlaceholderSection
-      eyebrow="Contacto"
-      title="Contacto"
-      description="Email, LinkedIn, GitHub y formulario de contacto. El formulario se conecta a la tabla contact_messages en la Fase 8."
-      accent="amber"
-    />
+    <Panel accent="amber">
+      <p className="hud-label">Contacto</p>
+      <h1 className={styles.title}>Hablemos</h1>
+      <p className={styles.description}>
+        Development, AI projects, automatización, infraestructura o cualquier otro proyecto técnico
+        interesante — cuéntame en qué estás pensando.
+      </p>
+      <ContactForm />
+    </Panel>
   );
 }

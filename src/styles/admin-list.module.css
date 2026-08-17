@@ -69,3 +69,17 @@
 .deleteButton:focus-visible {
   text-decoration: underline;
 }
+
+.actionButton {
+  background: none;
+  border: none;
+  color: var(--color-accent-cyan);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  padding: 0;
+}
+
+.actionButton:hover,
+.actionButton:focus-visible {
+  text-decoration: underline;
+}
