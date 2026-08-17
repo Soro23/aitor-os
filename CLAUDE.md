@@ -4,9 +4,11 @@ Este archivo proporciona contexto a Claude Code (claude.ai/code) al trabajar con
 
 ## Estado actual del repositorio
 
-Fases 1-2 del roadmap completadas: app Next.js 16 (App Router) con el tema visual base y rutas públicas placeholder (Fase 1); los 3 clientes Supabase y `supabase/` inicializado con la CLI local (Fase 2). **Todavía no hay esquema de base de datos, RLS, autenticación ni Docker** — eso corresponde a las Fases 3-9, ver `ARCHITECTURE.md` §6. No existen `supabase/migrations/`, `docker/` ni `server/` todavía.
+Fases 1-4 del roadmap completadas: app Next.js 16 (App Router) con tema visual base (Fase 1); los 3 clientes Supabase apuntando al schema `asros` (Fase 2); esquema completo + RLS + tipos (Fase 3); autenticación admin (`middleware.ts`, `requireAdmin()`, login/logout) (Fase 4). **Todavía no hay CRUDs de contenido ni Docker** — eso corresponde a las Fases 5-9, ver `ARCHITECTURE.md` §6.
 
 > Nota de entorno: esta máquina no tiene Docker instalado, así que `npx supabase start`/`db reset` no se han podido ejecutar todavía — el código de las Fases 2-3 en adelante está escrito pero sin verificación en vivo contra una instancia real hasta que Docker esté disponible.
+>
+> Nota técnica: Next.js 16 marca el archivo `middleware.ts` como deprecado en favor de `proxy.ts` (sigue funcionando, solo un aviso en build). Se mantiene `middleware.ts` porque `ARCHITECTURE.md` y varias skills (`auth-security-reviewer`, etc.) lo nombran explícitamente. Revisar si Next.js elimina el soporte antes de la Fase 9.
 
 - `ARCHITECTURE.md` — arquitectura técnica decidida.
 - `design-concept.md` — lenguaje visual decidido.
@@ -20,23 +22,23 @@ Fases 1-2 del roadmap completadas: app Next.js 16 (App Router) con el tema visua
 Verificados contra `package.json`:
 
 ```
-npm run dev        # servidor de desarrollo (Next.js, Turbopack)
-npm run build      # build de producción (output: 'standalone')
-npm run start      # sirve el build de producción
-npm run lint       # ESLint (eslint-config-next, flat config)
-npm run typecheck  # tsc --noEmit
+npm run dev              # servidor de desarrollo (Next.js, Turbopack)
+npm run build            # build de producción (output: 'standalone')
+npm run start             # sirve el build de producción
+npm run lint               # ESLint (eslint-config-next, flat config)
+npm run typecheck          # tsc --noEmit
+npm run test:unit           # Vitest — tests/unit/ y tests/actions/ (mocks de sesión, sin Docker)
+npm run test:integration    # Vitest — tests/integration/ (Supabase real, requiere Docker)
 ```
 
-No hay todavía scripts de test (`test:unit`, `test:integration`, `test:e2e`) — se añaden cuando exista la primera Server Action/repositorio a testear (Fase 4+). Requiere Docker Desktop:
+Todavía no hay `test:e2e` (Playwright) — se añade con el primer flujo crítico end-to-end (Fase 5).
 
 ```
 npx supabase start   # levanta Postgres/GoTrue/PostgREST/Storage/Kong/Studio locales
 npx supabase stop    # los detiene
 npx supabase db reset            # reaplica todas las migraciones de supabase/migrations/
-npx supabase gencode typescript --local > src/types/dto/database.types.ts
+npx supabase gencode typescript --local --schema asros > src/types/dto/database.types.ts
 ```
-
-Volver a ejecutar la skill `aitor-os-claude-md` cuando exista el primer esquema real (Fase 3) para completar esta sección.
 
 ## Qué es este proyecto
 

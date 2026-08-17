@@ -1,0 +1,19 @@
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  background-color: var(--color-bg);
+}
+
+.panel {
+  width: 100%;
+  max-width: 360px;
+}
+
+.title {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-2xl);
+  margin: var(--space-3) 0 var(--space-5);
+}
