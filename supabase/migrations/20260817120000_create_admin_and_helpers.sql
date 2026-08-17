@@ -9,10 +9,10 @@ grant usage on schema asros to anon, authenticated, service_role;
 -- real fila a fila; estos GRANT son el equivalente al comportamiento por
 -- defecto que Supabase ya aplica sobre el schema "public".
 alter default privileges in schema asros
-  grant select, insert, update, delete on tables to anon, authenticated;
+  grant select, insert, update, delete on tables to anon, authenticated, service_role;
 
 alter default privileges in schema asros
-  grant usage, select on sequences to anon, authenticated;
+  grant usage, select on sequences to anon, authenticated, service_role;
 
 alter default privileges in schema asros
   grant execute on functions to anon, authenticated, service_role;
