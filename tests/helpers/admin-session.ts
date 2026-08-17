@@ -1,13 +1,18 @@
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+import { createServerClient } from "@supabase/ssr";
 import { vi } from "vitest";
 import type { Database } from "@/types/dto/database.types";
 
 /**
  * Helper para tests de repositorio/integracion contra Supabase real (nunca
  * mocks del cliente): crea (o reutiliza) un usuario admin de prueba, lo anade
- * a asros.app_admins con el cliente service-role, inicia sesión con el
- * cliente anon y mockea next/headers para que lib/supabase/server pueda
- * autenticarse con esa sesión fuera de una request real de Next.js.
+ * a asros.app_admins con el cliente service-role, inicia sesión con el mismo
+ * cliente createServerClient de @supabase/ssr que usa lib/supabase/server.ts
+ * (contra un jar de cookies en memoria) y mockea next/headers con esas
+ * cookies reales. Construir el cookie a mano (JSON.stringify de
+ * access_token/refresh_token) no sirve: @supabase/ssr codifica el Session
+ * completo en base64url con prefijo "base64-", y sin ese formato exacto la
+ * sesión no se reconoce como autenticada aunque el login haya ido bien.
  *
  * Requiere `npx supabase start` corriendo y las variables de entorno de
  * .env.test (o .env.local) cargadas.
@@ -63,25 +68,28 @@ export async function setupAdminSession() {
     throw new Error(`No se pudo registrar el admin de prueba en app_admins: ${upsertError.message}`);
   }
 
-  const anon = createSupabaseClient<Database, "asros">(url, anonKey, {
+  const cookieJar = new Map<string, string>();
+  const anon = createServerClient<Database, "asros">(url, anonKey, {
     db: { schema: "asros" },
+    cookies: {
+      getAll: () => Array.from(cookieJar, ([name, value]) => ({ name, value })),
+      setAll: (cookiesToSet) => {
+        cookiesToSet.forEach(({ name, value }) => cookieJar.set(name, value));
+      },
+    },
   });
-  const { data: session, error: signInError } = await anon.auth.signInWithPassword({
+  const { error: signInError } = await anon.auth.signInWithPassword({
     email: TEST_ADMIN_EMAIL,
     password: TEST_ADMIN_PASSWORD,
   });
 
-  if (signInError || !session.session) {
+  if (signInError || cookieJar.size === 0) {
     throw new Error(`No se pudo iniciar sesión como admin de prueba: ${signInError?.message}`);
   }
 
-  const { access_token, refresh_token } = session.session;
-  const cookieName = `sb-${new URL(url).hostname.split(".")[0]}-auth-token`;
-  const cookieValue = JSON.stringify({ access_token, refresh_token });
-
   vi.doMock("next/headers", () => ({
     cookies: async () => ({
-      getAll: () => [{ name: cookieName, value: cookieValue }],
+      getAll: () => Array.from(cookieJar, ([name, value]) => ({ name, value })),
       set: () => {},
     }),
   }));
