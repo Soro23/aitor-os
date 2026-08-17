@@ -17,7 +17,7 @@ export class ForbiddenError extends Error {
 }
 
 /**
- * Defensa en profundidad para Server Actions de escritura: comprueba sesion
+ * Defensa en profundidad para Server Actions de escritura: comprueba sesión
  * (getUser) y pertenencia a app_admins (RPC is_admin(), via RLS/security
  * definer). La frontera real vive en Postgres — esto es la segunda capa.
  */

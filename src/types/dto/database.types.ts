@@ -12,6 +12,9 @@
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export type Database = {
+  __InternalSupabase: {
+    PostgrestVersion: "13";
+  };
   public: {
     Tables: Record<string, never>;
     Views: Record<string, never>;
@@ -21,6 +24,7 @@ export type Database = {
   asros: {
     Tables: {
       app_admins: {
+        Relationships: [];
         Row: {
           user_id: string;
           created_at: string;
@@ -35,6 +39,7 @@ export type Database = {
         };
       };
       projects: {
+        Relationships: [];
         Row: {
           id: string;
           slug: string;
@@ -100,6 +105,7 @@ export type Database = {
         };
       };
       project_screenshots: {
+        Relationships: [];
         Row: {
           id: string;
           project_id: string;
@@ -126,6 +132,7 @@ export type Database = {
         };
       };
       garden_notes: {
+        Relationships: [];
         Row: {
           id: string;
           slug: string;
@@ -176,6 +183,7 @@ export type Database = {
         };
       };
       garden_note_relations: {
+        Relationships: [];
         Row: {
           note_id: string;
           related_note_id: string;
@@ -193,6 +201,7 @@ export type Database = {
         };
       };
       lab_experiments: {
+        Relationships: [];
         Row: {
           id: string;
           lab_number: number;
@@ -238,6 +247,7 @@ export type Database = {
         };
       };
       resources: {
+        Relationships: [];
         Row: {
           id: string;
           name: string;
@@ -276,6 +286,7 @@ export type Database = {
         };
       };
       now_items: {
+        Relationships: [];
         Row: {
           id: string;
           category: Database["asros"]["Enums"]["now_item_category"];
@@ -308,6 +319,7 @@ export type Database = {
         };
       };
       stack_items: {
+        Relationships: [];
         Row: {
           id: string;
           name: string;
@@ -340,6 +352,7 @@ export type Database = {
         };
       };
       contact_messages: {
+        Relationships: [];
         Row: {
           id: string;
           name: string;

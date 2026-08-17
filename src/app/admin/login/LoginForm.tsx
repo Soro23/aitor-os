@@ -22,7 +22,7 @@ export function LoginForm() {
         />
       </label>
       <label className={styles.field}>
-        <span className="hud-label">Contrasena</span>
+        <span className="hud-label">Contraseña</span>
         <input
           type="password"
           name="password"

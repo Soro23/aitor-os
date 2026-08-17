@@ -23,28 +23,28 @@ describe("requireAdmin", () => {
     rpcMock.mockReset();
   });
 
-  it("rechaza sin sesion", async () => {
+  it("rechaza sin sesión", async () => {
     getUserMock.mockResolvedValue(null);
 
     await expect(requireAdmin()).rejects.toBeInstanceOf(UnauthorizedError);
     expect(rpcMock).not.toHaveBeenCalled();
   });
 
-  it("rechaza una sesion que no esta en app_admins", async () => {
+  it("rechaza una sesión que no esta en app_admins", async () => {
     getUserMock.mockResolvedValue({ id: "user-1" });
     rpcMock.mockResolvedValue({ data: false, error: null });
 
     await expect(requireAdmin()).rejects.toBeInstanceOf(ForbiddenError);
   });
 
-  it("rechaza si la comprobacion RPC devuelve error", async () => {
+  it("rechaza si la comprobación RPC devuelve error", async () => {
     getUserMock.mockResolvedValue({ id: "user-1" });
     rpcMock.mockResolvedValue({ data: null, error: new Error("rpc failed") });
 
     await expect(requireAdmin()).rejects.toBeInstanceOf(ForbiddenError);
   });
 
-  it("permite una sesion admin", async () => {
+  it("permite una sesión admin", async () => {
     const user = { id: "admin-1" };
     getUserMock.mockResolvedValue(user);
     rpcMock.mockResolvedValue({ data: true, error: null });

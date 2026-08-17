@@ -1,0 +1,22 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.textarea {
+  background-color: var(--color-bg);
+  border: var(--border-width) solid var(--color-border);
+  color: var(--color-text-primary);
+  padding: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.textarea:focus-visible {
+  outline: none;
+  border-color: var(--color-accent-cyan);
+  box-shadow: var(--glow-cyan);
+}

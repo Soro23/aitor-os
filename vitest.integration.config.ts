@@ -11,7 +11,8 @@ export default defineConfig({
   },
   test: {
     environment: "node",
-    include: ["tests/integration/**/*.test.ts"],
+    include: ["tests/repository/**/*.test.ts", "tests/integration/**/*.test.ts"],
+    setupFiles: ["tests/setup/load-env.ts"],
     passWithNoTests: true,
   },
 });

@@ -18,7 +18,7 @@ export async function login(
   });
 
   if (!parsed.success) {
-    return { error: "Introduce un email y una contrasena validos." };
+    return { error: "Introduce un email y una contraseña válidos." };
   }
 
   const supabase = await createClient();

@@ -4,7 +4,7 @@ import type { Database } from "@/types/dto/database.types";
 
 /**
  * Cliente Supabase para Server Components, Server Actions y repositorios.
- * Usa la anon key + cookies de sesion: respeta RLS, nunca hace bypass.
+ * Usa la anon key + cookies de sesión: respeta RLS, nunca hace bypass.
  * Este es el unico cliente que debe usar `server/repositories/*`.
  */
 export async function createClient() {
@@ -26,7 +26,7 @@ export async function createClient() {
             );
           } catch {
             // Llamado desde un Server Component: se ignora porque
-            // middleware.ts ya refresca la sesion en cada request.
+            // middleware.ts ya refresca la sesión en cada request.
           }
         },
       },

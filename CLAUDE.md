@@ -4,11 +4,13 @@ Este archivo proporciona contexto a Claude Code (claude.ai/code) al trabajar con
 
 ## Estado actual del repositorio
 
-Fases 1-4 del roadmap completadas: app Next.js 16 (App Router) con tema visual base (Fase 1); los 3 clientes Supabase apuntando al schema `asros` (Fase 2); esquema completo + RLS + tipos (Fase 3); autenticación admin (`middleware.ts`, `requireAdmin()`, login/logout) (Fase 4). **Todavía no hay CRUDs de contenido ni Docker** — eso corresponde a las Fases 5-9, ver `ARCHITECTURE.md` §6.
+Fases 1-5 del roadmap completadas: app Next.js 16 (App Router) con tema visual base (Fase 1); los 3 clientes Supabase apuntando al schema `asros` (Fase 2); esquema completo + RLS + tipos (Fase 3); autenticación admin (Fase 4); CRUD completo de Proyectos como slice de referencia — admin + público + Inicio conectado a destacados (Fase 5). **Todavía no hay Garden/Lab/Recursos/Now/Stack/Contacto/Dashboard ni Docker** — eso corresponde a las Fases 6-9, ver `ARCHITECTURE.md` §6. El patrón de Proyectos (`lib/validation/`, `types/dto/`, `server/repositories/`, `server/actions/`, UI admin+pública, tests) es la plantilla a replicar para cada entidad siguiente.
 
-> Nota de entorno: esta máquina no tiene Docker instalado, así que `npx supabase start`/`db reset` no se han podido ejecutar todavía — el código de las Fases 2-3 en adelante está escrito pero sin verificación en vivo contra una instancia real hasta que Docker esté disponible.
+> Nota de entorno: esta máquina no tiene Docker instalado, así que `npx supabase start`/`db reset` no se han podido ejecutar todavía — todo el código de las Fases 2 en adelante está escrito y pasa `build`/`lint`/`typecheck`/`test:unit`, pero sin verificación en vivo contra una instancia real hasta que Docker esté disponible. `test:integration` y `test:e2e` están escritos pero no ejecutados.
 >
 > Nota técnica: Next.js 16 marca el archivo `middleware.ts` como deprecado en favor de `proxy.ts` (sigue funcionando, solo un aviso en build). Se mantiene `middleware.ts` porque `ARCHITECTURE.md` y varias skills (`auth-security-reviewer`, etc.) lo nombran explícitamente. Revisar si Next.js elimina el soporte antes de la Fase 9.
+>
+> Nota técnica: `database.types.ts` está escrito a mano (sin Docker no se puede ejecutar `supabase gencode`). Cada tabla necesita un campo `Relationships: []` junto a `Row`/`Insert`/`Update` y el `Database` type necesita la clave `__InternalSupabase: { PostgrestVersion: "13" }` — sin ellos, `@supabase/supabase-js` resuelve `.from(tabla)` como `never` en vez de los tipos reales (typecheck pasa pero sin ningún chequeo real). Si se regenera con la CLI, este problema desaparece solo.
 
 - `ARCHITECTURE.md` — arquitectura técnica decidida.
 - `design-concept.md` — lenguaje visual decidido.
@@ -28,10 +30,11 @@ npm run start             # sirve el build de producción
 npm run lint               # ESLint (eslint-config-next, flat config)
 npm run typecheck          # tsc --noEmit
 npm run test:unit           # Vitest — tests/unit/ y tests/actions/ (mocks de sesión, sin Docker)
-npm run test:integration    # Vitest — tests/integration/ (Supabase real, requiere Docker)
+npm run test:integration    # Vitest — tests/repository/ y tests/integration/ (Supabase real, requiere Docker)
+npm run test:e2e            # Playwright (chromium) — tests/e2e/, requiere Docker + `npm run dev` corriendo
 ```
 
-Todavía no hay `test:e2e` (Playwright) — se añade con el primer flujo crítico end-to-end (Fase 5).
+`test:integration`/`test:e2e` necesitan `.env.test` (copiar de `.env.test.example`) con un usuario admin de prueba — se crea solo la primera vez (ver `tests/helpers/admin-session.ts`).
 
 ```
 npx supabase start   # levanta Postgres/GoTrue/PostgREST/Storage/Kong/Studio locales

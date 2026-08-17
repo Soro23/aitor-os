@@ -3,8 +3,8 @@ import { createServerClient } from "@supabase/ssr";
 import type { Database } from "@/types/dto/database.types";
 
 /**
- * Guarda de rutas /admin/**: solo comprueba autenticacion (hay sesion).
- * La autorizacion (es admin en app_admins) es responsabilidad de
+ * Guarda de rutas /admin/**: solo comprueba autenticación (hay sesión).
+ * La autorización (es admin en app_admins) es responsabilidad de
  * requireAdmin()/requireAdminOrRedirect() — separacion deliberada entre
  * "estar logueado" y "ser admin" (ver skill auth-security-reviewer).
  */
