@@ -1,0 +1,34 @@
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+import type { Database } from "@/types/dto/database.types";
+
+/**
+ * Cliente Supabase para Server Components, Server Actions y repositorios.
+ * Usa la anon key + cookies de sesion: respeta RLS, nunca hace bypass.
+ * Este es el unico cliente que debe usar `server/repositories/*`.
+ */
+export async function createClient() {
+  const cookieStore = await cookies();
+
+  return createServerClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options),
+            );
+          } catch {
+            // Llamado desde un Server Component: se ignora porque
+            // middleware.ts ya refresca la sesion en cada request.
+          }
+        },
+      },
+    },
+  );
+}

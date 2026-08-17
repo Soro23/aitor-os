@@ -32,6 +32,13 @@ npm run lint
 npm run typecheck
 ```
 
+### Base de datos local (requiere Docker Desktop)
+
+```bash
+cp .env.example .env.local   # y rellenar con los valores que imprime supabase start
+npx supabase start
+```
+
 ## Licencia
 
 Proyecto propietario. Todos los derechos reservados — ver [`LICENSE.md`](./LICENSE.md). No está permitido copiar, redistribuir ni reutilizar el código, diseño o contenido de este repositorio sin autorización expresa del titular.

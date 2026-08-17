@@ -4,7 +4,9 @@ Este archivo proporciona contexto a Claude Code (claude.ai/code) al trabajar con
 
 ## Estado actual del repositorio
 
-Fase 1 del roadmap (bootstrap) completada: hay una app Next.js 16 (App Router) funcional con el tema visual base y las rutas públicas como placeholder. **Todavía no hay conexión a Supabase, base de datos, autenticación ni Docker** — eso corresponde a las Fases 2-9, ver `ARCHITECTURE.md` §6. No existen `supabase/migrations/`, `docker/` ni `server/` todavía.
+Fases 1-2 del roadmap completadas: app Next.js 16 (App Router) con el tema visual base y rutas públicas placeholder (Fase 1); los 3 clientes Supabase y `supabase/` inicializado con la CLI local (Fase 2). **Todavía no hay esquema de base de datos, RLS, autenticación ni Docker** — eso corresponde a las Fases 3-9, ver `ARCHITECTURE.md` §6. No existen `supabase/migrations/`, `docker/` ni `server/` todavía.
+
+> Nota de entorno: esta máquina no tiene Docker instalado, así que `npx supabase start`/`db reset` no se han podido ejecutar todavía — el código de las Fases 2-3 en adelante está escrito pero sin verificación en vivo contra una instancia real hasta que Docker esté disponible.
 
 - `ARCHITECTURE.md` — arquitectura técnica decidida.
 - `design-concept.md` — lenguaje visual decidido.
@@ -25,7 +27,16 @@ npm run lint       # ESLint (eslint-config-next, flat config)
 npm run typecheck  # tsc --noEmit
 ```
 
-No hay todavía scripts de test (`test:unit`, `test:integration`, `test:e2e`) ni de base de datos — se añaden cuando exista la primera Server Action/repositorio a testear (Fase 4+) y la conexión a Supabase (Fase 2). Volver a ejecutar la skill `aitor-os-claude-md` cuando eso ocurra para completar esta sección.
+No hay todavía scripts de test (`test:unit`, `test:integration`, `test:e2e`) — se añaden cuando exista la primera Server Action/repositorio a testear (Fase 4+). Requiere Docker Desktop:
+
+```
+npx supabase start   # levanta Postgres/GoTrue/PostgREST/Storage/Kong/Studio locales
+npx supabase stop    # los detiene
+npx supabase db reset            # reaplica todas las migraciones de supabase/migrations/
+npx supabase gencode typescript --local > src/types/dto/database.types.ts
+```
+
+Volver a ejecutar la skill `aitor-os-claude-md` cuando exista el primer esquema real (Fase 3) para completar esta sección.
 
 ## Qué es este proyecto
 
