@@ -103,7 +103,7 @@ services:
       - meta
       - rest
     environment:
-      SUPABASE_URL: http://kong:8000
+      SUPABASE_URL: http://kong:800
       SUPABASE_ANON_KEY: ${ANON_KEY}
       SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
       STUDIO_PG_META_URL: http://meta:8080
@@ -120,7 +120,8 @@ services:
       - rest
       - storage
     ports:
-      - "8000:8000"
+      - "8005:8000"
+      - "8445:8443"
     environment:
       KONG_DATABASE: "off"
       KONG_DECLARATIVE_CONFIG: /var/lib/kong/kong.yml
