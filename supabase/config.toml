@@ -4,6 +4,7 @@
 # working directory name when running `supabase init`.
 project_id = "aitor-os"
 
+
 [api]
 enabled = true
 # Port to use for the API URL.
