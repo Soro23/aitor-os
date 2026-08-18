@@ -6,9 +6,9 @@ import type { Database } from "@/types/dto/database.types";
  * Usa la anon key: respeta RLS, nunca hace bypass.
  */
 export function createClient() {
-  return createBrowserClient<Database, "asros">(
+  return createBrowserClient<Database, "public">(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { db: { schema: "asros" } },
+    { db: { schema: "public" } },
   );
 }

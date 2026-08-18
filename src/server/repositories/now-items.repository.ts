@@ -3,7 +3,7 @@ import type { Database } from "@/types/dto/database.types";
 import type { NowItemDTO } from "@/types/dto/now-item.dto";
 import type { CreateNowItemInput, UpdateNowItemInput } from "@/lib/validation/now-item.schema";
 
-type NowItemRow = Database["asros"]["Tables"]["now_items"]["Row"];
+type NowItemRow = Database["public"]["Tables"]["now_items"]["Row"];
 
 function toDTO(row: NowItemRow): NowItemDTO {
   return {
@@ -70,7 +70,7 @@ export const nowItemsRepository = {
 
   async update(id: string, input: UpdateNowItemInput): Promise<NowItemDTO> {
     const supabase = await createClient();
-    const patch: Database["asros"]["Tables"]["now_items"]["Update"] = {};
+    const patch: Database["public"]["Tables"]["now_items"]["Update"] = {};
 
     if (input.category !== undefined) patch.category = input.category;
     if (input.title !== undefined) patch.title = input.title;

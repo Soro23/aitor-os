@@ -1,4 +1,4 @@
-create table asros.lab_experiments (
+create table public.lab_experiments (
   id uuid primary key default gen_random_uuid(),
   -- GENERATED ALWAYS: el repositorio nunca lo pasa en create(), lo asigna
   -- Postgres. Presentacion como "LAB #014" es responsabilidad del View Model.
@@ -6,7 +6,7 @@ create table asros.lab_experiments (
   title text not null,
   description text,
   stack text[] not null default '{}',
-  status asros.lab_experiment_status not null default 'experiment',
+  status public.lab_experiment_status not null default 'experiment',
   github_url text,
   demo_url text,
   is_published boolean not null default false,
@@ -16,22 +16,22 @@ create table asros.lab_experiments (
   updated_at timestamptz not null default now()
 );
 
-create index idx_lab_experiments_is_published on asros.lab_experiments (is_published);
+create index idx_lab_experiments_is_published on public.lab_experiments (is_published);
 
 create trigger set_lab_experiments_updated_at
-  before update on asros.lab_experiments
+  before update on public.lab_experiments
   for each row
-  execute function asros.set_updated_at();
+  execute function public.set_updated_at();
 
-alter table asros.lab_experiments enable row level security;
+alter table public.lab_experiments enable row level security;
 
 create policy "lab_experiments_select_published"
-  on asros.lab_experiments for select
+  on public.lab_experiments for select
   to anon, authenticated
   using (is_published = true);
 
 create policy "lab_experiments_admin_all"
-  on asros.lab_experiments for all
+  on public.lab_experiments for all
   to authenticated
-  using (asros.is_admin())
-  with check (asros.is_admin());
+  using (public.is_admin())
+  with check (public.is_admin());

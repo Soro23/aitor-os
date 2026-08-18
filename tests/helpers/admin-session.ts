@@ -6,7 +6,7 @@ import type { Database } from "@/types/dto/database.types";
 /**
  * Helper para tests de repositorio/integracion contra Supabase real (nunca
  * mocks del cliente): crea (o reutiliza) un usuario admin de prueba, lo anade
- * a asros.app_admins con el cliente service-role, inicia sesión con el mismo
+ * a public.app_admins con el cliente service-role, inicia sesión con el mismo
  * cliente createServerClient de @supabase/ssr que usa lib/supabase/server.ts
  * (contra un jar de cookies en memoria) y mockea next/headers con esas
  * cookies reales. Construir el cookie a mano (JSON.stringify de
@@ -34,8 +34,8 @@ export async function setupAdminSession() {
   const anonKey = requiredEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY");
   const serviceRoleKey = requiredEnv("SUPABASE_SERVICE_ROLE_KEY");
 
-  const admin = createSupabaseClient<Database, "asros">(url, serviceRoleKey, {
-    db: { schema: "asros" },
+  const admin = createSupabaseClient<Database, "public">(url, serviceRoleKey, {
+    db: { schema: "public" },
     auth: { autoRefreshToken: false, persistSession: false },
   });
 
@@ -69,8 +69,8 @@ export async function setupAdminSession() {
   }
 
   const cookieJar = new Map<string, string>();
-  const anon = createServerClient<Database, "asros">(url, anonKey, {
-    db: { schema: "asros" },
+  const anon = createServerClient<Database, "public">(url, anonKey, {
+    db: { schema: "public" },
     cookies: {
       getAll: () => Array.from(cookieJar, ([name, value]) => ({ name, value })),
       setAll: (cookiesToSet) => {

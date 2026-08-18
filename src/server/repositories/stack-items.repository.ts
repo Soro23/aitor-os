@@ -3,7 +3,7 @@ import type { Database } from "@/types/dto/database.types";
 import type { StackItemDTO } from "@/types/dto/stack-item.dto";
 import type { CreateStackItemInput, UpdateStackItemInput } from "@/lib/validation/stack-item.schema";
 
-type StackItemRow = Database["asros"]["Tables"]["stack_items"]["Row"];
+type StackItemRow = Database["public"]["Tables"]["stack_items"]["Row"];
 
 function toDTO(row: StackItemRow): StackItemDTO {
   return {
@@ -74,7 +74,7 @@ export const stackItemsRepository = {
 
   async update(id: string, input: UpdateStackItemInput): Promise<StackItemDTO> {
     const supabase = await createClient();
-    const patch: Database["asros"]["Tables"]["stack_items"]["Update"] = {};
+    const patch: Database["public"]["Tables"]["stack_items"]["Update"] = {};
 
     if (input.name !== undefined) patch.name = input.name;
     if (input.category !== undefined) patch.category = input.category;

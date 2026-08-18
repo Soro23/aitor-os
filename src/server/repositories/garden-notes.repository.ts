@@ -6,7 +6,7 @@ import type {
   UpdateGardenNoteInput,
 } from "@/lib/validation/garden-note.schema";
 
-type GardenNoteRow = Database["asros"]["Tables"]["garden_notes"]["Row"];
+type GardenNoteRow = Database["public"]["Tables"]["garden_notes"]["Row"];
 
 function toDTO(row: GardenNoteRow): GardenNoteDTO {
   return {
@@ -141,7 +141,7 @@ export const gardenNotesRepository = {
 
   async update(id: string, input: UpdateGardenNoteInput): Promise<GardenNoteDTO> {
     const supabase = await createClient();
-    const patch: Database["asros"]["Tables"]["garden_notes"]["Update"] = {};
+    const patch: Database["public"]["Tables"]["garden_notes"]["Update"] = {};
 
     if (input.slug !== undefined) patch.slug = input.slug;
     if (input.title !== undefined) patch.title = input.title;

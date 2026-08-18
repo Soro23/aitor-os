@@ -3,7 +3,7 @@ import type { Database } from "@/types/dto/database.types";
 import type { ContactMessageDTO } from "@/types/dto/contact-message.dto";
 import type { CreateContactMessageInput } from "@/lib/validation/contact-message.schema";
 
-type ContactMessageRow = Database["asros"]["Tables"]["contact_messages"]["Row"];
+type ContactMessageRow = Database["public"]["Tables"]["contact_messages"]["Row"];
 
 function toDTO(row: ContactMessageRow): ContactMessageDTO {
   return {

@@ -3,7 +3,7 @@ import type { Database } from "@/types/dto/database.types";
 import type { ResourceDTO } from "@/types/dto/resource.dto";
 import type { CreateResourceInput, UpdateResourceInput } from "@/lib/validation/resource.schema";
 
-type ResourceRow = Database["asros"]["Tables"]["resources"]["Row"];
+type ResourceRow = Database["public"]["Tables"]["resources"]["Row"];
 
 function toDTO(row: ResourceRow): ResourceDTO {
   return {
@@ -91,7 +91,7 @@ export const resourcesRepository = {
 
   async update(id: string, input: UpdateResourceInput): Promise<ResourceDTO> {
     const supabase = await createClient();
-    const patch: Database["asros"]["Tables"]["resources"]["Update"] = {};
+    const patch: Database["public"]["Tables"]["resources"]["Update"] = {};
 
     if (input.name !== undefined) patch.name = input.name;
     if (input.description !== undefined) patch.description = input.description;

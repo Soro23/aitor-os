@@ -10,11 +10,11 @@ import type { Database } from "@/types/dto/database.types";
 export async function createClient() {
   const cookieStore = await cookies();
 
-  return createServerClient<Database, "asros">(
+  return createServerClient<Database, "public">(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
-      db: { schema: "asros" },
+      db: { schema: "public" },
       cookies: {
         getAll() {
           return cookieStore.getAll();

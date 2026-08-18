@@ -6,7 +6,7 @@ import type {
   UpdateProjectScreenshotInput,
 } from "@/lib/validation/project-screenshot.schema";
 
-type ProjectScreenshotRow = Database["asros"]["Tables"]["project_screenshots"]["Row"];
+type ProjectScreenshotRow = Database["public"]["Tables"]["project_screenshots"]["Row"];
 
 function toDTO(row: ProjectScreenshotRow): ProjectScreenshotDTO {
   return {
@@ -51,7 +51,7 @@ export const projectScreenshotsRepository = {
 
   async update(id: string, input: UpdateProjectScreenshotInput): Promise<ProjectScreenshotDTO> {
     const supabase = await createClient();
-    const patch: Database["asros"]["Tables"]["project_screenshots"]["Update"] = {};
+    const patch: Database["public"]["Tables"]["project_screenshots"]["Update"] = {};
 
     if (input.altText !== undefined) patch.alt_text = input.altText;
     if (input.sortOrder !== undefined) patch.sort_order = input.sortOrder;

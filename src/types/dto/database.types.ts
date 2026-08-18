@@ -1,13 +1,13 @@
 /**
  * Tipos generados desde el esquema de Supabase (supabase/migrations/).
- * Todo el esquema de la aplicacion vive en el schema `asros` (no `public`).
+ * Todo el esquema de la aplicacion vive en el schema `public`.
  *
  * Escritos a mano siguiendo el formato exacto de
  * `supabase gencode typescript` porque esta maquina no tiene Docker
  * instalado y no se ha podido levantar una instancia local para generarlos.
  * Regenerar en cuanto haya Docker disponible:
  *   npx supabase start
- *   npx supabase gencode typescript --local --schema asros > src/types/dto/database.types.ts
+ *   npx supabase gencode typescript --local --schema public > src/types/dto/database.types.ts
  */
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
@@ -16,12 +16,6 @@ export type Database = {
     PostgrestVersion: "13";
   };
   public: {
-    Tables: Record<string, never>;
-    Views: Record<string, never>;
-    Functions: Record<string, never>;
-    Enums: Record<string, never>;
-  };
-  asros: {
     Tables: {
       app_admins: {
         Relationships: [];
@@ -49,7 +43,7 @@ export type Database = {
           solution: string | null;
           technologies: string[];
           architecture: string | null;
-          status: Database["asros"]["Enums"]["project_status"];
+          status: Database["public"]["Enums"]["project_status"];
           progress: number;
           github_url: string | null;
           demo_url: string | null;
@@ -70,7 +64,7 @@ export type Database = {
           solution?: string | null;
           technologies?: string[];
           architecture?: string | null;
-          status?: Database["asros"]["Enums"]["project_status"];
+          status?: Database["public"]["Enums"]["project_status"];
           progress?: number;
           github_url?: string | null;
           demo_url?: string | null;
@@ -91,7 +85,7 @@ export type Database = {
           solution?: string | null;
           technologies?: string[];
           architecture?: string | null;
-          status?: Database["asros"]["Enums"]["project_status"];
+          status?: Database["public"]["Enums"]["project_status"];
           progress?: number;
           github_url?: string | null;
           demo_url?: string | null;
@@ -137,8 +131,8 @@ export type Database = {
           id: string;
           slug: string;
           title: string;
-          category: Database["asros"]["Enums"]["garden_note_category"];
-          status: Database["asros"]["Enums"]["garden_note_status"];
+          category: Database["public"]["Enums"]["garden_note_category"];
+          status: Database["public"]["Enums"]["garden_note_status"];
           content: string | null;
           examples: string | null;
           commands: string | null;
@@ -153,8 +147,8 @@ export type Database = {
           id?: string;
           slug: string;
           title: string;
-          category: Database["asros"]["Enums"]["garden_note_category"];
-          status?: Database["asros"]["Enums"]["garden_note_status"];
+          category: Database["public"]["Enums"]["garden_note_category"];
+          status?: Database["public"]["Enums"]["garden_note_status"];
           content?: string | null;
           examples?: string | null;
           commands?: string | null;
@@ -169,8 +163,8 @@ export type Database = {
           id?: string;
           slug?: string;
           title?: string;
-          category?: Database["asros"]["Enums"]["garden_note_category"];
-          status?: Database["asros"]["Enums"]["garden_note_status"];
+          category?: Database["public"]["Enums"]["garden_note_category"];
+          status?: Database["public"]["Enums"]["garden_note_status"];
           content?: string | null;
           examples?: string | null;
           commands?: string | null;
@@ -208,7 +202,7 @@ export type Database = {
           title: string;
           description: string | null;
           stack: string[];
-          status: Database["asros"]["Enums"]["lab_experiment_status"];
+          status: Database["public"]["Enums"]["lab_experiment_status"];
           github_url: string | null;
           demo_url: string | null;
           is_published: boolean;
@@ -222,7 +216,7 @@ export type Database = {
           title: string;
           description?: string | null;
           stack?: string[];
-          status?: Database["asros"]["Enums"]["lab_experiment_status"];
+          status?: Database["public"]["Enums"]["lab_experiment_status"];
           github_url?: string | null;
           demo_url?: string | null;
           is_published?: boolean;
@@ -236,7 +230,7 @@ export type Database = {
           title?: string;
           description?: string | null;
           stack?: string[];
-          status?: Database["asros"]["Enums"]["lab_experiment_status"];
+          status?: Database["public"]["Enums"]["lab_experiment_status"];
           github_url?: string | null;
           demo_url?: string | null;
           is_published?: boolean;
@@ -252,7 +246,7 @@ export type Database = {
           id: string;
           name: string;
           description: string | null;
-          type: Database["asros"]["Enums"]["resource_type"];
+          type: Database["public"]["Enums"]["resource_type"];
           url: string;
           is_published: boolean;
           is_featured: boolean;
@@ -264,7 +258,7 @@ export type Database = {
           id?: string;
           name: string;
           description?: string | null;
-          type: Database["asros"]["Enums"]["resource_type"];
+          type: Database["public"]["Enums"]["resource_type"];
           url: string;
           is_published?: boolean;
           is_featured?: boolean;
@@ -276,7 +270,7 @@ export type Database = {
           id?: string;
           name?: string;
           description?: string | null;
-          type?: Database["asros"]["Enums"]["resource_type"];
+          type?: Database["public"]["Enums"]["resource_type"];
           url?: string;
           is_published?: boolean;
           is_featured?: boolean;
@@ -289,7 +283,7 @@ export type Database = {
         Relationships: [];
         Row: {
           id: string;
-          category: Database["asros"]["Enums"]["now_item_category"];
+          category: Database["public"]["Enums"]["now_item_category"];
           title: string;
           description: string | null;
           is_active: boolean;
@@ -299,7 +293,7 @@ export type Database = {
         };
         Insert: {
           id?: string;
-          category: Database["asros"]["Enums"]["now_item_category"];
+          category: Database["public"]["Enums"]["now_item_category"];
           title: string;
           description?: string | null;
           is_active?: boolean;
@@ -309,7 +303,7 @@ export type Database = {
         };
         Update: {
           id?: string;
-          category?: Database["asros"]["Enums"]["now_item_category"];
+          category?: Database["public"]["Enums"]["now_item_category"];
           title?: string;
           description?: string | null;
           is_active?: boolean;
@@ -323,8 +317,8 @@ export type Database = {
         Row: {
           id: string;
           name: string;
-          category: Database["asros"]["Enums"]["stack_category"];
-          usage_level: Database["asros"]["Enums"]["stack_usage_level"];
+          category: Database["public"]["Enums"]["stack_category"];
+          usage_level: Database["public"]["Enums"]["stack_usage_level"];
           is_visible: boolean;
           sort_order: number;
           created_at: string;
@@ -333,8 +327,8 @@ export type Database = {
         Insert: {
           id?: string;
           name: string;
-          category: Database["asros"]["Enums"]["stack_category"];
-          usage_level: Database["asros"]["Enums"]["stack_usage_level"];
+          category: Database["public"]["Enums"]["stack_category"];
+          usage_level: Database["public"]["Enums"]["stack_usage_level"];
           is_visible?: boolean;
           sort_order?: number;
           created_at?: string;
@@ -343,8 +337,8 @@ export type Database = {
         Update: {
           id?: string;
           name?: string;
-          category?: Database["asros"]["Enums"]["stack_category"];
-          usage_level?: Database["asros"]["Enums"]["stack_usage_level"];
+          category?: Database["public"]["Enums"]["stack_category"];
+          usage_level?: Database["public"]["Enums"]["stack_usage_level"];
           is_visible?: boolean;
           sort_order?: number;
           created_at?: string;

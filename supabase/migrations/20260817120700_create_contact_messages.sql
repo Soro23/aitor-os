@@ -2,7 +2,7 @@
 -- publico sin SELECT publico: la proteccion aqui es RLS insert-only, no
 -- requireAdmin() (submitContactMessage es la unica Server Action de
 -- escritura publica del sistema).
-create table asros.contact_messages (
+create table public.contact_messages (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   email text not null,
@@ -14,17 +14,17 @@ create table asros.contact_messages (
   created_at timestamptz not null default now()
 );
 
-create index idx_contact_messages_is_read on asros.contact_messages (is_read);
+create index idx_contact_messages_is_read on public.contact_messages (is_read);
 
-alter table asros.contact_messages enable row level security;
+alter table public.contact_messages enable row level security;
 
 create policy "contact_messages_insert_public"
-  on asros.contact_messages for insert
+  on public.contact_messages for insert
   to anon, authenticated
   with check (true);
 
 create policy "contact_messages_admin_all"
-  on asros.contact_messages for all
+  on public.contact_messages for all
   to authenticated
-  using (asros.is_admin())
-  with check (asros.is_admin());
+  using (public.is_admin())
+  with check (public.is_admin());

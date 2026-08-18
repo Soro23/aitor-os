@@ -6,7 +6,7 @@ import type {
   UpdateLabExperimentInput,
 } from "@/lib/validation/lab-experiment.schema";
 
-type LabExperimentRow = Database["asros"]["Tables"]["lab_experiments"]["Row"];
+type LabExperimentRow = Database["public"]["Tables"]["lab_experiments"]["Row"];
 
 function toDTO(row: LabExperimentRow): LabExperimentDTO {
   return {
@@ -113,7 +113,7 @@ export const labExperimentsRepository = {
 
   async update(id: string, input: UpdateLabExperimentInput): Promise<LabExperimentDTO> {
     const supabase = await createClient();
-    const patch: Database["asros"]["Tables"]["lab_experiments"]["Update"] = {};
+    const patch: Database["public"]["Tables"]["lab_experiments"]["Update"] = {};
 
     if (input.title !== undefined) patch.title = input.title;
     if (input.description !== undefined) patch.description = input.description;

@@ -3,7 +3,7 @@ import type { Database } from "@/types/dto/database.types";
 import type { ProjectDTO } from "@/types/dto/project.dto";
 import type { CreateProjectInput, UpdateProjectInput } from "@/lib/validation/project.schema";
 
-type ProjectRow = Database["asros"]["Tables"]["projects"]["Row"];
+type ProjectRow = Database["public"]["Tables"]["projects"]["Row"];
 
 function toDTO(row: ProjectRow): ProjectDTO {
   return {
@@ -121,7 +121,7 @@ export const projectsRepository = {
 
   async update(id: string, input: UpdateProjectInput): Promise<ProjectDTO> {
     const supabase = await createClient();
-    const patch: Database["asros"]["Tables"]["projects"]["Update"] = {};
+    const patch: Database["public"]["Tables"]["projects"]["Update"] = {};
 
     if (input.slug !== undefined) patch.slug = input.slug;
     if (input.name !== undefined) patch.name = input.name;

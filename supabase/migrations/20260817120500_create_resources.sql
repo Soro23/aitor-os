@@ -1,8 +1,8 @@
-create table asros.resources (
+create table public.resources (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   description text,
-  type asros.resource_type not null,
+  type public.resource_type not null,
   url text not null,
   is_published boolean not null default false,
   is_featured boolean not null default false,
@@ -11,23 +11,23 @@ create table asros.resources (
   updated_at timestamptz not null default now()
 );
 
-create index idx_resources_is_published on asros.resources (is_published);
-create index idx_resources_type on asros.resources (type);
+create index idx_resources_is_published on public.resources (is_published);
+create index idx_resources_type on public.resources (type);
 
 create trigger set_resources_updated_at
-  before update on asros.resources
+  before update on public.resources
   for each row
-  execute function asros.set_updated_at();
+  execute function public.set_updated_at();
 
-alter table asros.resources enable row level security;
+alter table public.resources enable row level security;
 
 create policy "resources_select_published"
-  on asros.resources for select
+  on public.resources for select
   to anon, authenticated
   using (is_published = true);
 
 create policy "resources_admin_all"
-  on asros.resources for all
+  on public.resources for all
   to authenticated
-  using (asros.is_admin())
-  with check (asros.is_admin());
+  using (public.is_admin())
+  with check (public.is_admin());

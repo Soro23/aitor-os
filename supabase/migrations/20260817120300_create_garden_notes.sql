@@ -1,9 +1,9 @@
-create table asros.garden_notes (
+create table public.garden_notes (
   id uuid primary key default gen_random_uuid(),
   slug text not null unique,
   title text not null,
-  category asros.garden_note_category not null,
-  status asros.garden_note_status not null default 'seed',
+  category public.garden_note_category not null,
+  status public.garden_note_status not null default 'seed',
   content text,
   examples text,
   commands text,
@@ -15,55 +15,55 @@ create table asros.garden_notes (
   updated_at timestamptz not null default now()
 );
 
-create index idx_garden_notes_is_published on asros.garden_notes (is_published);
-create index idx_garden_notes_category on asros.garden_notes (category);
-create index idx_garden_notes_slug on asros.garden_notes (slug);
+create index idx_garden_notes_is_published on public.garden_notes (is_published);
+create index idx_garden_notes_category on public.garden_notes (category);
+create index idx_garden_notes_slug on public.garden_notes (slug);
 
 create trigger set_garden_notes_updated_at
-  before update on asros.garden_notes
+  before update on public.garden_notes
   for each row
-  execute function asros.set_updated_at();
+  execute function public.set_updated_at();
 
-alter table asros.garden_notes enable row level security;
+alter table public.garden_notes enable row level security;
 
 create policy "garden_notes_select_published"
-  on asros.garden_notes for select
+  on public.garden_notes for select
   to anon, authenticated
   using (is_published = true);
 
 create policy "garden_notes_admin_all"
-  on asros.garden_notes for all
+  on public.garden_notes for all
   to authenticated
-  using (asros.is_admin())
-  with check (asros.is_admin());
+  using (public.is_admin())
+  with check (public.is_admin());
 
 -- Relacion N:N auto-referenciada entre notas ("notas relacionadas").
-create table asros.garden_note_relations (
-  note_id uuid not null references asros.garden_notes (id) on delete cascade,
-  related_note_id uuid not null references asros.garden_notes (id) on delete cascade,
+create table public.garden_note_relations (
+  note_id uuid not null references public.garden_notes (id) on delete cascade,
+  related_note_id uuid not null references public.garden_notes (id) on delete cascade,
   created_at timestamptz not null default now(),
   primary key (note_id, related_note_id),
   constraint garden_note_relations_no_self_relation check (note_id <> related_note_id)
 );
 
-alter table asros.garden_note_relations enable row level security;
+alter table public.garden_note_relations enable row level security;
 
 create policy "garden_note_relations_select_published"
-  on asros.garden_note_relations for select
+  on public.garden_note_relations for select
   to anon, authenticated
   using (
     exists (
-      select 1 from asros.garden_notes n
+      select 1 from public.garden_notes n
       where n.id = garden_note_relations.note_id and n.is_published = true
     )
     and exists (
-      select 1 from asros.garden_notes n
+      select 1 from public.garden_notes n
       where n.id = garden_note_relations.related_note_id and n.is_published = true
     )
   );
 
 create policy "garden_note_relations_admin_all"
-  on asros.garden_note_relations for all
+  on public.garden_note_relations for all
   to authenticated
-  using (asros.is_admin())
-  with check (asros.is_admin());
+  using (public.is_admin())
+  with check (public.is_admin());
