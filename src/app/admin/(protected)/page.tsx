@@ -5,7 +5,7 @@ export default function AdminHomePage() {
     <Panel accent="cyan">
       <p className="hud-label">Panel de administración</p>
       <h1>Bienvenido</h1>
-      <p>El CRUD de cada colección se conecta a partir de la Fase 5.</p>
+      <p>Usa el menú superior para gestionar cada colección.</p>
     </Panel>
   );
 }
