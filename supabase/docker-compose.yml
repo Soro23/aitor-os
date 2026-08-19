@@ -39,6 +39,7 @@ services:
       GOTRUE_DB_DRIVER: postgres
       GOTRUE_DB_DATABASE_URL: postgres://supabase_auth_admin:${POSTGRES_PASSWORD}@db:5432/postgres
       GOTRUE_SITE_URL: ${SITE_URL}
+      GOTRUE_API_EXTERNAL_URL: ${SITE_URL}
       # Registro publico desactivado (single-admin) — ver aitor-os-security-rules.
       GOTRUE_DISABLE_SIGNUP: "true"
       GOTRUE_JWT_SECRET: ${JWT_SECRET}
@@ -126,7 +127,10 @@ services:
       KONG_DECLARATIVE_CONFIG: /var/lib/kong/kong.yml
       KONG_PLUGINS: request-transformer,cors
     volumes:
-      - ./docker/kong.yml:/var/lib/kong/kong.yml:ro
+      # Ruta relativa a la raiz del repo, no a este directorio: Coolify
+      # (base_directory=/supabase) resuelve los bind mounts del compose
+      # contra el checkout completo del repo, no contra supabase/.
+      - ./supabase/docker/kong.yml:/var/lib/kong/kong.yml:ro
     networks:
       - supabase
 
