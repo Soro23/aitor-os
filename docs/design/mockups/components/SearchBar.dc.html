@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap');
+:root {
+  --bg: #fbeef2; --bg-panel: #ffffff;
+  --ink: #1c1420; --ink-secondary: #8a7280;
+  --line: #f0d3dc;
+  --pink: #ff4d94;
+  --font-mono: 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --sp-2: .5rem; --sp-3: .75rem; --sp-5: 1.5rem; --sp-6: 2rem;
+}
+* , *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 1rem; line-height: 1.5; }
+p { margin: 0; } h3 { margin: 0; font-weight: 700; }
+input { font-family: var(--font-sans); }
+.hud { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em; }
+.sheet { padding: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-5); }
+.compName { color: var(--pink); font-size: .95rem; }
+.compDesc { font-family: var(--font-sans); color: var(--ink-secondary); font-size: .8rem; }
+.search { display: flex; align-items: center; gap: var(--sp-3); background: var(--bg-panel); border: 1px solid var(--line); padding: var(--sp-3); max-width: 340px; }
+.search:focus-within { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,77,148,.15); }
+.search input { border: none; outline: none; background: transparent; font-size: .9rem; width: 100%; color: var(--ink); }
+.search input::placeholder { color: var(--ink-secondary); }
+</style>
+</helmet>
+<div class="sheet">
+  <div>
+    <h3 class="hud compName">Search bar</h3>
+    <p class="compDesc">Input con icono de lupa trazado — el anillo de foco es el mismo rosa que el resto de campos.</p>
+  </div>
+  <div class="search">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--ink-secondary)" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg>
+    <input placeholder="Buscar en el Garden..." />
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

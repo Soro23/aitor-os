@@ -1,0 +1,33 @@
+.wrap {
+  display: inline-flex;
+  align-items: center;
+}
+
+.spin {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-accent-primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin {
+    animation: none;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}

@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap');
+:root {
+  --bg: #fbeef2; --bg-panel: #ffffff;
+  --ink: #1c1420; --ink-secondary: #8a7280;
+  --line: #f0d3dc;
+  --pink: #ff4d94;
+  --font-mono: 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --sp-1: .25rem; --sp-2: .5rem; --sp-3: .75rem; --sp-4: 1rem; --sp-5: 1.5rem; --sp-6: 2rem;
+}
+* , *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 1rem; line-height: 1.5; }
+p { margin: 0; } h3 { margin: 0; font-weight: 700; }
+.hud { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em; }
+.sheet { padding: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-5); }
+.compName { color: var(--pink); font-size: .95rem; }
+.compDesc { font-family: var(--font-sans); color: var(--ink-secondary); font-size: .8rem; }
+.field { display: flex; flex-direction: column; gap: var(--sp-2); }
+.select { position: relative; background: var(--bg-panel); border: 1px solid var(--pink); padding: var(--sp-2) var(--sp-3); font-family: var(--font-sans); display: flex; align-items: center; justify-content: space-between; }
+.chev { width: 12px; height: 12px; }
+.panel { position: relative; margin-top: -1px; background: var(--bg-panel); border: 1px solid var(--line); border-top: none; }
+.opt { padding: var(--sp-2) var(--sp-3); font-family: var(--font-sans); font-size: .9rem; border-bottom: 1px solid var(--line); }
+.opt:last-child { border-bottom: none; }
+.opt.selected { background: rgba(255,77,148,.08); color: var(--pink); }
+</style>
+</helmet>
+<div class="sheet">
+  <div>
+    <h3 class="hud compName">Dropdown / Select</h3>
+    <p class="compDesc">Cerrado con acento rosa activo, panel de opciones abierto debajo.</p>
+  </div>
+  <div class="field">
+    <span class="hud">Estado</span>
+    <div class="select">
+      <span>En desarrollo</span>
+      <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="var(--pink)" stroke-width="1.5"><path d="M2 4l4 4 4-4"/></svg>
+    </div>
+    <div class="panel">
+      <div class="opt">Idea</div>
+      <div class="opt selected">En desarrollo</div>
+      <div class="opt">Beta</div>
+      <div class="opt">Finalizado</div>
+      <div class="opt">Pausado</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

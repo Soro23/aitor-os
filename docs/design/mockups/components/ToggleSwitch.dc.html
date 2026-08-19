@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap');
+:root {
+  --bg: #fbeef2; --bg-panel: #ffffff;
+  --ink: #1c1420; --ink-secondary: #8a7280;
+  --line: #f0d3dc;
+  --pink: #ff4d94; --teal: #0091a3; --green: #1a9e6b;
+  --font-mono: 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --sp-1: .25rem; --sp-2: .5rem; --sp-3: .75rem; --sp-4: 1rem; --sp-5: 1.5rem; --sp-6: 2rem;
+}
+* , *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 1rem; line-height: 1.5; }
+p { margin: 0; } h3 { margin: 0; font-weight: 700; }
+button { font-family: inherit; }
+.hud { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em; }
+.sheet { padding: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-5); }
+.compName { color: var(--pink); font-size: .95rem; }
+.compDesc { font-family: var(--font-sans); color: var(--ink-secondary); font-size: .8rem; }
+.row { display: flex; align-items: center; gap: var(--sp-4); }
+.toggle { display: inline-flex; align-items: center; gap: var(--sp-2); background: var(--bg-panel); border: 1px solid var(--line); color: var(--ink-secondary); padding: var(--sp-2) var(--sp-3); font-size: .7rem; cursor: pointer; }
+.use { font-family: var(--font-sans); color: var(--ink-secondary); font-size: .78rem; }
+</style>
+</helmet>
+<div class="sheet">
+  <div>
+    <h3 class="hud compName">ToggleSwitch</h3>
+    <p class="compDesc">Switch genérico para flags que no son `is_published`/`is_featured` — el `tone` fija el color de "activo".</p>
+  </div>
+  <div class="row"><button class="hud toggle" style="border-color:var(--green);color:var(--green)">Activo</button><span class="use">tone="green" — is_active</span></div>
+  <div class="row"><button class="hud toggle" style="border-color:var(--teal);color:var(--teal)">Visible</button><span class="use">tone="teal" — is_visible</span></div>
+  <div class="row"><button class="hud toggle" style="border-color:var(--pink);color:var(--pink)">Prioritario</button><span class="use">tone="pink"</span></div>
+  <div class="row"><button class="hud toggle">Inactivo</button><span class="use">off</span></div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

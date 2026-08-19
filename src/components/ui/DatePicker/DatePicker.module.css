@@ -1,0 +1,56 @@
+.cal {
+  background-color: var(--color-bg-panel);
+  border: var(--border-width) solid var(--color-border);
+  padding: var(--space-4);
+  width: 280px;
+}
+
+.calHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+}
+
+.calHead button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  text-align: center;
+}
+
+.dow {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  padding-bottom: var(--space-2);
+}
+
+.day {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  padding: var(--space-2) 0;
+  color: var(--color-text-primary);
+}
+
+.day.muted {
+  color: var(--color-border);
+}
+
+.day.selected {
+  background-color: var(--color-accent-primary);
+  color: #fff;
+}

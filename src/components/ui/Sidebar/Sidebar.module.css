@@ -1,0 +1,27 @@
+.side {
+  width: 220px;
+  background-color: var(--color-bg-panel);
+  border: var(--border-width) solid var(--color-border);
+  padding: var(--space-4) 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.entry {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+}
+
+.entry.active {
+  color: var(--color-accent-primary);
+  border-left-color: var(--color-accent-primary);
+  background-color: rgba(255, 77, 148, 0.06);
+}
+
+.entry:hover,
+.entry:focus-visible {
+  color: var(--color-text-primary);
+}

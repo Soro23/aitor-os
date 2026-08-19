@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap');
+:root {
+  --bg: #fbeef2; --bg-panel: #ffffff;
+  --ink: #1c1420; --ink-secondary: #8a7280;
+  --line: #f0d3dc;
+  --pink: #ff4d94;
+  --font-mono: 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --sp-1: .25rem; --sp-2: .5rem; --sp-3: .75rem; --sp-4: 1rem; --sp-5: 1.5rem; --sp-6: 2rem;
+}
+* , *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 1rem; line-height: 1.5; }
+p { margin: 0; } h3 { margin: 0; font-weight: 700; }
+.hud { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em; }
+.sheet { padding: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-6); }
+.compName { color: var(--pink); font-size: .95rem; }
+.compDesc { font-family: var(--font-sans); color: var(--ink-secondary); font-size: .8rem; }
+.demo { display: flex; justify-content: center; padding-top: var(--sp-6); }
+.wrap { position: relative; display: inline-flex; }
+.trigger { width: 20px; height: 20px; border: 1px solid var(--ink-secondary); display: flex; align-items: center; justify-content: center; font-size: .68rem; color: var(--ink-secondary); }
+.bubble { position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; padding: var(--sp-2) var(--sp-3); font-family: var(--font-sans); font-size: .72rem; white-space: nowrap; }
+.bubble::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: var(--ink); }
+</style>
+</helmet>
+<div class="sheet">
+  <div>
+    <h3 class="hud compName">Tooltip</h3>
+    <p class="compDesc">Burbuja oscura con flecha, sobre un trigger de ayuda contextual.</p>
+  </div>
+  <div class="demo">
+    <div class="wrap">
+      <div class="bubble">Progreso estimado del proyecto</div>
+      <div class="trigger">?</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

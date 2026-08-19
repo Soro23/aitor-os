@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap');
+:root {
+  --bg: #fbeef2; --bg-panel: #ffffff;
+  --ink: #1c1420; --ink-secondary: #8a7280;
+  --line: #f0d3dc;
+  --pink: #ff4d94;
+  --font-mono: 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --sp-1: .25rem; --sp-2: .5rem; --sp-3: .75rem; --sp-4: 1rem; --sp-5: 1.5rem; --sp-6: 2rem;
+}
+* , *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 1rem; line-height: 1.5; }
+p { margin: 0; } h3 { margin: 0; font-weight: 700; }
+button { font-family: var(--font-mono); }
+.hud { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em; }
+.sheet { padding: var(--sp-6) var(--sp-6) var(--sp-6) 100px; display: flex; flex-direction: column; gap: var(--sp-5); }
+.compName { color: var(--pink); font-size: .95rem; }
+.compDesc { font-family: var(--font-sans); color: var(--ink-secondary); font-size: .8rem; }
+.wrap { position: relative; display: inline-block; }
+.trigger { font-size: .72rem; padding: var(--sp-2) var(--sp-4); border: 1px solid var(--pink); color: var(--pink); background: transparent; cursor: pointer; }
+.pop { position: absolute; top: calc(100% + 12px); left: 0; width: 240px; background: var(--bg-panel); border: 1px solid var(--line); box-shadow: 0 16px 30px rgba(28,20,32,.15); padding: var(--sp-4); }
+.pop::before { content: ""; position: absolute; bottom: 100%; left: 24px; border: 7px solid transparent; border-bottom-color: var(--bg-panel); }
+.pTitle { font-family: var(--font-sans); font-weight: 800; font-size: .85rem; margin-bottom: var(--sp-2); }
+.pBody { font-family: var(--font-sans); color: var(--ink-secondary); font-size: .78rem; margin-bottom: var(--sp-3); }
+.pAction { color: var(--pink); font-size: .72rem; font-family: var(--font-sans); font-weight: 600; }
+</style>
+</helmet>
+<div class="sheet">
+  <div>
+    <h3 class="hud compName">Popover</h3>
+    <p class="compDesc">Como Tooltip pero con contenido rico — panel con flecha, título y acción, no solo una línea de texto.</p>
+  </div>
+  <div class="wrap">
+    <button class="hud trigger">Compartir</button>
+    <div class="pop">
+      <p class="pTitle">Compartir proyecto</p>
+      <p class="pBody">Cualquiera con el enlace podrá ver esta ficha, aunque no esté publicada.</p>
+      <span class="pAction">Copiar enlace →</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
