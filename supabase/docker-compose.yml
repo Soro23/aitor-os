@@ -21,6 +21,10 @@ services:
     restart: unless-stopped
     volumes:
       - db-data:/var/lib/postgresql/data
+      # Solo se ejecuta en el primer initdb (volumen vacio). Fija la
+      # contraseña de los roles de servicio internos -- ver comentario en
+      # el propio roles.sql.
+      - ./supabase/docker/roles.sql:/docker-entrypoint-initdb.d/roles.sql:ro
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: postgres
