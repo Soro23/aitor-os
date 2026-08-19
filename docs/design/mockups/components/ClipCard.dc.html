@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap');
+:root {
+  --bg: #fbeef2; --bg-panel: #ffffff;
+  --ink: #1c1420; --ink-secondary: #8a7280;
+  --line: #f0d3dc;
+  --pink: #ff4d94; --teal: #0091a3; --amber: #d98a12;
+  --font-mono: 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --sp-1: .25rem; --sp-2: .5rem; --sp-3: .75rem; --sp-4: 1rem; --sp-5: 1.5rem; --sp-6: 2rem;
+}
+* , *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 1rem; line-height: 1.5; }
+p { margin: 0; } h3 { margin: 0; font-weight: 700; }
+a { color: inherit; text-decoration: none; }
+.hud { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em; }
+.sheet { padding: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-5); }
+.compName { color: var(--pink); font-size: .95rem; }
+.compDesc { font-family: var(--font-sans); color: var(--ink-secondary); font-size: .8rem; }
+
+.grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-4); }
+.card { position: relative; background: var(--bg-panel); border: 1px solid var(--line); padding: var(--sp-5) var(--sp-5) var(--sp-5) calc(var(--sp-5) + 30px); overflow: hidden; box-shadow: 0 8px 18px rgba(28,20,32,.08); }
+.sideBar { position: absolute; top: 0; bottom: 0; left: 0; width: 26px; background: linear-gradient(180deg, var(--pink), var(--teal)); display: flex; align-items: center; justify-content: center; }
+.sideBar span { writing-mode: vertical-rl; transform: rotate(180deg); font-size: .6rem; letter-spacing: .18em; color: #fff; font-weight: 700; }
+.eyebrow { font-size: .68rem; color: var(--ink-secondary); margin: 0 0 var(--sp-2); }
+.cardTitle { font-family: var(--font-sans); font-size: 1.05rem; font-weight: 800; margin: 0 0 var(--sp-3); }
+.status { display: inline-flex; align-items: center; font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; padding: var(--sp-1) var(--sp-3); border: 1px solid var(--line); color: var(--amber); }
+.status::before { content: "▮"; margin-right: 4px; }
+.footer { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--line); display: flex; gap: var(--sp-3); }
+.link { color: var(--teal); font-size: .75rem; font-family: var(--font-sans); }
+</style>
+</helmet>
+<div class="sheet">
+  <div>
+    <h3 class="hud compName">ClipCard</h3>
+    <p class="compDesc">Panel identidad + eyebrow + título + cuerpo + footer opcional. La tarjeta de listado del sistema.</p>
+  </div>
+  <div class="grid2">
+    <article class="card">
+      <span class="sideBar"><span>PROJECT</span></span>
+      <p class="hud eyebrow">TypeScript · Next.js</p>
+      <h3 class="cardTitle">Trading Platform</h3>
+      <span class="status">En desarrollo</span>
+    </article>
+    <article class="card">
+      <span class="sideBar"><span>LAB</span></span>
+      <p class="hud eyebrow">LAB #014</p>
+      <h3 class="cardTitle">Generador de documentación</h3>
+      <span class="status" style="color:var(--teal)">Experiment</span>
+      <div class="footer"><a class="link" href="#">GitHub</a><a class="link" href="#">Demo</a></div>
+    </article>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

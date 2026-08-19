@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap');
+:root {
+  --bg: #fbeef2; --bg-panel: #ffffff; --bg-panel-2: #fff5f7;
+  --ink: #1c1420; --ink-secondary: #8a7280;
+  --line: #f0d3dc;
+  --pink: #ff4d94; --teal: #0091a3; --amber: #d98a12; --red: #d43a4f; --green: #1a9e6b;
+  --font-mono: 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --sp-1: .25rem; --sp-2: .5rem; --sp-3: .75rem; --sp-4: 1rem; --sp-5: 1.5rem; --sp-6: 2rem; --sp-8: 4rem;
+}
+* , *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body {
+  background: radial-gradient(ellipse 1200px 700px at 30% 15%, rgba(255,77,148,.09) 0%, transparent 55%),
+    radial-gradient(ellipse 1000px 700px at 90% 90%, rgba(0,145,163,.07) 0%, transparent 55%), var(--bg);
+  color: var(--ink); font-family: var(--font-mono); font-size: 1rem; line-height: 1.5; position: relative; min-height: 100%; display: flex; flex-direction: column;
+}
+p { margin: 0; } h1,h2,h3 { margin: 0; font-weight: 700; }
+a { color: inherit; text-decoration: none; }
+.hud { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em; }
+
+.header { position: relative; background: #fff; border-bottom: 2px solid var(--teal); }
+.header::after { content: ""; position: absolute; left: 0; bottom: -2px; width: 30%; height: 2px; background: var(--pink); }
+.bar { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-4) var(--sp-5); max-width: 1200px; margin: 0 auto; }
+.brand { color: var(--teal); font-size: .9rem; }
+.brand span { color: var(--pink); }
+.navList { list-style: none; margin: 0; padding: 0 var(--sp-5) var(--sp-4); max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: var(--sp-5); }
+.navLink { color: var(--ink-secondary); font-size: .78rem; }
+.navLink.active { color: var(--pink); }
+
+.footer { position: relative; background: #fff; border-top: 1px solid var(--line); margin-top: auto; }
+.footerBar { max-width: 1200px; margin: 0 auto; padding: var(--sp-4) var(--sp-5); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sp-3); }
+.copyright { color: var(--ink-secondary); font-size: .75rem; margin: 0; }
+.adminLink { color: var(--ink-secondary); font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; }
+
+.main { max-width: 1200px; margin: 0 auto; padding: var(--sp-6) var(--sp-5) var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-6); position: relative; z-index: 3; flex: 1; width: 100%; }
+
+.panel { position: relative; background: var(--bg-panel); border: 1px solid var(--line); padding: var(--sp-6) var(--sp-6) 0 calc(var(--sp-6) + 30px); overflow: hidden;
+  box-shadow: 0 10px 24px rgba(28,20,32,.08); }
+.sideBar { position: absolute; top: 0; bottom: 0; left: 0; width: 26px; background: linear-gradient(180deg, var(--pink), var(--teal)); display: flex; align-items: center; justify-content: center; }
+.sideBar span { writing-mode: vertical-rl; transform: rotate(180deg); font-size: .62rem; letter-spacing: .18em; color: #fff; font-weight: 700; }
+.speedlines { position: absolute; top: 0; right: 0; width: 220px; height: 100px; opacity: .5;
+  background: repeating-linear-gradient(-18deg, var(--teal) 0 2px, transparent 2px 14px);
+  clip-path: polygon(100% 0, 100% 100%, 0 0); }
+.ping { position: absolute; top: 18px; right: 22px; width: 40px; height: 40px; }
+.telemetry { display: flex; flex-wrap: wrap; gap: 0; margin: var(--sp-5) 0 0 calc((var(--sp-6) + 30px) * -1); border-top: 1px solid var(--line); }
+.telemetry span { padding: var(--sp-2) var(--sp-4); font-size: .65rem; color: var(--ink-secondary); border-right: 1px solid var(--line); }
+.telemetry span:first-child { padding-left: calc(var(--sp-6) + 30px); }
+.telemetry span:last-child { border-right: none; }
+.telemetry span b { color: var(--pink); font-weight: 500; }
+
+.title { font-size: 2.75rem; font-weight: 800; margin: var(--sp-3) 0; letter-spacing: -.01em; }
+.title span { color: var(--pink); }
+.tagline { font-family: var(--font-sans); color: var(--ink-secondary); max-width: 60ch; margin-bottom: var(--sp-4); }
+.nowList { display: flex; flex-direction: column; gap: var(--sp-2); padding-bottom: var(--sp-5); }
+.pulseWrap { display: inline-flex; align-items: center; gap: var(--sp-2); font-size: .75rem; color: var(--ink-secondary); }
+.dot { width: 6px; height: 6px; background: var(--pink); }
+.blink { animation: dp 1.4s steps(1) infinite; }
+@keyframes dp { 0%,49% { opacity: 1; } 50%,100% { opacity: .3; } }
+
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-5); }
+.cardPanel { padding-bottom: var(--sp-6); }
+.eyebrow { font-size: .68rem; color: var(--ink-secondary); margin: 0 0 var(--sp-2); }
+.cardTitle { font-family: var(--font-sans); font-size: 1.1rem; font-weight: 800; margin: 0 0 var(--sp-3); color: var(--ink); }
+.status { display: inline-flex; align-items: center; gap: var(--sp-1); font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; padding: var(--sp-1) var(--sp-3); border: 1px solid var(--line); width: fit-content; }
+.status.amber { color: var(--amber); } .status.red { color: var(--red); } .status.green { color: var(--green); } .status.teal { color: var(--teal); }
+.status::before { content: "▮"; margin-right: 2px; }
+.pbTrack { height: 4px; background: var(--line); overflow: hidden; margin-top: var(--sp-3); }
+.pbFill { height: 100%; background: var(--pink); }
+</style>
+</helmet>
+
+<header class="header">
+  <div class="bar"><span class="hud brand">AITOR <span>//</span> OS</span></div>
+  <nav><ul class="navList">
+    <li><a class="hud navLink active" href="#">Inicio</a></li>
+    <li><a class="hud navLink" href="#">Sobre mí</a></li>
+    <li><a class="hud navLink" href="#">Proyectos</a></li>
+    <li><a class="hud navLink" href="#">Garden</a></li>
+    <li><a class="hud navLink" href="#">Dashboard</a></li>
+    <li><a class="hud navLink" href="#">Now</a></li>
+    <li><a class="hud navLink" href="#">Lab</a></li>
+    <li><a class="hud navLink" href="#">Recursos</a></li>
+    <li><a class="hud navLink" href="#">Stack</a></li>
+    <li><a class="hud navLink" href="#">Contacto</a></li>
+  </ul></nav>
+</header>
+
+<main class="main">
+  <div class="panel">
+    <span class="sideBar"><span>SYSTEM ONLINE</span></span>
+    <span class="speedlines"></span>
+    <svg class="ping" viewBox="0 0 40 40" fill="none" stroke="#ff4d94">
+      <circle cx="20" cy="20" r="3.4" fill="#ff4d94" stroke="none"/>
+      <circle cx="20" cy="20" r="10" stroke-width="1" opacity=".6"/>
+      <circle cx="20" cy="20" r="17" stroke-width="1" opacity=".3"/>
+    </svg>
+    <p class="hud">Aitor OS · Boot sequence</p>
+    <h1 class="title">A<span>ITOR</span></h1>
+    <p class="tagline">Técnico informático y desarrollador centrado en sistemas, automatización, desarrollo e inteligencia artificial.</p>
+    <div class="nowList">
+      <div class="pulseWrap"><span class="dot blink"></span><span class="hud">Trabajando en: Plataforma de trading</span></div>
+      <div class="pulseWrap"><span class="dot blink"></span><span class="hud">Aprendiendo: Docker</span></div>
+    </div>
+    <div class="telemetry">
+      <span>LAT <b>40.4168N</b></span><span>LON <b>3.7038W</b></span><span>UPTIME <b>482D</b></span><span>STATUS <b>ONLINE</b></span>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <article class="panel cardPanel">
+      <span class="sideBar"><span>PROJECT</span></span>
+      <p class="hud eyebrow">Proyecto destacado</p>
+      <h3 class="cardTitle">Trading Platform</h3>
+      <span class="status amber">En desarrollo</span>
+      <div class="pbTrack"><div class="pbFill" style="width:80%"></div></div>
+    </article>
+    <article class="panel cardPanel">
+      <span class="sideBar"><span>GARDEN</span></span>
+      <p class="hud eyebrow">Última nota — Sistemas</p>
+      <h3 class="cardTitle">Active Directory</h3>
+      <span class="status teal">Growing</span>
+    </article>
+    <article class="panel cardPanel">
+      <span class="sideBar"><span>LAB</span></span>
+      <p class="hud eyebrow">Último experimento — LAB #014</p>
+      <h3 class="cardTitle">Generador de documentación con IA</h3>
+      <span class="status green">Experiment</span>
+    </article>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footerBar">
+    <p class="copyright">Aitor Solana Roca © 2026</p>
+    <span class="adminLink">Admin</span>
+  </div>
+</footer>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

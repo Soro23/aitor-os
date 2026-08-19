@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap');
+:root {
+  --bg: #fbeef2; --bg-panel: #ffffff;
+  --ink: #1c1420; --ink-secondary: #8a7280;
+  --line: #f0d3dc;
+  --pink: #ff4d94;
+  --font-mono: 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --sp-1: .25rem; --sp-2: .5rem; --sp-3: .75rem; --sp-4: 1rem; --sp-5: 1.5rem; --sp-6: 2rem;
+}
+* , *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 1rem; line-height: 1.5; }
+p { margin: 0; } h3 { margin: 0; font-weight: 700; }
+textarea { font-family: inherit; }
+.hud { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em; }
+.sheet { padding: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-5); }
+.compName { color: var(--pink); font-size: .95rem; }
+.compDesc { font-family: var(--font-sans); color: var(--ink-secondary); font-size: .8rem; }
+.field { display: flex; flex-direction: column; gap: var(--sp-2); }
+.textarea { background: var(--bg); border: 1px solid var(--line); color: var(--ink); padding: var(--sp-3); font-size: .85rem; line-height: 1.6; resize: vertical; }
+.textarea:focus-visible { outline: none; border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,77,148,.15); }
+</style>
+</helmet>
+<div class="sheet">
+  <div>
+    <h3 class="hud compName">MarkdownEditor</h3>
+    <p class="compDesc">Textarea etiquetado para contenido largo (notas del Garden, descripciones de proyecto). Fuente mono, foco rosa.</p>
+  </div>
+  <label class="field">
+    <span class="hud">Contenido</span>
+    <textarea class="textarea" rows="6">## Active Directory
+
+Notas sobre gestión de dominios y estructura de OUs...</textarea>
+  </label>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

@@ -2,6 +2,12 @@
  * Tokens de diseño — Aitor OS
  * Fuente de verdad: design-concept.md (raíz del repo) + skill aitor-os-design-system.
  *
+ * Paleta "Anime Interface" (adoptada — ver docs/design/README.md para el proceso
+ * de exploración completo). Los nombres --color-accent-cyan/violet se conservan
+ * por compatibilidad con el código existente (PanelAccent sigue usando esos
+ * literales), pero ahora resuelven a rosa/teal en vez de cian/violeta neón.
+ * --color-accent-primary/secondary son los alias nuevos, preferidos en código nuevo.
+ *
  * Breakpoints (referencia — CSS no permite var() dentro de @media sin un plugin
  * adicional, así que estos valores se usan literales en cada media query):
  *   mobile:       base, sin media query (mobile-first)
@@ -11,19 +17,23 @@
  */
 
 :root {
-  /* Color — base */
-  --color-bg: #05060a;
-  --color-bg-panel: #0b0e17;
-  --color-border: #1c2333;
-  --color-text-primary: #e8ecf4;
-  --color-text-secondary: #8a93a8;
+  /* Color — base (claro) */
+  --color-bg: #fbeef2;
+  --color-bg-panel: #ffffff;
+  --color-bg-panel-secondary: #fff5f7;
+  --color-border: #f0d3dc;
+  --color-text-primary: #1c1420;
+  --color-text-secondary: #8a7280;
 
-  /* Color — acentos neón (uso selectivo, nunca simultáneo en un mismo bloque) */
-  --color-accent-cyan: #00f0ff;
-  --color-accent-violet: #b84dff;
-  --color-accent-green: #39ff88;
-  --color-accent-amber: #ffb020;
-  --color-accent-red: #ff3d5a;
+  /* Color — acentos (rosa primario + teal secundario + semánticos) */
+  --color-accent-cyan: #ff4d94; /* alias legado → rosa (primario/identidad) */
+  --color-accent-violet: #0091a3; /* alias legado → teal (secundario/Garden) */
+  --color-accent-primary: var(--color-accent-cyan);
+  --color-accent-secondary: var(--color-accent-violet);
+  --color-accent-green: #1a9e6b;
+  --color-accent-amber: #d98a12;
+  --color-accent-red: #d43a4f;
+  --color-accent-gray: var(--color-text-secondary);
 
   /* Tipografía */
   --font-mono: var(--font-jetbrains-mono), "Space Mono", ui-monospace, monospace;
@@ -49,17 +59,18 @@
   --space-7: 3rem;
   --space-8: 4rem;
 
-  /* Bordes cortados (clip-path) — tamaño estándar del corte de esquina */
-  --clip-corner: 12px;
-  --clip-corner-sm: 8px;
+  /* Bordes: Anime Interface es de esquina recta (sin clip-path); estos tokens
+     quedan solo por si algún componente heredado los sigue referenciando. */
+  --clip-corner: 0px;
+  --clip-corner-sm: 0px;
   --border-width: 1px;
 
-  /* Glow — usado en barras de progreso, indicadores de pulso, foco */
-  --glow-cyan: 0 0 12px rgba(0, 240, 255, 0.45);
-  --glow-violet: 0 0 12px rgba(184, 77, 255, 0.45);
-  --glow-green: 0 0 12px rgba(57, 255, 136, 0.45);
-  --glow-amber: 0 0 12px rgba(255, 176, 32, 0.45);
-  --glow-red: 0 0 12px rgba(255, 61, 90, 0.45);
+  /* Sombra de foco/acento (reemplaza al glow neón) */
+  --glow-cyan: 0 0 0 3px rgba(255, 77, 148, 0.15);
+  --glow-violet: 0 0 0 3px rgba(0, 145, 163, 0.15);
+  --glow-green: 0 0 0 3px rgba(26, 158, 107, 0.15);
+  --glow-amber: 0 0 0 3px rgba(217, 138, 18, 0.15);
+  --glow-red: 0 0 0 3px rgba(212, 58, 79, 0.15);
 
   /* Transiciones */
   --transition-fast: 120ms ease;

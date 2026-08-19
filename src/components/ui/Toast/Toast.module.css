@@ -1,0 +1,39 @@
+.toast {
+  position: relative;
+  background-color: var(--color-text-primary);
+  color: var(--color-bg-panel);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  box-shadow: 0 12px 24px rgba(28, 20, 32, 0.25);
+  max-width: 360px;
+}
+
+.bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+}
+
+.tone-cyan { background-color: var(--color-accent-primary); }
+.tone-violet { background-color: var(--color-accent-secondary); }
+.tone-green { background-color: var(--color-accent-green); }
+.tone-amber { background-color: var(--color-accent-amber); }
+.tone-red { background-color: var(--color-accent-red); }
+
+.message {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+}
+
+.close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}

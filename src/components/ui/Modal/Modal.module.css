@@ -1,0 +1,42 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(28, 20, 32, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  z-index: 100;
+}
+
+.dialog {
+  position: relative;
+  background-color: var(--color-bg-panel);
+  border: var(--border-width) solid var(--color-border);
+  padding: var(--space-5) var(--space-5) var(--space-5) calc(var(--space-5) + 30px);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 40px rgba(28, 20, 32, 0.2);
+}
+
+.sideBar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 26px;
+  background: linear-gradient(180deg, var(--color-accent-primary), var(--color-accent-secondary));
+}
+
+.title {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  margin: 0 0 var(--space-3);
+}
+
+.body {
+  font-family: var(--font-sans);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}

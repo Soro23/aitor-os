@@ -1,0 +1,47 @@
+.wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.triggerButton {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.pop {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  width: 260px;
+  background-color: var(--color-bg-panel);
+  border: var(--border-width) solid var(--color-border);
+  box-shadow: 0 16px 30px rgba(28, 20, 32, 0.15);
+  padding: var(--space-4);
+  z-index: 50;
+}
+
+.pop::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 24px;
+  border: 7px solid transparent;
+  border-bottom-color: var(--color-bg-panel);
+}
+
+.title {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: var(--font-size-sm);
+  margin: 0 0 var(--space-2);
+}
+
+.body {
+  font-family: var(--font-sans);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}

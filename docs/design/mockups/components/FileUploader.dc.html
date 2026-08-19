@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap');
+:root {
+  --bg: #fbeef2; --bg-panel: #ffffff;
+  --ink: #1c1420; --ink-secondary: #8a7280;
+  --line: #f0d3dc;
+  --pink: #ff4d94;
+  --font-mono: 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --sp-2: .5rem; --sp-3: .75rem; --sp-5: 1.5rem; --sp-6: 2rem; --sp-8: 4rem;
+}
+* , *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 1rem; line-height: 1.5; }
+p { margin: 0; } h3 { margin: 0; font-weight: 700; }
+.hud { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em; }
+.sheet { padding: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-5); }
+.compName { color: var(--pink); font-size: .95rem; }
+.compDesc { font-family: var(--font-sans); color: var(--ink-secondary); font-size: .8rem; }
+.drop { border: 1.5px dashed var(--line); background: var(--bg-panel); padding: var(--sp-8) var(--sp-5); display: flex; flex-direction: column; align-items: center; gap: var(--sp-3); text-align: center; }
+.drop.hover { border-color: var(--pink); background: rgba(255,77,148,.04); }
+.txt { font-family: var(--font-sans); font-size: .85rem; color: var(--ink); }
+.hint { font-family: var(--font-sans); font-size: .72rem; color: var(--ink-secondary); }
+</style>
+</helmet>
+<div class="sheet">
+  <div>
+    <h3 class="hud compName">File uploader</h3>
+    <p class="compDesc">Zona con borde discontinuo — se tiñe de rosa al arrastrar un archivo encima.</p>
+  </div>
+  <div class="drop">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="var(--ink-secondary)" stroke-width="1.5"><path d="M14 20V8M9 13l5-5 5 5"/><path d="M5 20v3a1 1 0 001 1h16a1 1 0 001-1v-3"/></svg>
+    <span class="txt">Arrastra una captura o haz clic para subirla</span>
+    <span class="hint">PNG, JPG hasta 5MB</span>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
