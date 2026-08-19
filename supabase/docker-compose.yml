@@ -39,7 +39,9 @@ services:
       GOTRUE_DB_DRIVER: postgres
       GOTRUE_DB_DATABASE_URL: postgres://supabase_auth_admin:${POSTGRES_PASSWORD}@db:5432/postgres
       GOTRUE_SITE_URL: ${SITE_URL}
-      GOTRUE_API_EXTERNAL_URL: ${SITE_URL}
+      # gotrue lee esta clave SIN el prefijo GOTRUE_ (verificado contra el
+      # supabase-auth de referencia en Coolify, que la expone tal cual).
+      API_EXTERNAL_URL: ${SITE_URL}
       # Registro publico desactivado (single-admin) — ver aitor-os-security-rules.
       GOTRUE_DISABLE_SIGNUP: "true"
       GOTRUE_JWT_SECRET: ${JWT_SECRET}
@@ -74,6 +76,7 @@ services:
       SERVICE_KEY: ${SERVICE_ROLE_KEY}
       POSTGREST_URL: http://rest:3000
       DATABASE_URL: postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@db:5432/postgres
+      PGRST_JWT_SECRET: ${JWT_SECRET}
       FILE_SIZE_LIMIT: "52428800"
       STORAGE_BACKEND: file
       FILE_STORAGE_BACKEND_PATH: /var/lib/storage
