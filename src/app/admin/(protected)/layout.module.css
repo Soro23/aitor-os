@@ -1,5 +1,7 @@
 .shell {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background-color: var(--color-bg);
 }
 
@@ -15,24 +17,6 @@
 .brand {
   color: var(--color-accent-cyan);
   text-decoration: none;
-}
-
-.logout {
-  background: none;
-  border: var(--border-width) solid var(--color-border);
-  color: var(--color-text-secondary);
-  padding: var(--space-2) var(--space-3);
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: var(--font-size-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-chrome);
-}
-
-.logout:hover,
-.logout:focus-visible {
-  border-color: var(--color-accent-red);
-  color: var(--color-accent-red);
 }
 
 .nav {
@@ -67,4 +51,53 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--space-6) var(--space-5);
+  flex: 1;
+  width: 100%;
+}
+
+.footer {
+  border-top: var(--border-width) solid var(--color-border);
+  background-color: var(--color-bg-panel);
+  margin-top: auto;
+}
+
+.footerBar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.copyright {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  margin: 0;
+}
+
+.footerLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.footerLink {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-chrome);
+}
+
+.footerLink:hover,
+.footerLink:focus-visible {
+  color: var(--color-accent-cyan);
 }
