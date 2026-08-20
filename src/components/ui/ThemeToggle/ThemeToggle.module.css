@@ -1,0 +1,22 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--color-bg-panel);
+  border: var(--border-width) solid var(--color-border);
+  color: var(--color-text-secondary);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.toggle:hover:not(:disabled),
+.toggle:focus-visible:not(:disabled) {
+  border-color: var(--color-accent-cyan);
+  color: var(--color-accent-cyan);
+}
+
+.toggle:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}

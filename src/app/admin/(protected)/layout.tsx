@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { requireAdminOrRedirect } from "@/lib/auth/requireAdmin";
 import { logout } from "@/server/actions/auth.actions";
+import { ThemeToggle } from "@/components/ui/ThemeToggle/ThemeToggle";
 import styles from "./layout.module.css";
 
 const NAV_LINKS = [
@@ -23,11 +24,14 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         <Link href="/admin" className={`hud-label ${styles.brand}`}>
           Aitor OS · Admin
         </Link>
-        <form action={logout}>
-          <button type="submit" className={styles.logout}>
-            Cerrar sesión
-          </button>
-        </form>
+        <div className="hud-actions-row">
+          <ThemeToggle />
+          <form action={logout}>
+            <button type="submit" className={styles.logout}>
+              Cerrar sesión
+            </button>
+          </form>
+        </div>
       </header>
       <nav aria-label="Navegación admin" className={styles.nav}>
         <ul className={styles.navList}>

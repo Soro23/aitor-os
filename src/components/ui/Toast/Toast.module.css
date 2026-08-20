@@ -33,7 +33,13 @@
   margin-left: auto;
   background: none;
   border: none;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-bg-panel);
+  opacity: 0.6;
   font-size: var(--font-size-sm);
   cursor: pointer;
+}
+
+.close:hover,
+.close:focus-visible {
+  opacity: 1;
 }

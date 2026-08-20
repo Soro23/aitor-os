@@ -42,6 +42,21 @@ Esta línea sigue encajando con el eje del perfil (sistemas, automatización, IA
 - El texto de lectura larga (notas del Garden, descripciones de proyecto) se escribe siempre en `#1C1420`/`#8A7280` sobre `#FBEEF2`/`#FFFFFF` (contraste AA holgado), nunca directamente en rosa o teal saturado.
 - Los acentos se reservan para: bordes, iconos, etiquetas cortas en mayúsculas, indicadores de estado y elementos gráficos (barras, franjas). Antes de aplicar un acento a texto, verificar contraste ≥ 4.5:1 sobre el fondo real donde se use.
 
+### Modo oscuro
+
+Misma identidad Anime Interface, solo invierte las superficies/texto — los acentos (rosa, teal, verde, ámbar, rojo) no cambian entre temas y mantienen contraste ≥ 4.5:1 verificado sobre el nuevo fondo oscuro. Se activa con la clase `dark` en `<html>` (gestionada por `next-themes`), sigue `prefers-color-scheme` por defecto y el usuario puede fijar su elección con el `ThemeToggle` (persistida en `localStorage`).
+
+| Uso | Color | Hex |
+|---|---|---|
+| Fondo principal | Violeta-negro cálido | `#14101A` |
+| Fondo secundario (paneles) | Violeta oscuro | `#1E1826` |
+| Fondo terciario (paneles secundarios) | Violeta oscuro, ligeramente más claro | `#241C2E` |
+| Bordes / divisores | Violeta grisáceo | `#33283C` |
+| Texto principal | Casi blanco cálido | `#F5EEF1` |
+| Texto secundario | Gris violáceo claro | `#B9A8B6` |
+
+Implementación: `src/styles/tokens.css` (bloque `:root.dark`), sin redefinir tokens estructurales (spacing, tipografía, `--glow-*`) ni acentos.
+
 ---
 
 ## Tipografía
