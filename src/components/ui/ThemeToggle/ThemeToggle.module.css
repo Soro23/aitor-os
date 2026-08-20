@@ -1,13 +1,18 @@
 .toggle {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   background-color: var(--color-bg-panel);
   border: var(--border-width) solid var(--color-border);
   color: var(--color-text-secondary);
-  padding: var(--space-2) var(--space-3);
+  padding: var(--space-2);
   cursor: pointer;
-  font-size: var(--font-size-xs);
   transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.toggle svg {
+  width: 16px;
+  height: 16px;
 }
 
 .toggle:hover:not(:disabled),

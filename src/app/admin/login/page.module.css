@@ -17,3 +17,20 @@
   font-size: var(--font-size-2xl);
   margin: var(--space-3) 0 var(--space-5);
 }
+
+.homeLink {
+  display: block;
+  margin-top: var(--space-5);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-chrome);
+}
+
+.homeLink:hover,
+.homeLink:focus-visible {
+  color: var(--color-accent-cyan);
+}

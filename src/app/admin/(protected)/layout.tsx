@@ -24,14 +24,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         <Link href="/admin" className={`hud-label ${styles.brand}`}>
           Aitor OS · Admin
         </Link>
-        <div className="hud-actions-row">
-          <ThemeToggle />
-          <form action={logout}>
-            <button type="submit" className={styles.logout}>
-              Cerrar sesión
-            </button>
-          </form>
-        </div>
+        <ThemeToggle />
       </header>
       <nav aria-label="Navegación admin" className={styles.nav}>
         <ul className={styles.navList}>
@@ -45,6 +38,21 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         </ul>
       </nav>
       <main className={styles.main}>{children}</main>
+      <footer className={styles.footer}>
+        <div className={styles.footerBar}>
+          <p className={styles.copyright}>Aitor Solana Roca © 2026</p>
+          <div className={styles.footerLinks}>
+            <Link href="/" className={styles.footerLink}>
+              Inicio
+            </Link>
+            <form action={logout}>
+              <button type="submit" className={styles.footerLink}>
+                Cerrar sesión
+              </button>
+            </form>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
