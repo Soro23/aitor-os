@@ -24,13 +24,20 @@ create trigger set_contact_messages_updated_at
 -- contact_messages_insert_public no restringe columnas (with check (true)):
 -- sin esto, un insert publico directo via REST podria fijar pipeline_status
 -- o internal_notes con valores arbitrarios, saltandose el pipeline de leads.
+-- Solo se fuerza para quien NO es admin: el alta manual de un lead desde
+-- /admin (createManual, siempre con requireAdmin(), rol authenticated) y
+-- cualquier insert hecho con el cliente service-role (scripts/seeds/tests,
+-- bypassa RLS por completo y no lleva auth.uid()) deben poder seguir
+-- fijando estos campos.
 create or replace function public.enforce_contact_message_insert_defaults()
 returns trigger
 language plpgsql
 as $$
 begin
-  new.pipeline_status := 'nuevo';
-  new.internal_notes := null;
+  if not (public.is_admin() or current_user = 'service_role') then
+    new.pipeline_status := 'nuevo';
+    new.internal_notes := null;
+  end if;
   new.updated_at := now();
   return new;
 end;

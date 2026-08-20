@@ -52,12 +52,18 @@ describe("RLS de proposal_templates", () => {
       .single();
     seededIds.push(seeded!.id);
 
-    const { error } = await anonClient
-      .from("proposal_templates")
-      .update({ name: "Modificada por anon" })
-      .eq("id", seeded!.id);
+    // Un UPDATE cuyo WHERE no matchea ninguna fila visible bajo RLS no
+    // lanza error explícito, simplemente actualiza 0 filas en silencio.
+    // La prueba real es que la fila sigue intacta, comprobado abajo.
+    await anonClient.from("proposal_templates").update({ name: "Modificada por anon" }).eq("id", seeded!.id);
 
-    expect(error).not.toBeNull();
+    const { data: unchanged } = await adminClient
+      .from("proposal_templates")
+      .select("name")
+      .eq("id", seeded!.id)
+      .single();
+
+    expect(unchanged?.name).toBe("Plantilla a proteger");
   });
 
   it("admin puede leer y actualizar plantillas", async () => {

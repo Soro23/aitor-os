@@ -26,18 +26,27 @@ afterAll(async () => {
 
 describe("RLS de contact_messages (pipeline de leads)", () => {
   it("anon puede insertar un mensaje basico (formulario publico)", async () => {
-    const { data, error } = await anonClient
-      .from("contact_messages")
-      .insert({
-        name: "Visitante anonimo",
-        email: `anon-${Date.now()}@example.com`,
-        message: "Hola, quiero hablar de un proyecto.",
-      })
-      .select("id")
-      .single();
+    // Sin .select() tras el insert: como anon no tiene policy de SELECT,
+    // encadenar .select() dispara el RETURNING de Postgres, que se filtra
+    // por políticas SELECT y lanza 42501 si ninguna aplica — no es que el
+    // insert falle, es que devolver la fila insertada falla. El formulario
+    // público real (contactMessagesRepository.create) tampoco encadena
+    // .select() por esta misma razón.
+    const email = `anon-${Date.now()}@example.com`;
+    const { error } = await anonClient.from("contact_messages").insert({
+      name: "Visitante anonimo",
+      email,
+      message: "Hola, quiero hablar de un proyecto.",
+    });
 
     expect(error).toBeNull();
-    if (data) seededIds.push(data.id);
+
+    const { data: seeded } = await adminClient
+      .from("contact_messages")
+      .select("id")
+      .eq("email", email)
+      .single();
+    if (seeded) seededIds.push(seeded.id);
   });
 
   it("anon no puede leer mensajes existentes", async () => {
@@ -60,12 +69,14 @@ describe("RLS de contact_messages (pipeline de leads)", () => {
       .single();
     seededIds.push(seeded!.id);
 
-    const { error } = await anonClient
+    // Un UPDATE cuyo WHERE no matchea ninguna fila visible bajo RLS no
+    // lanza error explícito (a diferencia de un INSERT bloqueado): Postgres
+    // simplemente actualiza 0 filas en silencio. La prueba real de que RLS
+    // bloqueó el cambio es que la fila sigue intacta, comprobado abajo.
+    await anonClient
       .from("contact_messages")
       .update({ pipeline_status: "ganado", internal_notes: "intento anonimo" })
       .eq("id", seeded!.id);
-
-    expect(error).not.toBeNull();
 
     const { data: unchanged } = await adminClient
       .from("contact_messages")

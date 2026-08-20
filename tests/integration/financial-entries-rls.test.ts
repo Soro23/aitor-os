@@ -52,12 +52,18 @@ describe("RLS de financial_entries", () => {
       .single();
     seededIds.push(seeded!.id);
 
-    const { error } = await anonClient
-      .from("financial_entries")
-      .update({ amount: 999 })
-      .eq("id", seeded!.id);
+    // Un UPDATE cuyo WHERE no matchea ninguna fila visible bajo RLS no
+    // lanza error explícito, simplemente actualiza 0 filas en silencio.
+    // La prueba real es que la fila sigue intacta, comprobado abajo.
+    await anonClient.from("financial_entries").update({ amount: 999 }).eq("id", seeded!.id);
 
-    expect(error).not.toBeNull();
+    const { data: unchanged } = await adminClient
+      .from("financial_entries")
+      .select("amount")
+      .eq("id", seeded!.id)
+      .single();
+
+    expect(unchanged?.amount).toBe(100);
   });
 
   it("admin puede leer y actualizar movimientos", async () => {
