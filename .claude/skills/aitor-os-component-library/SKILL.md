@@ -1,6 +1,6 @@
 ---
 name: aitor-os-component-library
-description: Mantiene el inventario vivo de componentes disponibles en Aitor OS (Panel, ClipCard, StatusBadge, ProgressBar, PulseIndicator, DataTable, PublishToggle, FeaturedToggle, MarkdownEditor, ToggleSwitch). Usar SIEMPRE antes de crear un componente para consultar qué existe, y actualizarla cuando se cree uno nuevo.
+description: Mantiene el inventario vivo de componentes disponibles en Aitor OS (Panel, ClipCard, StatusBadge, ProgressBar, PulseIndicator, ThemeToggle, DataTable, PublishToggle, FeaturedToggle, MarkdownEditor, ToggleSwitch). Usar SIEMPRE antes de crear un componente para consultar qué existe, y actualizarla cuando se cree uno nuevo.
 ---
 
 # Skill: Aitor OS — Component Library
@@ -16,6 +16,7 @@ Inventario de referencia rápida — el detalle de estilo de cada uno vive en [[
 | `StatusBadge` | Indicador de estado mapeado a color semántico (idea/en desarrollo/beta/finalizado/pausado y equivalentes) |
 | `ProgressBar` | Barra de progreso con glow en el acento correspondiente |
 | `PulseIndicator` | Indicador de actividad en vivo (último commit, proceso activo en Now) |
+| `ThemeToggle` | Alterna entre modo claro/oscuro (`next-themes`), persistido en `localStorage` |
 
 ## Componentes admin (`src/components/admin/`)
 

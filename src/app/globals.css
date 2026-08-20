@@ -52,3 +52,10 @@ select {
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-chrome);
 }
+
+/* Fila de acciones de cabecera (ej. ThemeToggle + acción principal) */
+.hud-actions-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}

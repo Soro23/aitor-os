@@ -8,6 +8,13 @@
  * literales), pero ahora resuelven a rosa/teal en vez de cian/violeta neón.
  * --color-accent-primary/secondary son los alias nuevos, preferidos en código nuevo.
  *
+ * Modo claro/oscuro: solo los 6 tokens de superficie/texto (--color-bg,
+ * --color-bg-panel, --color-bg-panel-secondary, --color-border,
+ * --color-text-primary, --color-text-secondary) varían por tema — se
+ * redefinen bajo `:root.dark`. Los acentos y los --glow-* se mantienen
+ * iguales en ambos temas. El tema se aplica añadiendo la clase `dark` al
+ * `<html>` (gestionado por `next-themes`, ver `src/app/layout.tsx`).
+ *
  * Breakpoints (referencia — CSS no permite var() dentro de @media sin un plugin
  * adicional, así que estos valores se usan literales en cada media query):
  *   mobile:       base, sin media query (mobile-first)
@@ -17,7 +24,7 @@
  */
 
 :root {
-  /* Color — base (claro) */
+  /* Color — base (claro, tema por defecto) */
   --color-bg: #fbeef2;
   --color-bg-panel: #ffffff;
   --color-bg-panel-secondary: #fff5f7;
@@ -25,7 +32,7 @@
   --color-text-primary: #1c1420;
   --color-text-secondary: #8a7280;
 
-  /* Color — acentos (rosa primario + teal secundario + semánticos) */
+  /* Color — acentos (rosa primario + teal secundario + semánticos, iguales en ambos temas) */
   --color-accent-cyan: #ff4d94; /* alias legado → rosa (primario/identidad) */
   --color-accent-violet: #0091a3; /* alias legado → teal (secundario/Garden) */
   --color-accent-primary: var(--color-accent-cyan);
@@ -75,4 +82,15 @@
   /* Transiciones */
   --transition-fast: 120ms ease;
   --transition-base: 200ms ease;
+}
+
+:root.dark {
+  /* Color — base (oscuro). Misma identidad Anime Interface (rosa/teal),
+     solo cambian las 6 superficies/texto; acentos y --glow-* no varían. */
+  --color-bg: #14101a;
+  --color-bg-panel: #1e1826;
+  --color-bg-panel-secondary: #241c2e;
+  --color-border: #33283c;
+  --color-text-primary: #f5eef1;
+  --color-text-secondary: #b9a8b6;
 }

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle/ThemeToggle";
 import styles from "./SiteNav.module.css";
 
 const LINKS = [
@@ -26,15 +27,18 @@ export function SiteNav() {
         <Link href="/" className={`hud-label ${styles.brand}`}>
           Aitor OS
         </Link>
-        <button
-          type="button"
-          className={`hud-label ${styles.toggle}`}
-          aria-expanded={open}
-          aria-controls="site-nav-list"
-          onClick={() => setOpen((value) => !value)}
-        >
-          {open ? "Cerrar" : "Menú"}
-        </button>
+        <div className="hud-actions-row">
+          <ThemeToggle />
+          <button
+            type="button"
+            className={`hud-label ${styles.toggle}`}
+            aria-expanded={open}
+            aria-controls="site-nav-list"
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? "Cerrar" : "Menú"}
+          </button>
+        </div>
       </div>
       <nav aria-label="Navegación principal">
         <ul id="site-nav-list" className={`${styles.list} ${open ? styles.listOpen : ""}`}>
