@@ -1,84 +1,501 @@
-.stack {
+/* La página pública comparte <main> con padding y max-width (layout.module.css,
+   para el resto de rutas). Aquí se rompe del todo con el truco clásico de
+   full-bleed (margen calc(50% - 50vw)): el riel llega a los 4 bordes reales
+   del viewport sin importar cuántos ancestros tengan su propio max-width. El
+   padding/max-width se reintroduce dentro, en .mainInner y en .content. */
+.pageWithRail {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-5);
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: calc(-1 * var(--space-6));
+  margin-bottom: calc(-1 * var(--space-8));
 }
 
-.title {
+.rail {
+  width: 44px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) 0 var(--space-5) var(--space-2);
+  background: linear-gradient(
+    180deg,
+    var(--color-accent-cyan) 0%,
+    var(--color-accent-amber) 33%,
+    var(--color-accent-green) 66%,
+    var(--color-accent-violet) 100%
+  );
+}
+
+.railLabel {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  /* Sin padding-bottom propio: .contactBand (última sección) ya aporta su
+     padding-bottom — así el riel (align-items: stretch) llega exactamente
+     hasta el borde real, sin descuadrarse por un margen negativo. */
+  padding: var(--space-6) var(--space-5) 0;
+}
+
+.mainInner {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.sectionLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+.sectionLabelDark {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--band-text-secondary);
+  margin-bottom: var(--space-5);
+}
+
+.sectionMarker {
+  display: block;
+  width: 32px;
+  height: 3px;
+  margin-bottom: var(--space-2);
+  flex-shrink: 0;
+}
+
+.bodyText {
+  color: var(--color-text-secondary);
+}
+
+/* 00 — Identity */
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.wordmark {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: var(--font-size-3xl);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
   color: var(--color-text-primary);
-  margin: var(--space-3) 0;
+}
+
+.wordmarkAccent {
+  color: var(--color-accent-cyan);
 }
 
 .tagline {
   color: var(--color-text-secondary);
-  max-width: 60ch;
-  margin-bottom: var(--space-4);
+  max-width: 56ch;
 }
 
-.heroTags {
+.tagsRow {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-bottom: var(--space-4);
+  margin: var(--space-4) 0;
 }
 
-.heroActions {
+.heroLinks {
   display: flex;
   flex-wrap: wrap;
+  gap: var(--space-5);
+  margin-top: var(--space-2);
+}
+
+.heroLink {
+  color: var(--color-accent-cyan);
+  text-decoration: none;
+  font-size: var(--font-size-xs);
+}
+
+.heroLink:hover,
+.heroLink:focus-visible {
+  color: var(--color-accent-secondary);
+}
+
+.heroLinkMuted {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: var(--font-size-xs);
+}
+
+.heroLinkMuted:hover,
+.heroLinkMuted:focus-visible {
+  color: var(--color-accent-cyan);
+}
+
+.statusPanel {
+  border-left: 3px solid var(--color-accent-cyan);
+  padding-left: var(--space-5);
+}
+
+.statusList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.statusRow {
+  display: flex;
+  justify-content: space-between;
   gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: var(--border-width) solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.statusRow:last-child {
+  border-bottom: none;
+}
+
+.statusDivider {
+  color: var(--color-text-secondary);
+  margin: var(--space-4) 0 var(--space-2);
+  padding-top: var(--space-3);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.statusOnline {
+  color: var(--color-accent-green);
+}
+
+/* 01 — Highlight */
+.highlightGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: var(--border-width) solid var(--color-border);
+}
+
+.highlightLeft {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  justify-content: center;
+  background-color: var(--color-bg-panel);
+  border-right: var(--border-width) solid var(--color-border);
+}
+
+.highlightTitle {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-primary);
+}
+
+.highlightCta {
+  align-self: flex-start;
+  margin-top: var(--space-2);
+}
+
+.highlightRight {
+  background: linear-gradient(135deg, var(--color-accent-cyan) 0%, var(--color-accent-amber) 100%);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2);
+  color: #fff;
+}
+
+.highlightPct {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-3xl);
+}
+
+.highlightTrack {
+  width: 100%;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.35);
+  margin-top: var(--space-2);
+  overflow: hidden;
+}
+
+.highlightFill {
+  height: 100%;
+  background-color: #fff;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+
+.statTile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.statNumber {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-2xl);
+  color: var(--color-text-primary);
+}
+
+/* 02 — Builds */
+.buildsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+.buildCta {
+  color: inherit;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-chrome);
+}
+
+.viewAll {
+  display: inline-block;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  margin-top: var(--space-3);
+}
+
+.viewAll:hover,
+.viewAll:focus-visible {
+  color: var(--color-accent-cyan);
+}
+
+/* 03 / 04 — actividad + código */
+.midGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);
+}
+
+.feedList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.feedRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.feedValue {
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.langBar {
+  height: 8px;
+  display: flex;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
   margin-bottom: var(--space-4);
 }
 
-.nowList {
+.langSegment {
+  height: 100%;
+}
+
+.legendList {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-5);
+.legendRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
 }
 
-.sectionTitle {
-  margin-top: var(--space-2);
+.legendLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.legendDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.githubNote {
+  color: var(--color-text-secondary);
+  margin-top: var(--space-3);
+}
+
+/* 05 — Explora el sistema.
+   Banda deliberadamente oscura para dar contraste, independiente del tema
+   claro/oscuro activo — de ahí los tokens --band-* fijos en vez de
+   var(--color-bg)/var(--color-text-*), que sí siguen el tema. */
+/* El margen/padding izquierdos son el doble que a la derecha a propósito:
+   cancelan tanto el padding propio de .content como el gap rail↔content de
+   .pageWithRail, para que el FONDO llegue hasta el riel — el padding extra
+   compensa para que el contenido interior (.exploreInner) no se desplace. */
+.exploreBand {
+  --band-bg: #14101a;
+  --band-text-primary: #f5eef1;
+  --band-text-secondary: #b9a8b6;
+  background-color: var(--band-bg);
+  background-image: radial-gradient(rgba(245, 238, 241, 0.12) 1px, transparent 1px);
+  background-size: 22px 22px;
+  color: var(--band-text-primary);
+  padding: var(--space-7) var(--space-5) var(--space-7) calc(2 * var(--space-5));
+  margin: 0 calc(-1 * var(--space-5)) 0 calc(-2 * var(--space-5));
+}
+
+.exploreInner {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .exploreGrid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-5);
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
 }
 
-.exploreText {
-  color: var(--color-text-secondary);
-}
-
-.cardLink {
+.exploreItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
   color: inherit;
   text-decoration: none;
-  display: block;
+}
+
+.exploreNum {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+}
+
+.exploreIcon {
+  margin: var(--space-2) 0;
+}
+
+.exploreTitle {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-chrome);
+  color: var(--band-text-primary);
+}
+
+.exploreDesc {
+  color: var(--band-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.exploreLink {
+  margin-top: var(--space-1);
+}
+
+/* 06 — Contacto — mismo truco de ancho que .exploreBand, y margin-top
+   negativo igual al gap de .content para que no quede espacio entre las
+   dos bandas (deben leerse como un único bloque de cierre). */
+.contactBand {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-5) var(--space-8) calc(2 * var(--space-5));
+  background-color: var(--color-bg-panel-secondary);
+  margin: calc(-1 * var(--space-8)) calc(-1 * var(--space-5)) 0 calc(-2 * var(--space-5));
+}
+
+.contactHeadline {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-primary);
+  max-width: 40ch;
+}
+
+.contactCta {
+  margin-top: var(--space-3);
 }
 
 @media (min-width: 768px) {
-  .grid {
+  .buildsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .exploreGrid {
-    grid-template-columns: repeat(2, 1fr);
+  .midGrid {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (min-width: 1024px) {
-  .grid {
+  .buildsGrid {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .highlightGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .highlightLeft {
+    border-right: none;
+    border-bottom: var(--border-width) solid var(--color-border);
   }
 
   .exploreGrid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .statsRow {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .exploreGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .wordmark {
+    font-size: var(--font-size-2xl);
   }
 }
