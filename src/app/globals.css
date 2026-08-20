@@ -18,6 +18,12 @@ body {
   font-family: var(--font-sans);
   font-size: var(--font-size-base);
   line-height: 1.5;
+  /* La portada rompe el max-width de <main> con el truco calc(50% - 50vw)
+     para que su riel llegue a los bordes reales del viewport; en algunos
+     navegadores 100vw no descuenta el ancho de la scrollbar y sobran 1-2px.
+     "clip" (no "hidden") evita el efecto colateral de CSS Overflow que
+     convertiría <body> en su propio contenedor de scroll. */
+  overflow-x: clip;
 }
 
 a {

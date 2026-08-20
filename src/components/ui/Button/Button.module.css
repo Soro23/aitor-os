@@ -3,6 +3,7 @@
   font-size: var(--font-size-xs);
   cursor: pointer;
   border: var(--border-width) solid transparent;
+  text-decoration: none;
   transition: background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base);
 }
 

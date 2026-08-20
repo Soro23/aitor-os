@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle/ThemeToggle";
+import { PulseIndicator } from "@/components/ui/PulseIndicator/PulseIndicator";
 import styles from "./SiteNav.module.css";
 
 const LINKS = [
@@ -28,6 +29,7 @@ export function SiteNav() {
           Aitor OS
         </Link>
         <div className="hud-actions-row">
+          <PulseIndicator label="Sys online" tone="green" />
           <ThemeToggle />
           <button
             type="button"
