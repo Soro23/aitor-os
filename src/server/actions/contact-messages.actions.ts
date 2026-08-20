@@ -4,8 +4,17 @@ import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth/requireAdmin";
 import { isRateLimited } from "@/lib/rate-limit";
-import { createContactMessageSchema } from "@/lib/validation/contact-message.schema";
+import {
+  createContactMessageSchema,
+  createLeadManualSchema,
+  updateLeadPipelineSchema,
+} from "@/lib/validation/contact-message.schema";
 import { contactMessagesRepository } from "@/server/repositories/contact-messages.repository";
+
+function revalidateLeadPaths() {
+  revalidatePath("/admin/leads");
+  revalidatePath("/admin/mensajes");
+}
 
 export interface SubmitContactMessageState {
   success?: boolean;
@@ -56,4 +65,20 @@ export async function deleteMessage(id: string) {
   await contactMessagesRepository.delete(id);
   revalidatePath("/admin/mensajes");
   return { success: true };
+}
+
+export async function createLead(input: unknown) {
+  await requireAdmin();
+  const data = createLeadManualSchema.parse(input);
+  const lead = await contactMessagesRepository.createManual(data);
+  revalidateLeadPaths();
+  return { success: true, lead };
+}
+
+export async function updateLeadPipeline(id: string, input: unknown) {
+  await requireAdmin();
+  const data = updateLeadPipelineSchema.parse(input);
+  const lead = await contactMessagesRepository.updatePipeline(id, data);
+  revalidateLeadPaths();
+  return { success: true, lead };
 }

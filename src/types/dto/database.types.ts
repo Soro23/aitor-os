@@ -345,6 +345,75 @@ export type Database = {
           updated_at?: string;
         };
       };
+      proposal_templates: {
+        Relationships: [];
+        Row: {
+          id: string;
+          name: string;
+          summary: string | null;
+          content: string;
+          is_active: boolean;
+          sort_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          summary?: string | null;
+          content: string;
+          is_active?: boolean;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          summary?: string | null;
+          content?: string;
+          is_active?: boolean;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      financial_entries: {
+        Relationships: [];
+        Row: {
+          id: string;
+          type: Database["public"]["Enums"]["financial_entry_type"];
+          amount: number;
+          category: string | null;
+          description: string;
+          entry_date: string;
+          lead_id: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          type: Database["public"]["Enums"]["financial_entry_type"];
+          amount: number;
+          category?: string | null;
+          description: string;
+          entry_date?: string;
+          lead_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          type?: Database["public"]["Enums"]["financial_entry_type"];
+          amount?: number;
+          category?: string | null;
+          description?: string;
+          entry_date?: string;
+          lead_id?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
       contact_messages: {
         Relationships: [];
         Row: {
@@ -354,7 +423,10 @@ export type Database = {
           message: string;
           interest: string | null;
           is_read: boolean;
+          pipeline_status: Database["public"]["Enums"]["lead_pipeline_status"];
+          internal_notes: string | null;
           created_at: string;
+          updated_at: string;
         };
         Insert: {
           id?: string;
@@ -363,7 +435,10 @@ export type Database = {
           message: string;
           interest?: string | null;
           is_read?: boolean;
+          pipeline_status?: Database["public"]["Enums"]["lead_pipeline_status"];
+          internal_notes?: string | null;
           created_at?: string;
+          updated_at?: string;
         };
         Update: {
           id?: string;
@@ -372,7 +447,10 @@ export type Database = {
           message?: string;
           interest?: string | null;
           is_read?: boolean;
+          pipeline_status?: Database["public"]["Enums"]["lead_pipeline_status"];
+          internal_notes?: string | null;
           created_at?: string;
+          updated_at?: string;
         };
       };
     };
@@ -404,6 +482,8 @@ export type Database = {
       now_item_category: "building" | "learning" | "exploring";
       stack_category: "desarrollo" | "sistemas" | "infraestructura" | "ia";
       stack_usage_level: "daily" | "frequent" | "learning" | "exploring";
+      lead_pipeline_status: "nuevo" | "contactado" | "propuesta_enviada" | "ganado" | "perdido";
+      financial_entry_type: "ingreso" | "gasto";
     };
   };
 };

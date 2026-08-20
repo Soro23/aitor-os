@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { createContactMessageSchema } from "@/lib/validation/contact-message.schema";
+import {
+  createContactMessageSchema,
+  createLeadManualSchema,
+  updateLeadPipelineSchema,
+} from "@/lib/validation/contact-message.schema";
 
 const validInput = {
   name: "Visitante",
@@ -43,6 +47,41 @@ describe("createContactMessageSchema", () => {
 
   it("rechaza un nombre demasiado largo", () => {
     const result = createContactMessageSchema.safeParse({ ...validInput, name: "a".repeat(121) });
+    expect(result.success).toBe(false);
+  });
+});
+
+describe("createLeadManualSchema", () => {
+  it("acepta un alta manual sin mensaje (default vacio)", () => {
+    const result = createLeadManualSchema.safeParse({ name: "Referido", email: "referido@example.com" });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.message).toBe("");
+    }
+  });
+
+  it("rechaza un email invalido", () => {
+    const result = createLeadManualSchema.safeParse({ name: "Referido", email: "no-es-un-email" });
+    expect(result.success).toBe(false);
+  });
+});
+
+describe("updateLeadPipelineSchema", () => {
+  it("acepta un cambio de fase valido", () => {
+    const result = updateLeadPipelineSchema.safeParse({ pipelineStatus: "contactado" });
+    expect(result.success).toBe(true);
+  });
+
+  it("acepta notas internas opcionales", () => {
+    const result = updateLeadPipelineSchema.safeParse({
+      pipelineStatus: "propuesta_enviada",
+      internalNotes: "Enviada propuesta el lunes",
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("rechaza una fase que no existe", () => {
+    const result = updateLeadPipelineSchema.safeParse({ pipelineStatus: "en_negociacion" });
     expect(result.success).toBe(false);
   });
 });
