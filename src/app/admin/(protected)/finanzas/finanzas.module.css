@@ -1,0 +1,15 @@
+.totals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.totalLabel {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+}
+
+.totalValue {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xl);
+}

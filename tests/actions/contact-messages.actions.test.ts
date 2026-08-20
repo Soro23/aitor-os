@@ -5,6 +5,8 @@ const createMock = vi.fn();
 const markAsReadMock = vi.fn();
 const deleteMock = vi.fn();
 const revalidatePathMock = vi.fn();
+const createManualMock = vi.fn();
+const updatePipelineMock = vi.fn();
 
 vi.mock("@/lib/auth/requireAdmin", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@/lib/auth/requireAdmin")>();
@@ -27,10 +29,12 @@ vi.mock("@/server/repositories/contact-messages.repository", () => ({
     findAll: vi.fn(),
     markAsRead: (id: string) => markAsReadMock(id),
     delete: (id: string) => deleteMock(id),
+    createManual: (input: unknown) => createManualMock(input),
+    updatePipeline: (id: string, input: unknown) => updatePipelineMock(id, input),
   },
 }));
 
-const { submitContactMessage, markMessageAsRead, deleteMessage } = await import(
+const { submitContactMessage, markMessageAsRead, deleteMessage, createLead, updateLeadPipeline } = await import(
   "@/server/actions/contact-messages.actions"
 );
 const { UnauthorizedError } = await import("@/lib/auth/requireAdmin");
@@ -115,5 +119,54 @@ describe("markMessageAsRead / deleteMessage", () => {
     requireAdminMock.mockRejectedValue(new UnauthorizedError());
     await expect(deleteMessage("m1")).rejects.toBeInstanceOf(UnauthorizedError);
     expect(deleteMock).not.toHaveBeenCalled();
+  });
+});
+
+describe("createLead / updateLeadPipeline", () => {
+  beforeEach(() => {
+    requireAdminMock.mockReset();
+    createManualMock.mockReset();
+    updatePipelineMock.mockReset();
+    revalidatePathMock.mockReset();
+  });
+
+  it("createLead rechaza sin sesión admin", async () => {
+    requireAdminMock.mockRejectedValue(new UnauthorizedError());
+    await expect(createLead({ name: "Referido", email: "referido@example.com" })).rejects.toBeInstanceOf(
+      UnauthorizedError,
+    );
+    expect(createManualMock).not.toHaveBeenCalled();
+  });
+
+  it("createLead crea el lead y revalida /admin/leads y /admin/mensajes", async () => {
+    requireAdminMock.mockResolvedValue({ id: "admin-1" });
+    createManualMock.mockResolvedValue({ id: "lead-1" });
+
+    const result = await createLead({ name: "Referido", email: "referido@example.com" });
+
+    expect(result.success).toBe(true);
+    expect(createManualMock).toHaveBeenCalledWith(
+      expect.objectContaining({ name: "Referido", email: "referido@example.com" }),
+    );
+    expect(revalidatePathMock).toHaveBeenCalledWith("/admin/leads");
+    expect(revalidatePathMock).toHaveBeenCalledWith("/admin/mensajes");
+  });
+
+  it("updateLeadPipeline rechaza sin sesión admin", async () => {
+    requireAdminMock.mockRejectedValue(new UnauthorizedError());
+    await expect(updateLeadPipeline("m1", { pipelineStatus: "contactado" })).rejects.toBeInstanceOf(
+      UnauthorizedError,
+    );
+    expect(updatePipelineMock).not.toHaveBeenCalled();
+  });
+
+  it("updateLeadPipeline actualiza la fase", async () => {
+    requireAdminMock.mockResolvedValue({ id: "admin-1" });
+    updatePipelineMock.mockResolvedValue({ id: "m1", pipelineStatus: "ganado" });
+
+    const result = await updateLeadPipeline("m1", { pipelineStatus: "ganado" });
+
+    expect(result.success).toBe(true);
+    expect(updatePipelineMock).toHaveBeenCalledWith("m1", expect.objectContaining({ pipelineStatus: "ganado" }));
   });
 });

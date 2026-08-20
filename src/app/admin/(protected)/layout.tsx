@@ -12,6 +12,10 @@ const NAV_LINKS = [
   { href: "/admin/recursos", label: "Recursos" },
   { href: "/admin/now", label: "Now" },
   { href: "/admin/stack", label: "Stack" },
+  { href: "/admin/leads", label: "Leads" },
+  { href: "/admin/calculadora", label: "Calculadora" },
+  { href: "/admin/plantillas", label: "Plantillas" },
+  { href: "/admin/finanzas", label: "Finanzas" },
   { href: "/admin/mensajes", label: "Mensajes" },
 ];
 
