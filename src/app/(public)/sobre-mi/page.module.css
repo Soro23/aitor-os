@@ -1,46 +1,417 @@
-.stack {
+/* Mismo truco de full-bleed que src/app/(public)/page.module.css (.pageWithRail):
+   el riel llega a los 4 bordes reales del viewport con margin: calc(50% - 50vw).
+   El padding/max-width se reintroduce dentro, en .content y .mainInner. */
+.pageWithRail {
+  display: flex;
+  gap: var(--space-5);
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: calc(-1 * var(--space-6));
+  margin-bottom: calc(-1 * var(--space-8));
+}
+
+.rail {
+  width: 44px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) 0 var(--space-5) var(--space-2);
+  background: linear-gradient(180deg,
+      var(--color-accent-cyan) 0%,
+      var(--color-accent-amber) 33%,
+      var(--color-accent-green) 66%,
+      var(--color-accent-violet) 100%);
 }
 
-.title {
-  font-family: var(--font-mono);
-  font-size: var(--font-size-3xl);
-  color: var(--color-text-primary);
-  margin: var(--space-3) 0;
+.railLabel {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #fff;
+  font-size: 1.2rem;
 }
 
-.paragraph {
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-6) var(--space-5) var(--space-8);
+}
+
+.mainInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.sectionLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   color: var(--color-text-secondary);
-  max-width: 70ch;
   margin-bottom: var(--space-4);
 }
 
-.paragraph:last-child {
-  margin-bottom: 0;
-}
-
-.timeline {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  list-style: none;
-  margin: var(--space-3) 0 0;
-  padding: 0;
-}
-
-.timelineItem {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-4);
-}
-
-.timelineYear {
-  color: var(--color-accent-primary);
+.sectionMarker {
+  display: block;
+  width: 32px;
+  height: 3px;
+  margin-bottom: var(--space-2);
   flex-shrink: 0;
 }
 
-.timelineDescription {
+.bodyText {
   color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* 00 — Identity */
+.panel {
+  position: relative;
+  background-color: var(--color-bg-panel);
+  border: var(--border-width) solid var(--color-accent-cyan);
+  padding: var(--space-5);
+}
+
+.identityTop {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.heroName {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--font-size-3xl);
+  line-height: 1.1;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-4);
+}
+
+.heroNameAccent {
+  color: var(--color-accent-cyan);
+}
+
+.identityBio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 62ch;
+}
+
+.tagsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-4) 0;
+}
+
+.heroLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin-top: var(--space-2);
+}
+
+.heroLink {
+  color: var(--color-accent-cyan);
+  text-decoration: none;
+  font-size: var(--font-size-xs);
+}
+
+.heroLink:hover,
+.heroLink:focus-visible {
+  color: var(--color-accent-secondary);
+}
+
+.heroLinkMuted {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: var(--font-size-xs);
+}
+
+.heroLinkMuted:hover,
+.heroLinkMuted:focus-visible {
+  color: var(--color-accent-cyan);
+}
+
+/* Marco de foto — placeholder hasta que haya una imagen real */
+.photoFrame {
+  position: relative;
+  border: var(--border-width) solid var(--color-accent-cyan);
+  background-color: var(--color-bg-panel-secondary);
+  padding: var(--space-3);
+}
+
+.photoInner {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background-color: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.photoCorner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--color-accent-cyan);
+}
+
+.photoCornerTl {
+  top: -1px;
+  left: -1px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.photoCornerTr {
+  top: -1px;
+  right: -1px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.photoCornerBl {
+  bottom: -1px;
+  left: -1px;
+  border-right: none;
+  border-top: none;
+}
+
+.photoCornerBr {
+  bottom: -1px;
+  right: -1px;
+  border-left: none;
+  border-top: none;
+}
+
+.photoCaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-2);
+}
+
+.photoPlaceholderTag {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  border: 1px dashed var(--color-border);
+  padding: 2px 6px;
+}
+
+/* Franja de telemetría — a todo el ancho, debajo de la bio + foto */
+.telemetryStrip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.telemetryItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.telemetryKey {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.telemetryValue {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+
+.telemetryValueOnline {
+  color: var(--color-accent-green);
+}
+
+/* 01 / 03 — bloques estilo terminal.
+   Fondo oscuro fijo (no sigue el tema claro/oscuro), mismo criterio que
+   .exploreBand en la home: acento de marca deliberadamente independiente
+   del tema activo. */
+.term {
+  --term-bg: #14101a;
+  --term-text: #f5eef1;
+  --term-text-secondary: #b9a8b6;
+  background-color: var(--term-bg);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.termBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-4);
+  border-bottom: var(--border-width) solid rgba(255, 255, 255, 0.12);
+}
+
+.termPath {
+  color: var(--term-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.termTag {
+  font-size: var(--font-size-xs);
+  color: rgba(245, 238, 241, 0.35);
+}
+
+.termBody {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.75;
+}
+
+.termCmd {
+  color: var(--term-text);
+}
+
+.termCmd::before {
+  content: "$ ";
+  color: rgba(245, 238, 241, 0.4);
+}
+
+.termOut {
+  color: rgba(245, 238, 241, 0.72);
+  padding-left: var(--space-4);
+}
+
+.termKeyCyan {
+  color: var(--color-accent-cyan);
+}
+
+.termKeyViolet {
+  color: var(--color-accent-violet);
+}
+
+.termKeyGreen {
+  color: var(--color-accent-green);
+}
+
+.termCursor {
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  background-color: var(--color-accent-cyan);
+  margin-left: var(--space-4);
+  vertical-align: -2px;
+}
+
+.logRow {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: var(--space-3);
+  padding-left: var(--space-4);
+}
+
+.logHash {
+  color: rgba(245, 238, 241, 0.4);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+/* 02 — Cómo pienso: prosa continua + fila de iconos */
+.essay {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.essayText {
+  font-size: var(--font-size-base);
+  line-height: 1.85;
+  color: var(--color-text-primary);
+}
+
+.essayClose {
+  font-size: var(--font-size-base);
+  line-height: 1.85;
+  color: var(--color-text-secondary);
+}
+
+.emCyan,
+.emAmber,
+.emViolet,
+.emGreen {
+  font-style: normal;
+  font-weight: 700;
+}
+
+.emCyan {
+  color: var(--color-accent-cyan);
+}
+
+.emAmber {
+  color: var(--color-accent-amber);
+}
+
+.emViolet {
+  color: var(--color-accent-violet);
+}
+
+.emGreen {
+  color: var(--color-accent-green);
+}
+
+.iconRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+  padding: var(--space-6) 0;
+  border-top: var(--border-width) solid var(--color-border);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.iconItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.iconLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 900px) {
+  .identityTop {
+    grid-template-columns: 1fr;
+  }
+
+  .telemetryStrip {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: var(--space-4);
+  }
+
+  .logRow {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .iconRow {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: var(--space-5);
+  }
+}
+
+@media (max-width: 767px) {
+  .heroName {
+    font-size: var(--font-size-2xl);
+  }
 }
