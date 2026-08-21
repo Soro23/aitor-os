@@ -482,7 +482,7 @@ export type Database = {
       now_item_category: "building" | "learning" | "exploring";
       stack_category: "desarrollo" | "sistemas" | "infraestructura" | "ia";
       stack_usage_level: "daily" | "frequent" | "learning" | "exploring";
-      lead_pipeline_status: "nuevo" | "contactado" | "propuesta_enviada" | "ganado" | "perdido";
+      lead_pipeline_status: "nuevo" | "contactado" | "propuesta_enviada" | "ganado" | "perdido" | "spam";
       financial_entry_type: "ingreso" | "gasto";
     };
   };

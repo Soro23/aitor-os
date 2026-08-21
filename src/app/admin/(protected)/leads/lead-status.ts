@@ -7,6 +7,7 @@ export const LEAD_STATUS_LABELS: Record<LeadPipelineStatus, string> = {
   propuesta_enviada: "Propuesta enviada",
   ganado: "Ganado",
   perdido: "Perdido",
+  spam: "Spam",
 };
 
 export const LEAD_STATUS_TONE: Record<LeadPipelineStatus, PanelAccent> = {
@@ -15,4 +16,5 @@ export const LEAD_STATUS_TONE: Record<LeadPipelineStatus, PanelAccent> = {
   propuesta_enviada: "amber",
   ganado: "green",
   perdido: "red",
+  spam: "red",
 };

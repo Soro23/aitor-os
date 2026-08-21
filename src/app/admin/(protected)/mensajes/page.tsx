@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { DataTable } from "@/components/admin/DataTable/DataTable";
 import { StatusBadge } from "@/components/ui/StatusBadge/StatusBadge";
 import { Panel } from "@/components/ui/Panel/Panel";
@@ -20,7 +21,14 @@ export default async function AdminMessagesPage() {
           getRowKey={(message) => message.id}
           emptyMessage="Todavía no hay mensajes."
           columns={[
-            { header: "Nombre", cell: (message) => message.name },
+            {
+              header: "Nombre",
+              cell: (message) => (
+                <Link href={`/admin/mensajes/${message.id}`} className={styles.actionLink}>
+                  {message.name}
+                </Link>
+              ),
+            },
             { header: "Email", cell: (message) => message.email },
             { header: "Interés", cell: (message) => message.interest ?? "—" },
             {

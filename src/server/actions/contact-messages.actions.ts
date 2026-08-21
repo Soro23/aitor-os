@@ -31,6 +31,12 @@ export async function submitContactMessage(
   _prevState: SubmitContactMessageState,
   formData: FormData,
 ): Promise<SubmitContactMessageState> {
+  // Honeypot: campo oculto que solo un bot rellena (ver ContactForm.tsx).
+  // Se responde success sin guardar nada, para no delatar la trampa.
+  if (formData.get("website")) {
+    return { success: true };
+  }
+
   const headersList = await headers();
   const ip = headersList.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
 

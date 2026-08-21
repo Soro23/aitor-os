@@ -36,8 +36,8 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
       </Panel>
 
       <Panel accent="violet">
-        {lead.pipelineStatus === "perdido" ? (
-          <StatusBadge label={LEAD_STATUS_LABELS.perdido} tone="red" />
+        {lead.pipelineStatus === "perdido" || lead.pipelineStatus === "spam" ? (
+          <StatusBadge label={LEAD_STATUS_LABELS[lead.pipelineStatus]} tone="red" />
         ) : (
           <Stepper steps={PIPELINE_STEPS} currentStep={STEP_INDEX[lead.pipelineStatus]} />
         )}

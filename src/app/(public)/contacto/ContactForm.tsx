@@ -22,6 +22,14 @@ export function ContactForm() {
 
   return (
     <form action={formAction} className={styles.form}>
+      {/* Honeypot anti-spam: invisible para personas, los bots que rellenan
+          todos los inputs del formulario caen en la trampa. Ver
+          submitContactMessage, que descarta el envío en silencio si llega relleno. */}
+      <label className={styles.honeypot} aria-hidden="true">
+        Web
+        <input name="website" tabIndex={-1} autoComplete="off" />
+      </label>
+
       <label className={styles.field}>
         <span className="hud-label">Nombre</span>
         <input name="name" required maxLength={120} className={styles.input} />

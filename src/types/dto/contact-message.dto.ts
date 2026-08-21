@@ -1,4 +1,4 @@
-export type LeadPipelineStatus = "nuevo" | "contactado" | "propuesta_enviada" | "ganado" | "perdido";
+export type LeadPipelineStatus = "nuevo" | "contactado" | "propuesta_enviada" | "ganado" | "perdido" | "spam";
 
 export interface ContactMessageDTO {
   id: string;
