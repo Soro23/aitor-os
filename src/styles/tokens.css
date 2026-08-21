@@ -43,7 +43,7 @@
   --color-accent-gray: var(--color-text-secondary);
 
   /* Tipografía */
-  --font-mono: var(--font-jetbrains-mono), "Space Mono", ui-monospace, monospace;
+  --font-mono: var(--font-space-mono), ui-monospace, monospace;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
   --font-size-xs: 0.75rem;

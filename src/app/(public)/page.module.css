@@ -20,13 +20,11 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-5) 0 var(--space-5) var(--space-2);
-  background: linear-gradient(
-    180deg,
-    var(--color-accent-cyan) 0%,
-    var(--color-accent-amber) 33%,
-    var(--color-accent-green) 66%,
-    var(--color-accent-violet) 100%
-  );
+  background: linear-gradient(180deg,
+      var(--color-accent-cyan) 0%,
+      var(--color-accent-amber) 33%,
+      var(--color-accent-green) 66%,
+      var(--color-accent-violet) 100%);
 }
 
 .railLabel {
@@ -96,7 +94,7 @@
 .wordmark {
   font-family: var(--font-mono);
   font-weight: 700;
-  font-size: var(--font-size-3xl);
+  font-size: calc(var(--font-size-3xl) * 3);
   line-height: 1;
   display: flex;
   align-items: center;
@@ -328,30 +326,40 @@
   height: 100%;
 }
 
-.legendList {
+.repoList {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
-.legendRow {
+.repoRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: var(--border-width) solid var(--color-border);
   color: var(--color-text-primary);
+  text-decoration: none;
   font-size: var(--font-size-sm);
 }
 
-.legendLabel {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
+.repoRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
-.legendDot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
+.repoRow:hover,
+.repoRow:focus-visible {
+  color: var(--color-accent-cyan);
+}
+
+.repoName {
+  font-weight: 600;
+}
+
+.repoLang {
+  color: var(--color-text-secondary);
   flex-shrink: 0;
 }
 
@@ -496,6 +504,6 @@
   }
 
   .wordmark {
-    font-size: var(--font-size-2xl);
+    font-size: calc(var(--font-size-2xl) * 3);
   }
 }

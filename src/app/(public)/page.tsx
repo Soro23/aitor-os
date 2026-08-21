@@ -400,24 +400,24 @@ export default async function HomePage() {
                     />
                   ))}
                 </div>
-                <div className={styles.legendList}>
-                  {languageEntries.map(([language, count], index) => (
-                    <div key={language} className={styles.legendRow}>
-                      <span className={styles.legendLabel}>
-                        <span
-                          className={styles.legendDot}
-                          style={{
-                            backgroundColor: `var(--color-accent-${LANGUAGE_ACCENTS[index % LANGUAGE_ACCENTS.length]})`,
-                          }}
-                        />
-                        {language}
-                      </span>
-                      <span className="hud-label">{count} repos</span>
-                    </div>
+                <div className={styles.repoList}>
+                  {githubActivity.recentRepos.map((repo) => (
+                    <a
+                      key={repo.url}
+                      href={repo.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={styles.repoRow}
+                    >
+                      <span className={styles.repoName}>{repo.name}</span>
+                      {repo.language ? (
+                        <span className={`hud-label ${styles.repoLang}`}>{repo.language}</span>
+                      ) : null}
+                    </a>
                   ))}
                 </div>
                 <p className={`hud-label ${styles.githubNote}`}>
-                  @{githubActivity.username} · {githubActivity.publicRepos} repositorios públicos
+                  @{githubActivity.username} · {githubActivity.publicRepos} repositorios públicos en total
                 </p>
               </>
             ) : (
