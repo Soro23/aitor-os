@@ -6,7 +6,7 @@
 }
 
 .grid {
-  max-width: 1200px;
+  max-width: var(--content-max-width);
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr;
@@ -76,7 +76,7 @@
 }
 
 .bottom {
-  max-width: 1200px;
+  max-width: var(--content-max-width);
   margin: var(--space-6) auto 0;
   padding-top: var(--space-4);
   border-top: var(--border-width) solid var(--color-border);
@@ -90,6 +90,11 @@
   color: var(--color-text-secondary);
   font-size: var(--font-size-xs);
   margin: 0;
+}
+
+.copyright span {
+  font-size: xx-large;
+  vertical-align: middle;
 }
 
 .adminLink {
@@ -118,9 +123,3 @@
   }
 }
 
-@media (min-width: 1440px) {
-  .grid,
-  .bottom {
-    max-width: 1400px;
-  }
-}

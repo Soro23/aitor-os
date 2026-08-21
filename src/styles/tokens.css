@@ -56,6 +56,11 @@
 
   --letter-spacing-chrome: 0.08em;
 
+  /* Layout — ancho de contenido de página, tomado de la home (referencia
+     de ancho para el resto de páginas públicas: layout.module.css .main,
+     SiteFooter, y cualquier page.module.css con su propio .mainInner). */
+  --content-max-width: 1400px;
+
   /* Spacing (escala base 4px) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
