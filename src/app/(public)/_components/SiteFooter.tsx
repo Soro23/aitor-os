@@ -107,7 +107,7 @@ export function SiteFooter() {
       </div>
 
       <div className={styles.bottom}>
-        <p className={styles.copyright}>Aitor Solana Roca © 2026</p>
+        <p className={`hud-label ${styles.copyright}`}>2026 <span>©</span> Aitor Solana Roca</p>
         <Link href="/admin" className={styles.adminLink}>
           Admin
         </Link>

@@ -92,6 +92,11 @@
   margin: 0;
 }
 
+.copyright span {
+  font-size: xx-large;
+  vertical-align: middle;
+}
+
 .adminLink {
   color: var(--color-text-secondary);
   text-decoration: none;
