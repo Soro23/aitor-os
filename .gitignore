@@ -33,3 +33,6 @@ yarn-error.log*
 # supabase
 supabase/.branches
 supabase/.temp
+
+# notas internas de negocio, no forman parte del contenido del proyecto
+/docs/sop/
