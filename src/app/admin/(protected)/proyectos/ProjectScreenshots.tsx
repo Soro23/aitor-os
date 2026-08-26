@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import {
   addProjectScreenshot,
   removeProjectScreenshot,
+  updateProjectScreenshot,
 } from "@/server/actions/project-screenshots.actions";
 import { FileUploader } from "@/components/ui/FileUploader/FileUploader";
 import { MAX_SCREENSHOTS_PER_PROJECT } from "@/lib/validation/project-screenshot.schema";
@@ -67,6 +68,22 @@ export function ProjectScreenshots({ projectId, screenshots }: ProjectScreenshot
     });
   }
 
+  function handleAltTextSave(id: string, altText: string, previous: string | null) {
+    if (altText === (previous ?? "")) return;
+    setError(null);
+    startTransition(async () => {
+      try {
+        await updateProjectScreenshot(id, { altText });
+        router.refresh();
+      } catch (err) {
+        const detail = err instanceof Error ? err.message : undefined;
+        setError(
+          detail ? `No se pudo guardar la descripción: ${detail}` : "No se pudo guardar la descripción.",
+        );
+      }
+    });
+  }
+
   function handleRemove(id: string) {
     setError(null);
     startTransition(async () => {
@@ -92,7 +109,20 @@ export function ProjectScreenshots({ projectId, screenshots }: ProjectScreenshot
             <li key={shot.id} className={styles.item}>
               {/* eslint-disable-next-line @next/next/no-img-element -- URLs externas de Storage, sin loader de next/image configurado todavia */}
               <img src={shot.imageUrl} alt={shot.altText ?? ""} className={styles.thumbnail} />
-              <span className={styles.altText}>{shot.altText || "Sin descripción"}</span>
+              <input
+                key={shot.id}
+                type="text"
+                defaultValue={shot.altText ?? ""}
+                placeholder="Descripción (texto alternativo)"
+                className={`${formStyles.input} ${styles.altTextInput}`}
+                disabled={isPending}
+                onBlur={(event) =>
+                  handleAltTextSave(shot.id, event.target.value.trim(), shot.altText)
+                }
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") event.currentTarget.blur();
+                }}
+              />
               <button
                 type="button"
                 className={listStyles.deleteButton}

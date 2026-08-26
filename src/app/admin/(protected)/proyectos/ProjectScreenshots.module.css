@@ -31,10 +31,8 @@
   flex-shrink: 0;
 }
 
-.altText {
+.altTextInput {
   flex: 1;
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
 }
 
 .empty {
