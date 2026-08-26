@@ -18,35 +18,29 @@ async function revalidateProjectScreenshotPaths(projectId: string) {
   if (project) revalidatePath(`/proyectos/${project.slug}`);
 }
 
-export interface AddProjectScreenshotsInput {
+export interface AddProjectScreenshotInput {
   projectId: string;
-  files: File[];
+  file: File;
 }
 
-export async function addProjectScreenshots(input: AddProjectScreenshotsInput) {
+export async function addProjectScreenshot(input: AddProjectScreenshotInput) {
   await requireAdmin();
-  if (input.files.length === 0) return { success: true, screenshots: [] };
 
   const existing = await projectScreenshotsRepository.findByProjectId(input.projectId);
-  if (existing.length + input.files.length > MAX_SCREENSHOTS_PER_PROJECT) {
-    throw new Error(
-      `Máximo ${MAX_SCREENSHOTS_PER_PROJECT} capturas por proyecto (ya hay ${existing.length}).`,
-    );
+  if (existing.length >= MAX_SCREENSHOTS_PER_PROJECT) {
+    throw new Error(`Máximo ${MAX_SCREENSHOTS_PER_PROJECT} capturas por proyecto.`);
   }
 
-  const screenshots = [];
-  for (const [index, file] of input.files.entries()) {
-    const imageUrl = await projectImagesRepository.upload(file, input.projectId, "screenshot");
-    const data = parseOrThrowReadable(createProjectScreenshotSchema, {
-      projectId: input.projectId,
-      imageUrl,
-      sortOrder: existing.length + index,
-    });
-    screenshots.push(await projectScreenshotsRepository.create(data));
-  }
+  const imageUrl = await projectImagesRepository.upload(input.file, input.projectId, "screenshot");
+  const data = parseOrThrowReadable(createProjectScreenshotSchema, {
+    projectId: input.projectId,
+    imageUrl,
+    sortOrder: existing.length,
+  });
+  const screenshot = await projectScreenshotsRepository.create(data);
 
   await revalidateProjectScreenshotPaths(input.projectId);
-  return { success: true, screenshots };
+  return { success: true, screenshot };
 }
 
 export async function updateProjectScreenshot(id: string, input: unknown) {

@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
-  addProjectScreenshots,
+  addProjectScreenshot,
   removeProjectScreenshot,
 } from "@/server/actions/project-screenshots.actions";
 import { FileUploader } from "@/components/ui/FileUploader/FileUploader";
@@ -22,6 +22,7 @@ export function ProjectScreenshots({ projectId, screenshots }: ProjectScreenshot
   const router = useRouter();
   const [files, setFiles] = useState<File[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const remainingSlots = MAX_SCREENSHOTS_PER_PROJECT - screenshots.length;
@@ -42,15 +43,27 @@ export function ProjectScreenshots({ projectId, screenshots }: ProjectScreenshot
   function handleAdd() {
     if (files.length === 0) return;
     setError(null);
+    const pending = files;
     startTransition(async () => {
-      try {
-        await addProjectScreenshots({ projectId, files });
-        setFiles([]);
-        router.refresh();
-      } catch (err) {
-        const detail = err instanceof Error ? err.message : undefined;
-        setError(detail ? `No se pudieron subir las capturas: ${detail}` : "No se pudieron subir las capturas.");
+      setProgress({ done: 0, total: pending.length });
+      for (const [index, file] of pending.entries()) {
+        try {
+          await addProjectScreenshot({ projectId, file });
+          setProgress({ done: index + 1, total: pending.length });
+        } catch (err) {
+          const detail = err instanceof Error ? err.message : undefined;
+          setError(
+            `Se subieron ${index} de ${pending.length} capturas. Falló "${file.name}"${detail ? `: ${detail}` : "."}`,
+          );
+          setFiles(pending.slice(index));
+          setProgress(null);
+          router.refresh();
+          return;
+        }
       }
+      setFiles([]);
+      setProgress(null);
+      router.refresh();
     });
   }
 
@@ -117,7 +130,7 @@ export function ProjectScreenshots({ projectId, screenshots }: ProjectScreenshot
             disabled={isPending || files.length === 0}
             onClick={handleAdd}
           >
-            {isPending ? "Subiendo..." : "Añadir"}
+            {progress ? `Subiendo ${progress.done}/${progress.total}...` : "Añadir"}
           </button>
         </div>
       )}
