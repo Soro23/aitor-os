@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { Panel } from "@/components/ui/Panel/Panel";
 import { StatusBadge } from "@/components/ui/StatusBadge/StatusBadge";
 import { ProgressBar } from "@/components/ui/ProgressBar/ProgressBar";
@@ -30,8 +31,14 @@ export default async function ProjectDetailPage({
     <div className={styles.stack}>
       {view.coverImageUrl ? (
         <div className={styles.hero}>
-          {/* eslint-disable-next-line @next/next/no-img-element -- URLs externas de Storage, sin loader de next/image configurado todavia */}
-          <img src={view.coverImageUrl} alt="" className={styles.heroImage} />
+          <Image
+            src={view.coverImageUrl}
+            alt=""
+            fill
+            sizes="100vw"
+            preload
+            style={{ objectFit: "cover" }}
+          />
           <div className={styles.heroOverlay}>
             <p className="hud-label">Proyecto</p>
             <h1 className={styles.heroTitle}>{view.name}</h1>

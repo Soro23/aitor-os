@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ClipCard } from "@/components/ui/ClipCard/ClipCard";
 import { StatusBadge } from "@/components/ui/StatusBadge/StatusBadge";
 import { ProgressBar } from "@/components/ui/ProgressBar/ProgressBar";
@@ -31,8 +32,15 @@ export default async function ProyectosPage() {
             accent={projectStatusTone(project.status)}
           >
             {project.coverImageUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element -- URLs externas de Storage, sin loader de next/image configurado todavia
-              <img src={project.coverImageUrl} alt="" className={styles.cover} />
+              <div className={styles.coverWrap}>
+                <Image
+                  src={project.coverImageUrl}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
             ) : null}
             <StatusBadge
               label={projectStatusLabel(project.status)}

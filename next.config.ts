@@ -1,7 +1,26 @@
 import type { NextConfig } from "next";
 
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseOrigin = supabaseUrl ? new URL(supabaseUrl) : undefined;
+
 const nextConfig: NextConfig = {
   output: "standalone",
+  images: {
+    remotePatterns: supabaseOrigin
+      ? [
+          {
+            protocol: supabaseOrigin.protocol.replace(":", "") as "http" | "https",
+            hostname: supabaseOrigin.hostname,
+            port: supabaseOrigin.port,
+            pathname: "/storage/v1/object/public/project-images/**",
+          },
+        ]
+      : [],
+    // El Supabase self-hosted vive en la misma red privada que la app (ver
+    // nota de entorno en CLAUDE.md) — sin esto next/image rechaza optimizar
+    // imágenes servidas desde una IP privada.
+    dangerouslyAllowLocalIP: true,
+  },
   experimental: {
     serverActions: {
       // Cada imagen de proyecto (portada, o una captura por llamada en la

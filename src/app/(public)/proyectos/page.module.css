@@ -10,12 +10,13 @@
   display: block;
 }
 
-.cover {
+.coverWrap {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
   border: var(--border-width) solid var(--color-border);
   margin-bottom: var(--space-3);
+  overflow: hidden;
 }
 
 @media (min-width: 768px) {
