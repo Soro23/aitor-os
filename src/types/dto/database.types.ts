@@ -49,6 +49,7 @@ export type Database = {
           demo_url: string | null;
           learnings: string | null;
           next_steps: string | null;
+          cover_image_url: string | null;
           is_published: boolean;
           is_featured: boolean;
           sort_order: number;
@@ -70,6 +71,7 @@ export type Database = {
           demo_url?: string | null;
           learnings?: string | null;
           next_steps?: string | null;
+          cover_image_url?: string | null;
           is_published?: boolean;
           is_featured?: boolean;
           sort_order?: number;
@@ -91,6 +93,7 @@ export type Database = {
           demo_url?: string | null;
           learnings?: string | null;
           next_steps?: string | null;
+          cover_image_url?: string | null;
           is_published?: boolean;
           is_featured?: boolean;
           sort_order?: number;

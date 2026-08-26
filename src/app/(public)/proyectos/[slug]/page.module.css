@@ -10,6 +10,13 @@
   margin: var(--space-3) 0;
 }
 
+.coverImage {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border: var(--border-width) solid var(--color-border);
+}
+
 .meta {
   display: flex;
   flex-wrap: wrap;

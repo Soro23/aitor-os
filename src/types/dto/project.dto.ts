@@ -17,6 +17,7 @@ export interface ProjectDTO {
   progress: number;
   githubUrl: string | null;
   demoUrl: string | null;
+  coverImageUrl: string | null;
   learnings: string | null;
   nextSteps: string | null;
   isPublished: boolean;
@@ -40,6 +41,7 @@ export interface ProjectPublicView {
   progress: number;
   githubUrl: string | null;
   demoUrl: string | null;
+  coverImageUrl: string | null;
   learnings: string | null;
   nextSteps: string | null;
   screenshots: ProjectScreenshotDTO[];
@@ -62,6 +64,7 @@ export function toProjectPublicView(
     progress: project.progress,
     githubUrl: project.githubUrl,
     demoUrl: project.demoUrl,
+    coverImageUrl: project.coverImageUrl,
     learnings: project.learnings,
     nextSteps: project.nextSteps,
     screenshots,

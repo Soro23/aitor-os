@@ -104,6 +104,19 @@ describe("projectsRepository", () => {
     expect(updated.description).toBe("Descripcion original");
   });
 
+  it("guarda y actualiza coverImageUrl", async () => {
+    const seeded = await seedProject();
+    const { projectsRepository } = await import("@/server/repositories/projects.repository");
+
+    const withCover = await projectsRepository.update(seeded.id, {
+      coverImageUrl: "https://storage.example.com/project-images/p1/cover-abc.png",
+    });
+    expect(withCover.coverImageUrl).toBe("https://storage.example.com/project-images/p1/cover-abc.png");
+
+    const untouched = await projectsRepository.update(seeded.id, { name: "Otro nombre" });
+    expect(untouched.coverImageUrl).toBe("https://storage.example.com/project-images/p1/cover-abc.png");
+  });
+
   it("delete elimina el proyecto", async () => {
     const seeded = await seedProject();
     const { projectsRepository } = await import("@/server/repositories/projects.repository");

@@ -10,6 +10,14 @@
   display: block;
 }
 
+.cover {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: var(--border-width) solid var(--color-border);
+  margin-bottom: var(--space-3);
+}
+
 @media (min-width: 768px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);

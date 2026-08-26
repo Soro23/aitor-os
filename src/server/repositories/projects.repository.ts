@@ -19,6 +19,7 @@ function toDTO(row: ProjectRow): ProjectDTO {
     progress: row.progress,
     githubUrl: row.github_url,
     demoUrl: row.demo_url,
+    coverImageUrl: row.cover_image_url,
     learnings: row.learnings,
     nextSteps: row.next_steps,
     isPublished: row.is_published,
@@ -106,6 +107,7 @@ export const projectsRepository = {
         progress: input.progress,
         github_url: input.githubUrl || null,
         demo_url: input.demoUrl || null,
+        cover_image_url: input.coverImageUrl || null,
         learnings: input.learnings ?? null,
         next_steps: input.nextSteps ?? null,
         is_published: input.isPublished,
@@ -134,6 +136,7 @@ export const projectsRepository = {
     if (input.progress !== undefined) patch.progress = input.progress;
     if (input.githubUrl !== undefined) patch.github_url = input.githubUrl || null;
     if (input.demoUrl !== undefined) patch.demo_url = input.demoUrl || null;
+    if (input.coverImageUrl !== undefined) patch.cover_image_url = input.coverImageUrl || null;
     if (input.learnings !== undefined) patch.learnings = input.learnings;
     if (input.nextSteps !== undefined) patch.next_steps = input.nextSteps;
     if (input.isPublished !== undefined) patch.is_published = input.isPublished;

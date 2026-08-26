@@ -28,6 +28,10 @@ export default async function ProjectDetailPage({
       <Panel accent={projectStatusTone(view.status)}>
         <p className="hud-label">Proyecto</p>
         <h1 className={styles.title}>{view.name}</h1>
+        {view.coverImageUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element -- URLs externas de Storage, sin loader de next/image configurado todavia
+          <img src={view.coverImageUrl} alt="" className={styles.coverImage} />
+        ) : null}
         <div className={styles.meta}>
           <StatusBadge label={projectStatusLabel(view.status)} tone={projectStatusTone(view.status)} />
           <ProgressBar value={view.progress} label="Progreso" tone={projectStatusTone(view.status)} />

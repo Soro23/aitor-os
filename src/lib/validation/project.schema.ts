@@ -30,6 +30,7 @@ const baseProjectFields = {
   progress: z.number().int().min(0).max(100).default(0),
   githubUrl: optionalUrl,
   demoUrl: optionalUrl,
+  coverImageUrl: optionalUrl,
   learnings: z.string().optional(),
   nextSteps: z.string().optional(),
   isPublished: z.boolean().default(false),
