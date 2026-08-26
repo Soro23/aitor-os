@@ -6,15 +6,9 @@
 
 .hero {
   position: relative;
+  height: min(50vh, 460px);
   border: var(--border-width) solid var(--color-border);
   overflow: hidden;
-}
-
-.heroImage {
-  display: block;
-  width: 100%;
-  height: min(50vh, 460px);
-  object-fit: cover;
 }
 
 .heroOverlay {

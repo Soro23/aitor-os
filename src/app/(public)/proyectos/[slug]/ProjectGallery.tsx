@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Modal } from "@/components/ui/Modal/Modal";
 import type { ProjectScreenshotDTO } from "@/types/dto/project-screenshot.dto";
 import styles from "./ProjectGallery.module.css";
@@ -45,11 +46,13 @@ export function ProjectGallery({ projectName, screenshots }: ProjectGalleryProps
             onClick={() => setOpenIndex(index)}
             aria-label={`Ampliar captura ${index + 1} de ${screenshots.length}`}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element -- URLs externas de Storage, sin loader de next/image configurado todavia */}
-            <img
+            <Image
               src={shot.imageUrl}
               alt={shot.altText || `${projectName} — captura ${index + 1}`}
+              fill
+              sizes="(min-width: 640px) 33vw, 50vw"
               className={styles.thumb}
+              style={{ objectFit: "cover" }}
             />
           </button>
         ))}
@@ -63,12 +66,15 @@ export function ProjectGallery({ projectName, screenshots }: ProjectGalleryProps
       >
         {current ? (
           <div className={styles.viewer}>
-            {/* eslint-disable-next-line @next/next/no-img-element -- URLs externas de Storage, sin loader de next/image configurado todavia */}
-            <img
-              src={current.imageUrl}
-              alt={current.altText || `${projectName} — captura ${(openIndex ?? 0) + 1}`}
-              className={styles.fullImage}
-            />
+            <div className={styles.fullImageWrap}>
+              <Image
+                src={current.imageUrl}
+                alt={current.altText || `${projectName} — captura ${(openIndex ?? 0) + 1}`}
+                fill
+                sizes="(min-width: 640px) 1100px, 92vw"
+                style={{ objectFit: "contain" }}
+              />
+            </div>
             {screenshots.length > 1 ? (
               <div className={styles.nav}>
                 <button
