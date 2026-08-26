@@ -47,8 +47,9 @@ export function ProjectScreenshots({ projectId, screenshots }: ProjectScreenshot
         await addProjectScreenshots({ projectId, files });
         setFiles([]);
         router.refresh();
-      } catch {
-        setError("No se pudieron subir las capturas.");
+      } catch (err) {
+        const detail = err instanceof Error ? err.message : undefined;
+        setError(detail ? `No se pudieron subir las capturas: ${detail}` : "No se pudieron subir las capturas.");
       }
     });
   }
@@ -59,8 +60,9 @@ export function ProjectScreenshots({ projectId, screenshots }: ProjectScreenshot
       try {
         await removeProjectScreenshot(id);
         router.refresh();
-      } catch {
-        setError("No se pudo quitar la captura.");
+      } catch (err) {
+        const detail = err instanceof Error ? err.message : undefined;
+        setError(detail ? `No se pudo quitar la captura: ${detail}` : "No se pudo quitar la captura.");
       }
     });
   }

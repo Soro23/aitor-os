@@ -7,6 +7,7 @@ import {
   updateProjectScreenshotSchema,
   MAX_SCREENSHOTS_PER_PROJECT,
 } from "@/lib/validation/project-screenshot.schema";
+import { parseOrThrowReadable } from "@/lib/validation/parse-or-throw-readable";
 import { projectScreenshotsRepository } from "@/server/repositories/project-screenshots.repository";
 import { projectImagesRepository } from "@/server/repositories/project-images.repository";
 import { projectsRepository } from "@/server/repositories/projects.repository";
@@ -36,7 +37,7 @@ export async function addProjectScreenshots(input: AddProjectScreenshotsInput) {
   const screenshots = [];
   for (const [index, file] of input.files.entries()) {
     const imageUrl = await projectImagesRepository.upload(file, input.projectId, "screenshot");
-    const data = createProjectScreenshotSchema.parse({
+    const data = parseOrThrowReadable(createProjectScreenshotSchema, {
       projectId: input.projectId,
       imageUrl,
       sortOrder: existing.length + index,

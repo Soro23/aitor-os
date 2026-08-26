@@ -1,23 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { ZodError } from "zod";
 import { requireAdmin } from "@/lib/auth/requireAdmin";
 import { createProjectSchema, updateProjectSchema } from "@/lib/validation/project.schema";
+import { parseOrThrowReadable } from "@/lib/validation/parse-or-throw-readable";
 import { projectsRepository } from "@/server/repositories/projects.repository";
 import { projectImagesRepository } from "@/server/repositories/project-images.repository";
-
-function parseOrThrowReadable<T>(schema: { parse: (input: unknown) => T }, input: unknown): T {
-  try {
-    return schema.parse(input);
-  } catch (err) {
-    if (err instanceof ZodError) {
-      const detail = err.issues.map((issue) => `${issue.path.join(".") || "campo"}: ${issue.message}`).join(" · ");
-      throw new Error(detail);
-    }
-    throw err;
-  }
-}
 
 function revalidateProjectPaths(slug?: string) {
   revalidatePath("/");
