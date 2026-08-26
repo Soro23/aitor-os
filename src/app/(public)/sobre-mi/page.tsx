@@ -4,12 +4,13 @@ import { SOCIAL_LINKS } from "@/lib/social-links";
 import styles from "./page.module.css";
 
 const EVOLUTION = [
-  { year: "2024", tone: "cyan" as const, label: "init:", description: "empiezo a profundizar en sistemas" },
-  { year: "2025", tone: "violet" as const, label: "feat:", description: "Active Directory / Windows Server" },
-  { year: "2026", tone: "cyan" as const, label: "feat:", description: "desarrollo + IA + automatización" },
+  { year: "2012", tone: "violet" as const, label: "chore:", description: "hostelería + formación + proyectos personales por mi cuenta" },
+  { year: "2019", tone: "cyan" as const, label: "feat:", description: "bootcamp DevOps en Netmind — arranco en Interdigital como front-end" },
+  { year: "2024", tone: "violet" as const, label: "feat:", description: "Preico Jurídicos — CRM legal, automatizaciones y la WebApp de Moto2" },
+  { year: "2025", tone: "cyan" as const, label: "feat:", description: "lidero un equipo de programadores en apps privadas de uso interno" },
 ];
 
-function SystemsIcon() {
+function IntegrationsIcon() {
   return (
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect x="4" y="4" width="16" height="6" />
@@ -40,7 +41,7 @@ function AutomationIcon() {
   );
 }
 
-function AiIcon() {
+function ProductIcon() {
   return (
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect x="3" y="3" width="5" height="5" />
@@ -86,26 +87,34 @@ export default function SobreMiPage() {
                   </h1>
                   <div className={styles.identityBio}>
                     <p className={styles.bodyText}>
-                      Soy técnico informático y desarrollador, centrado en sistemas, automatización,
-                      desarrollo e inteligencia artificial. Ahora mismo combino ambos mundos: construyo
-                      aplicaciones y automatizaciones, y sigo aprendiendo infraestructura y arquitectura
-                      backend.
+                      Soy Aitor, desarrollador full-stack con más de 7 años currando en proyectos reales:
+                      ecommerce, integraciones con ERPs, CRMs a medida, automatizaciones. Ahora mismo
+                      trabajo en Preico Jurídicos, donde he montado desde cero el CRM interno del
+                      despacho, una API para sincronizar datos con fuera y hasta una WebApp para
+                      gestionar los patrocinadores de un equipo de Moto2. En paralelo, estos dos últimos
+                      años también he liderado un equipo de programadores en el desarrollo de
+                      aplicaciones privadas de uso interno.
                     </p>
                     <p className={styles.bodyText}>
-                      Me interesan sobre todo los problemas técnicos con capas — sistemas que hay que
-                      entender de arriba a abajo antes de poder mejorarlos. Prefiero publicar ideas en
-                      construcción antes que esperar a tenerlas perfectas, de ahí el Digital Garden.
+                      Antes pasé cinco años en Interdigital como desarrollador front-end, muy metido en
+                      el mundo Magento: módulos para sincronizar tiendas con Dynamics 365 y Sage,
+                      auditorías de seguridad, APIs para conectar frontend y backend. Y antes de eso hubo
+                      un tramo largo, de 2012 a 2019, compaginando trabajos en hostelería con seguir
+                      formándome y sacar adelante proyectos personales por mi cuenta — hasta que un
+                      bootcamp de DevOps me metió de lleno en el stack con el que trabajo hoy.
                     </p>
                     <p className={styles.bodyText}>
-                      Esta web es mi sistema operativo personal público: un reflejo en construcción
-                      constante de en qué estoy trabajando, qué estoy aprendiendo y hacia dónde voy.
+                      Esta web es mi sistema operativo personal público: la uso para documentar en qué
+                      estoy trabajando y qué estoy aprendiendo ahora mismo — en este caso, Next.js,
+                      Supabase self-hosted y despliegue con Docker — en vez de esperar a tenerlo todo
+                      perfecto antes de enseñarlo.
                     </p>
                   </div>
                   <div className={styles.tagsRow}>
-                    <Tag label="Sistemas" />
-                    <Tag label="Desarrollo" />
+                    <Tag label="Full-Stack" />
+                    <Tag label="Integraciones" />
                     <Tag label="Automatización" />
-                    <Tag label="IA" />
+                    <Tag label="Producto" />
                   </div>
                   <div className={styles.heroLinks}>
                     <a href={SOCIAL_LINKS.github} target="_blank" rel="noreferrer" className={`hud-label ${styles.heroLink}`}>
@@ -144,15 +153,15 @@ export default function SobreMiPage() {
               <div className={styles.telemetryStrip}>
                 <div className={styles.telemetryItem}>
                   <span className={`hud-label ${styles.telemetryKey}`}>Rol actual</span>
-                  <span className={styles.telemetryValue}>Técnico + Developer</span>
+                  <span className={styles.telemetryValue}>Full-Stack Developer</span>
                 </div>
                 <div className={styles.telemetryItem}>
                   <span className={`hud-label ${styles.telemetryKey}`}>Enfoque</span>
-                  <span className={styles.telemetryValue}>Sistemas + Dev + IA</span>
+                  <span className={styles.telemetryValue}>Sistemas completos + integraciones</span>
                 </div>
                 <div className={styles.telemetryItem}>
                   <span className={`hud-label ${styles.telemetryKey}`}>Aprendiendo</span>
-                  <span className={styles.telemetryValue}>Arquitectura backend</span>
+                  <span className={styles.telemetryValue}>IA + modelos personalizados</span>
                 </div>
                 <div className={styles.telemetryItem}>
                   <span className={`hud-label ${styles.telemetryKey}`}>Disponibilidad</span>
@@ -177,18 +186,22 @@ export default function SobreMiPage() {
               <div className={styles.termBody}>
                 <p className={styles.termCmd}>tail -f historia.log</p>
                 <p className={styles.termOut}>
-                  <span className={styles.termKeyCyan}>[origen]</span> Empecé por el lado de sistemas —
-                  Active Directory, Windows Server, redes — resolviendo problemas del día a día en
-                  infraestructuras reales.
+                  <span className={styles.termKeyCyan}>[origen]</span> Estudié Sistemas Microinformáticos
+                  y Redes y después el Grado Superior de Desarrollo de Aplicaciones — ahí programé mi
+                  primera app de verdad, conectada a un TPV, y aprendí SOLID casi sin darme cuenta.
                 </p>
                 <p className={styles.termOut}>
-                  <span className={styles.termKeyViolet}>[giro]</span> Desde ahí me fui moviendo hacia el
-                  desarrollo y la inteligencia artificial, sin dejar atrás esa base.
+                  <span className={styles.termKeyViolet}>[giro]</span> Los primeros años curré en cosas
+                  muy distintas — comunicación en tiempo real para una app de spinning en INRETI,
+                  inventario para una concesionaria online en ebuga — y después vino un tramo largo, de
+                  2012 a 2019, compaginando hostelería con formación y proyectos propios, hasta que un
+                  bootcamp de DevOps en Netmind me metió de lleno en el stack con el que trabajo hoy.
                 </p>
                 <p className={styles.termOut}>
-                  <span className={styles.termKeyGreen}>[hoy]</span> Entender cómo funciona algo de arriba
-                  a abajo antes de intentar mejorarlo sigue siendo mi forma de acercarme a cualquier
-                  problema técnico.
+                  <span className={styles.termKeyGreen}>[hoy]</span> Desde entonces no he dejado de
+                  meterme en proyectos con muchas piezas moviéndose a la vez — y en los últimos años
+                  también en liderar equipo — pero sigo con la misma costumbre: entender el sistema
+                  completo antes de tocar nada.
                 </p>
                 <p><span className={styles.termCursor} /></p>
               </div>
@@ -200,46 +213,67 @@ export default function SobreMiPage() {
             <SectionLabel number="02" label="Cómo pienso" accent="cyan" />
             <div className={styles.essay}>
               <p className={styles.essayText}>
-                Me muevo entre cuatro terrenos que se solapan más de lo que parece: los{" "}
-                <em className={styles.emCyan}>sistemas</em> que sostienen todo por debajo — Windows
-                Server, Active Directory, redes —, el <em className={styles.emAmber}>desarrollo</em> que
-                construye encima con TypeScript y React, la{" "}
-                <em className={styles.emViolet}>automatización</em> que quita de en medio lo repetitivo
-                con scripts y agentes, y la <em className={styles.emGreen}>inteligencia artificial</em>{" "}
-                como frontera — LLMs, RAG — donde estoy aprendiendo ahora mismo.
+                Me muevo entre cuatro terrenos que en la práctica están todo el rato pisándose: el{" "}
+                <em className={styles.emCyan}>desarrollo full-stack</em> — Next.js, React, Node, PHP —
+                que es la base de casi todo lo que he hecho, las{" "}
+                <em className={styles.emAmber}>integraciones y APIs</em> que conectan sistemas que no
+                nacieron pensados para hablar entre sí — ERPs, pasarelas de pago, TPVs —, la{" "}
+                <em className={styles.emViolet}>automatización</em> de lo repetitivo — pagos,
+                facturación, sincronización de stock — y construir{" "}
+                <em className={styles.emGreen}>producto propio</em> desde cero, que es lo que más me
+                llena cuando se da la oportunidad.
               </p>
 
               <div className={styles.iconRow}>
                 <div className={styles.iconItem}>
-                  <span style={{ color: "var(--color-accent-cyan)" }}><SystemsIcon /></span>
-                  <span className={`hud-label ${styles.iconLabel}`}>Sistemas</span>
+                  <span style={{ color: "var(--color-accent-cyan)" }}><DevelopmentIcon /></span>
+                  <span className={`hud-label ${styles.iconLabel}`}>Full-Stack</span>
                 </div>
                 <div className={styles.iconItem}>
-                  <span style={{ color: "var(--color-accent-amber)" }}><DevelopmentIcon /></span>
-                  <span className={`hud-label ${styles.iconLabel}`}>Desarrollo</span>
+                  <span style={{ color: "var(--color-accent-amber)" }}><IntegrationsIcon /></span>
+                  <span className={`hud-label ${styles.iconLabel}`}>Integraciones</span>
                 </div>
                 <div className={styles.iconItem}>
                   <span style={{ color: "var(--color-accent-violet)" }}><AutomationIcon /></span>
                   <span className={`hud-label ${styles.iconLabel}`}>Automatización</span>
                 </div>
                 <div className={styles.iconItem}>
-                  <span style={{ color: "var(--color-accent-green)" }}><AiIcon /></span>
-                  <span className={`hud-label ${styles.iconLabel}`}>IA</span>
+                  <span style={{ color: "var(--color-accent-green)" }}><ProductIcon /></span>
+                  <span className={`hud-label ${styles.iconLabel}`}>Producto</span>
                 </div>
               </div>
 
               <p className={styles.essayText}>
-                Ahora mismo eso significa mover a la vez una plataforma de trading y un proyecto de IA
-                para e-commerce — dos problemas con capas distintas que me obligan a aplicar siempre el
-                mismo principio: entender el sistema completo antes de tocar nada, publicar en
-                construcción en vez de esperar a que esté perfecto, y documentar lo que aprendo por el
-                camino en el Garden.
+                Ahora mismo eso significa llevar varios frentes a la vez, y no todos tiran hacia el mismo
+                lado. En Preico Jurídicos monté el CRM interno del despacho desde cero y la API que lo
+                conecta con el resto de herramientas, así que cualquier cambio ahí lo pienso con cuidado
+                — es la pieza que sostiene el día a día de gente que no es técnica. En paralelo llevo la
+                WebApp de patrocinios del equipo de Moto2, que vive en un mundo completamente distinto —
+                presupuestos, contratos, imagen de marca —, y desde hace dos años también lidero un
+                pequeño equipo de programadores construyendo aplicaciones privadas de uso interno, lo que
+                me obliga a pensar no solo en el código sino en cómo se organiza el trabajo de otros. Son
+                proyectos que no se parecen entre sí, pero todos comparten el mismo problema de fondo:
+                hacer que piezas dispersas encajen sin que se note la costura.
+              </p>
+
+              <p className={styles.essayText}>
+                Fuera del horario laboral sigo teniendo la costumbre de construir cosas por mi cuenta —
+                no por currículum, sino porque me pica algo y necesito resolverlo. Utilidades que echaba
+                en falta, experimentos con IA para ver hasta dónde llegan, herramientas pequeñas que
+                solucionan un problema muy mío. Algunos de esos proyectos ya están cerrados y
+                funcionando, otros siguen abiertos y cambiando cada semana, y alguno se ha quedado
+                pausado en un cajón esperando que le vuelva a tocar el turno — no porque haya fracasado,
+                sino porque el foco se fue a otro sitio. Si quieres verlos con más detalle, todos están
+                en <Link href="/proyectos" className={styles.inlineLink}>Proyectos</Link>.
               </p>
 
               <p className={styles.essayClose}>
-                A medio plazo quiero seguir metiéndome en Docker, arquitectura backend y agentes de IA,
-                explorando SaaS y sistemas distribuidos — y que esta web sea el registro real de ese
-                camino, no un portfolio que se queda quieto mientras yo sigo cambiando.
+                A medio plazo quiero meterme más en serio en arquitectura backend, Docker y despliegue
+                real — no solo levantar un contenedor, sino entender bien qué pasa cuando algo falla en
+                producción. De hecho esta misma web es mi terreno de pruebas para eso: Next.js, Supabase
+                self-hosted, Coolify, todo montado y documentado mientras lo aprendo. Quiero que aitor-os
+                sea el registro real de ese camino — no un portfolio bonito que se queda quieto mientras
+                yo sigo cambiando, sino algo que se note que sigue vivo.
               </p>
             </div>
           </section>
@@ -250,7 +284,7 @@ export default function SobreMiPage() {
             <div className={styles.term}>
               <div className={styles.termBar}>
                 <span className={`hud-label ${styles.termPath}`}>guest@aitor-os:~$ ~/sobre-mi/evolucion</span>
-                <span className={`hud-label ${styles.termTag}`}>3 commits</span>
+                <span className={`hud-label ${styles.termTag}`}>{EVOLUTION.length} commits</span>
               </div>
               <div className={styles.termBody}>
                 <p className={styles.termCmd}>git log --oneline evolucion</p>

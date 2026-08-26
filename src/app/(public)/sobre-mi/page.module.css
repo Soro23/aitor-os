@@ -367,6 +367,17 @@
   color: var(--color-accent-green);
 }
 
+.inlineLink {
+  color: var(--color-accent-cyan);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.inlineLink:hover,
+.inlineLink:focus-visible {
+  color: var(--color-accent-secondary);
+}
+
 .iconRow {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
