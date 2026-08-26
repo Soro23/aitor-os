@@ -5,6 +5,7 @@ import { requireAdmin } from "@/lib/auth/requireAdmin";
 import {
   createProjectScreenshotSchema,
   updateProjectScreenshotSchema,
+  MAX_SCREENSHOTS_PER_PROJECT,
 } from "@/lib/validation/project-screenshot.schema";
 import { projectScreenshotsRepository } from "@/server/repositories/project-screenshots.repository";
 import { projectImagesRepository } from "@/server/repositories/project-images.repository";
@@ -16,25 +17,35 @@ async function revalidateProjectScreenshotPaths(projectId: string) {
   if (project) revalidatePath(`/proyectos/${project.slug}`);
 }
 
-export interface AddProjectScreenshotInput {
+export interface AddProjectScreenshotsInput {
   projectId: string;
-  file: File;
-  altText?: string;
-  sortOrder?: number;
+  files: File[];
 }
 
-export async function addProjectScreenshot(input: AddProjectScreenshotInput) {
+export async function addProjectScreenshots(input: AddProjectScreenshotsInput) {
   await requireAdmin();
-  const imageUrl = await projectImagesRepository.upload(input.file, input.projectId, "screenshot");
-  const data = createProjectScreenshotSchema.parse({
-    projectId: input.projectId,
-    imageUrl,
-    altText: input.altText,
-    sortOrder: input.sortOrder,
-  });
-  const screenshot = await projectScreenshotsRepository.create(data);
+  if (input.files.length === 0) return { success: true, screenshots: [] };
+
+  const existing = await projectScreenshotsRepository.findByProjectId(input.projectId);
+  if (existing.length + input.files.length > MAX_SCREENSHOTS_PER_PROJECT) {
+    throw new Error(
+      `Máximo ${MAX_SCREENSHOTS_PER_PROJECT} capturas por proyecto (ya hay ${existing.length}).`,
+    );
+  }
+
+  const screenshots = [];
+  for (const [index, file] of input.files.entries()) {
+    const imageUrl = await projectImagesRepository.upload(file, input.projectId, "screenshot");
+    const data = createProjectScreenshotSchema.parse({
+      projectId: input.projectId,
+      imageUrl,
+      sortOrder: existing.length + index,
+    });
+    screenshots.push(await projectScreenshotsRepository.create(data));
+  }
+
   await revalidateProjectScreenshotPaths(input.projectId);
-  return { success: true, screenshot };
+  return { success: true, screenshots };
 }
 
 export async function updateProjectScreenshot(id: string, input: unknown) {

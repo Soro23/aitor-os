@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const MAX_SCREENSHOTS_PER_PROJECT = 10;
+
 export const createProjectScreenshotSchema = z.object({
   projectId: z.uuid("projectId debe ser un uuid valido."),
   imageUrl: z.url("URL de imagen invalida."),
