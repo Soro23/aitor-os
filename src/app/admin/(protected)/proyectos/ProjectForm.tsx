@@ -57,8 +57,13 @@ export function ProjectForm({ project }: ProjectFormProps) {
         } else {
           await createProject(input);
         }
-      } catch {
-        return { error: "No se pudo guardar el proyecto. Revisa los campos." };
+      } catch (err) {
+        const detail = err instanceof Error ? err.message : undefined;
+        return {
+          error: detail
+            ? `No se pudo guardar el proyecto: ${detail}`
+            : "No se pudo guardar el proyecto. Revisa los campos.",
+        };
       }
 
       router.push("/admin/proyectos");
