@@ -63,4 +63,22 @@ describe("createProjectSchema", () => {
     const result = createProjectSchema.safeParse({ ...validInput, githubUrl: "" });
     expect(result.success).toBe(true);
   });
+
+  it("acepta una coverImageUrl valida", () => {
+    const result = createProjectSchema.safeParse({
+      ...validInput,
+      coverImageUrl: "https://storage.example.com/project-images/p1/cover-abc.png",
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("acepta coverImageUrl vacia (campo opcional)", () => {
+    const result = createProjectSchema.safeParse({ ...validInput, coverImageUrl: "" });
+    expect(result.success).toBe(true);
+  });
+
+  it("rechaza una coverImageUrl invalida", () => {
+    const result = createProjectSchema.safeParse({ ...validInput, coverImageUrl: "no-es-una-url" });
+    expect(result.success).toBe(false);
+  });
 });

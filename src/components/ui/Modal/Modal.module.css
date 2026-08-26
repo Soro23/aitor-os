@@ -19,6 +19,13 @@
   box-shadow: 0 20px 40px rgba(28, 20, 32, 0.2);
 }
 
+.dialog.lg {
+  max-width: min(92vw, 1100px);
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .sideBar {
   position: absolute;
   top: 0;

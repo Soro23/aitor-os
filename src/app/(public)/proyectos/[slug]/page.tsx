@@ -2,10 +2,12 @@ import { notFound } from "next/navigation";
 import { Panel } from "@/components/ui/Panel/Panel";
 import { StatusBadge } from "@/components/ui/StatusBadge/StatusBadge";
 import { ProgressBar } from "@/components/ui/ProgressBar/ProgressBar";
+import { Tag } from "@/components/ui/Tag/Tag";
 import { projectsRepository } from "@/server/repositories/projects.repository";
 import { projectScreenshotsRepository } from "@/server/repositories/project-screenshots.repository";
 import { toProjectPublicView } from "@/types/dto/project.dto";
 import { projectStatusLabel, projectStatusTone } from "@/lib/project-status";
+import { ProjectGallery } from "./ProjectGallery";
 import styles from "./page.module.css";
 
 export default async function ProjectDetailPage({
@@ -22,17 +24,40 @@ export default async function ProjectDetailPage({
 
   const screenshots = await projectScreenshotsRepository.findByProjectId(project.id);
   const view = toProjectPublicView(project, screenshots);
+  const tone = projectStatusTone(view.status);
 
   return (
     <div className={styles.stack}>
-      <Panel accent={projectStatusTone(view.status)}>
-        <p className="hud-label">Proyecto</p>
-        <h1 className={styles.title}>{view.name}</h1>
+      {view.coverImageUrl ? (
+        <div className={styles.hero}>
+          {/* eslint-disable-next-line @next/next/no-img-element -- URLs externas de Storage, sin loader de next/image configurado todavia */}
+          <img src={view.coverImageUrl} alt="" className={styles.heroImage} />
+          <div className={styles.heroOverlay}>
+            <p className="hud-label">Proyecto</p>
+            <h1 className={styles.heroTitle}>{view.name}</h1>
+          </div>
+        </div>
+      ) : null}
+
+      <Panel accent={tone}>
+        {!view.coverImageUrl ? (
+          <>
+            <p className="hud-label">Proyecto</p>
+            <h1 className={styles.title}>{view.name}</h1>
+          </>
+        ) : null}
         <div className={styles.meta}>
-          <StatusBadge label={projectStatusLabel(view.status)} tone={projectStatusTone(view.status)} />
-          <ProgressBar value={view.progress} label="Progreso" tone={projectStatusTone(view.status)} />
+          <StatusBadge label={projectStatusLabel(view.status)} tone={tone} />
+          <ProgressBar value={view.progress} label="Progreso" tone={tone} />
         </div>
         {view.description ? <p className={styles.description}>{view.description}</p> : null}
+        {view.technologies.length > 0 ? (
+          <div className={styles.tags}>
+            {view.technologies.map((tech) => (
+              <Tag key={tech} label={tech} />
+            ))}
+          </div>
+        ) : null}
         <div className={styles.links}>
           {view.githubUrl ? (
             <a href={view.githubUrl} target="_blank" rel="noreferrer" className={styles.link}>
@@ -46,6 +71,13 @@ export default async function ProjectDetailPage({
           ) : null}
         </div>
       </Panel>
+
+      {view.screenshots.length > 0 ? (
+        <Panel accent={tone}>
+          <p className="hud-label">Galería</p>
+          <ProjectGallery projectName={view.name} screenshots={view.screenshots} />
+        </Panel>
+      ) : null}
 
       {view.problem ? (
         <Panel>
@@ -68,13 +100,6 @@ export default async function ProjectDetailPage({
         </Panel>
       ) : null}
 
-      {view.technologies.length > 0 ? (
-        <Panel>
-          <p className="hud-label">Tecnologías</p>
-          <p className={styles.text}>{view.technologies.join(" · ")}</p>
-        </Panel>
-      ) : null}
-
       {view.learnings ? (
         <Panel accent="green">
           <p className="hud-label">Aprendizajes</p>
@@ -87,20 +112,6 @@ export default async function ProjectDetailPage({
           <p className="hud-label">Próximos pasos</p>
           <p className={styles.text}>{view.nextSteps}</p>
         </Panel>
-      ) : null}
-
-      {view.screenshots.length > 0 ? (
-        <div className={styles.screenshots}>
-          {view.screenshots.map((shot) => (
-            // eslint-disable-next-line @next/next/no-img-element -- URLs externas de Storage, sin loader de next/image configurado todavia
-            <img
-              key={shot.id}
-              src={shot.imageUrl}
-              alt={shot.altText ?? view.name}
-              className={styles.screenshot}
-            />
-          ))}
-        </div>
       ) : null}
     </div>
   );

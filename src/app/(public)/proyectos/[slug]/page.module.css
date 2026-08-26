@@ -4,6 +4,37 @@
   gap: var(--space-5);
 }
 
+.hero {
+  position: relative;
+  border: var(--border-width) solid var(--color-border);
+  overflow: hidden;
+}
+
+.heroImage {
+  display: block;
+  width: 100%;
+  height: min(50vh, 460px);
+  object-fit: cover;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  background: linear-gradient(180deg, rgba(20, 16, 26, 0) 0%, rgba(20, 16, 26, 0.85) 100%);
+}
+
+.heroOverlay :global(.hud-label) {
+  color: #f5eef1;
+}
+
+.heroTitle {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-3xl);
+  color: #f5eef1;
+  margin: var(--space-2) 0 0;
+}
+
 .title {
   font-family: var(--font-mono);
   font-size: var(--font-size-2xl);
@@ -21,6 +52,13 @@
 .description {
   color: var(--color-text-secondary);
   max-width: 70ch;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
 }
 
 .links {
@@ -44,22 +82,4 @@
   color: var(--color-text-secondary);
   white-space: pre-wrap;
   max-width: 70ch;
-}
-
-.screenshots {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-4);
-}
-
-.screenshot {
-  width: 100%;
-  height: auto;
-  border: var(--border-width) solid var(--color-border);
-}
-
-@media (min-width: 768px) {
-  .screenshots {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }

@@ -30,6 +30,10 @@ export default async function ProyectosPage() {
             title={project.name}
             accent={projectStatusTone(project.status)}
           >
+            {project.coverImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element -- URLs externas de Storage, sin loader de next/image configurado todavia
+              <img src={project.coverImageUrl} alt="" className={styles.cover} />
+            ) : null}
             <StatusBadge
               label={projectStatusLabel(project.status)}
               tone={projectStatusTone(project.status)}

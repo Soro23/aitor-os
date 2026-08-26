@@ -1,0 +1,84 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+.thumbButton {
+  display: block;
+  padding: 0;
+  border: var(--border-width) solid var(--color-border);
+  background: none;
+  cursor: zoom-in;
+  overflow: hidden;
+}
+
+.thumbButton:hover,
+.thumbButton:focus-visible {
+  border-color: var(--color-accent-cyan);
+  box-shadow: var(--glow-cyan);
+  outline: none;
+}
+
+.thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  transition: transform var(--transition-base);
+}
+
+.thumbButton:hover .thumb {
+  transform: scale(1.03);
+}
+
+.viewer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.fullImage {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border: var(--border-width) solid var(--color-border);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--space-4);
+}
+
+.navButton {
+  background: none;
+  border: var(--border-width) solid var(--color-border);
+  color: var(--color-text-primary);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.navButton:hover,
+.navButton:focus-visible {
+  border-color: var(--color-accent-cyan);
+  color: var(--color-accent-cyan);
+}
+
+.counter {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

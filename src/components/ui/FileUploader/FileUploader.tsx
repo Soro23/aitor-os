@@ -6,10 +6,11 @@ import styles from "./FileUploader.module.css";
 export interface FileUploaderProps {
   label: string;
   hint?: string;
+  multiple?: boolean;
   onFilesSelected: (files: FileList) => void;
 }
 
-export function FileUploader({ label, hint, onFilesSelected }: FileUploaderProps) {
+export function FileUploader({ label, hint, multiple, onFilesSelected }: FileUploaderProps) {
   const [isDragging, setIsDragging] = useState(false);
   const inputId = useId();
 
@@ -39,6 +40,7 @@ export function FileUploader({ label, hint, onFilesSelected }: FileUploaderProps
       <input
         id={inputId}
         type="file"
+        multiple={multiple}
         className={styles.input}
         onChange={(event) => {
           if (event.target.files) onFilesSelected(event.target.files);

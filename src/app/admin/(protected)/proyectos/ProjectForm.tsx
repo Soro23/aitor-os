@@ -1,12 +1,14 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createProject, updateProject } from "@/server/actions/projects.actions";
 import { MarkdownEditor } from "@/components/admin/MarkdownEditor/MarkdownEditor";
+import { FileUploader } from "@/components/ui/FileUploader/FileUploader";
 import { PROJECT_STATUS_VALUES } from "@/lib/validation/project.schema";
 import type { ProjectDTO } from "@/types/dto/project.dto";
 import styles from "@/styles/admin-form.module.css";
+import formStyles from "./ProjectForm.module.css";
 
 interface FormState {
   error?: string;
@@ -42,10 +44,12 @@ export interface ProjectFormProps {
 
 export function ProjectForm({ project }: ProjectFormProps) {
   const router = useRouter();
+  const [coverImageFile, setCoverImageFile] = useState<File | null>(null);
+  const [coverPreview, setCoverPreview] = useState<string | null>(project?.coverImageUrl ?? null);
 
   const [state, formAction, isPending] = useActionState<FormState, FormData>(
     async (_prevState, formData) => {
-      const input = buildInput(formData);
+      const input = { ...buildInput(formData), coverImageFile };
 
       try {
         if (project) {
@@ -53,8 +57,13 @@ export function ProjectForm({ project }: ProjectFormProps) {
         } else {
           await createProject(input);
         }
-      } catch {
-        return { error: "No se pudo guardar el proyecto. Revisa los campos." };
+      } catch (err) {
+        const detail = err instanceof Error ? err.message : undefined;
+        return {
+          error: detail
+            ? `No se pudo guardar el proyecto: ${detail}`
+            : "No se pudo guardar el proyecto. Revisa los campos.",
+        };
       }
 
       router.push("/admin/proyectos");
@@ -62,6 +71,13 @@ export function ProjectForm({ project }: ProjectFormProps) {
     },
     {},
   );
+
+  function handleCoverSelected(files: FileList) {
+    const file = files[0];
+    if (!file) return;
+    setCoverImageFile(file);
+    setCoverPreview(URL.createObjectURL(file));
+  }
 
   return (
     <form action={formAction} className={styles.form}>
@@ -74,6 +90,19 @@ export function ProjectForm({ project }: ProjectFormProps) {
           <span className="hud-label">Slug</span>
           <input name="slug" defaultValue={project?.slug} required className={styles.input} />
         </label>
+      </div>
+
+      <div className={formStyles.coverField}>
+        <span className="hud-label">Imagen principal</span>
+        {coverPreview ? (
+          // eslint-disable-next-line @next/next/no-img-element -- URLs de Storage o previews locales sin loader de next/image configurado todavia
+          <img src={coverPreview} alt="" className={formStyles.coverPreview} />
+        ) : null}
+        <FileUploader
+          label="Arrastra una imagen o haz clic para seleccionarla"
+          hint="PNG, JPG o WebP"
+          onFilesSelected={handleCoverSelected}
+        />
       </div>
 
       <MarkdownEditor

@@ -3,7 +3,9 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth/requireAdmin";
 import { createProjectSchema, updateProjectSchema } from "@/lib/validation/project.schema";
+import { parseOrThrowReadable } from "@/lib/validation/parse-or-throw-readable";
 import { projectsRepository } from "@/server/repositories/projects.repository";
+import { projectImagesRepository } from "@/server/repositories/project-images.repository";
 
 function revalidateProjectPaths(slug?: string) {
   revalidatePath("/");
@@ -12,18 +14,37 @@ function revalidateProjectPaths(slug?: string) {
   if (slug) revalidatePath(`/proyectos/${slug}`);
 }
 
-export async function createProject(input: unknown) {
+interface ProjectFormInput {
+  coverImageFile?: File | null;
+  [key: string]: unknown;
+}
+
+export async function createProject(input: ProjectFormInput) {
   await requireAdmin();
-  const data = createProjectSchema.parse(input);
-  const project = await projectsRepository.create(data);
+  const { coverImageFile, ...rest } = input;
+  const data = parseOrThrowReadable(createProjectSchema, rest);
+
+  let project = await projectsRepository.create(data);
+  if (coverImageFile) {
+    const coverImageUrl = await projectImagesRepository.upload(coverImageFile, project.id, "cover");
+    project = await projectsRepository.update(project.id, { coverImageUrl });
+  }
+
   revalidateProjectPaths(project.slug);
   return { success: true, project };
 }
 
-export async function updateProject(id: string, input: unknown) {
+export async function updateProject(id: string, input: ProjectFormInput) {
   await requireAdmin();
-  const data = updateProjectSchema.parse(input);
-  const project = await projectsRepository.update(id, data);
+  const { coverImageFile, ...rest } = input;
+  const data = parseOrThrowReadable(updateProjectSchema, rest);
+
+  let project = await projectsRepository.update(id, data);
+  if (coverImageFile) {
+    const coverImageUrl = await projectImagesRepository.upload(coverImageFile, id, "cover");
+    project = await projectsRepository.update(id, { coverImageUrl });
+  }
+
   revalidateProjectPaths(project.slug);
   return { success: true, project };
 }

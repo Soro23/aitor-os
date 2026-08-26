@@ -20,6 +20,18 @@ function toDTO(row: ProjectScreenshotRow): ProjectScreenshotDTO {
 }
 
 export const projectScreenshotsRepository = {
+  async findById(id: string): Promise<ProjectScreenshotDTO | null> {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("project_screenshots")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+
+    if (error) throw error;
+    return data ? toDTO(data) : null;
+  },
+
   async findByProjectId(projectId: string): Promise<ProjectScreenshotDTO[]> {
     const supabase = await createClient();
     const { data, error } = await supabase

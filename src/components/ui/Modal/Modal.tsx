@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import styles from "./Modal.module.css";
 
 export interface ModalProps {
@@ -8,9 +9,10 @@ export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
+  size?: "sm" | "lg";
 }
 
-export function Modal({ title, isOpen, onClose, children }: ModalProps) {
+export function Modal({ title, isOpen, onClose, children, size = "sm" }: ModalProps) {
   useEffect(() => {
     if (!isOpen) return;
 
@@ -24,13 +26,13 @@ export function Modal({ title, isOpen, onClose, children }: ModalProps) {
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div className={styles.backdrop} onClick={onClose}>
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        className={styles.dialog}
+        className={`${styles.dialog} ${size === "lg" ? styles.lg : ""}`}
         onClick={(event) => event.stopPropagation()}
       >
         <span className={styles.sideBar} aria-hidden="true" />
@@ -39,6 +41,7 @@ export function Modal({ title, isOpen, onClose, children }: ModalProps) {
         </h2>
         <div className={styles.body}>{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
