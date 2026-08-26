@@ -1,33 +1,104 @@
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.wrapper {
+  display: flex;
+  flex-direction: column;
   gap: var(--space-3);
 }
 
-.thumbButton {
+.main {
   position: relative;
-  display: block;
+  height: min(50vh, 480px);
+  border: var(--border-width) solid var(--color-border);
+  background-color: var(--color-bg-panel-secondary);
+  overflow: hidden;
+}
+
+.mainImageButton {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--border-width) solid var(--color-border);
+  background-color: var(--color-bg-panel);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.navButton:hover,
+.navButton:focus-visible {
+  border-color: var(--color-accent-cyan);
+  color: var(--color-accent-cyan);
+  outline: none;
+}
+
+.prev {
+  left: var(--space-3);
+}
+
+.next {
+  right: var(--space-3);
+}
+
+.counter {
+  position: absolute;
+  bottom: var(--space-3);
+  right: var(--space-3);
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  padding: 3px var(--space-2);
+  background-color: var(--color-bg-panel);
+  border: var(--border-width) solid var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+.filmstrip {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+}
+
+.filmThumb {
+  position: relative;
+  flex: 1 0 90px;
+  max-width: 140px;
   aspect-ratio: 16 / 10;
   padding: 0;
   border: var(--border-width) solid var(--color-border);
   background: none;
-  cursor: zoom-in;
-  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity var(--transition-base), border-color var(--transition-base);
 }
 
-.thumbButton:hover,
-.thumbButton:focus-visible {
-  border-color: var(--color-accent-cyan);
-  box-shadow: var(--glow-cyan);
+.filmThumb:hover,
+.filmThumb:focus-visible {
+  opacity: 0.85;
   outline: none;
 }
 
-.thumb {
-  transition: transform var(--transition-base);
+.filmThumbActive {
+  border-color: var(--color-accent-cyan);
+  box-shadow: var(--glow-cyan);
+  opacity: 1;
 }
 
-.thumbButton:hover .thumb {
-  transform: scale(1.03);
+.hint {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
 }
 
 .viewer {
@@ -45,7 +116,7 @@
   border: var(--border-width) solid var(--color-border);
 }
 
-.nav {
+.modalNav {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -53,7 +124,7 @@
   gap: var(--space-4);
 }
 
-.navButton {
+.modalNavButton {
   background: none;
   border: var(--border-width) solid var(--color-border);
   color: var(--color-text-primary);
@@ -63,21 +134,8 @@
   cursor: pointer;
 }
 
-.navButton:hover,
-.navButton:focus-visible {
+.modalNavButton:hover,
+.modalNavButton:focus-visible {
   border-color: var(--color-accent-cyan);
   color: var(--color-accent-cyan);
-}
-
-.counter {
-  font-family: var(--font-mono);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  white-space: nowrap;
-}
-
-@media (min-width: 640px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }

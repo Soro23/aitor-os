@@ -1,79 +1,214 @@
-.stack {
+/* Mismo truco full-bleed que Home/Sobre mí (ver comentario en
+   src/app/(public)/page.module.css): el riel llega a los bordes reales del
+   viewport rompiendo el max-width de <main>; el padding/max-width se
+   reintroduce dentro, en .content/.mainInner. */
+.pageWithRail {
+  display: flex;
+  gap: var(--space-5);
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: calc(-1 * var(--space-6));
+  margin-bottom: calc(-1 * var(--space-8));
+}
+
+.rail {
+  width: 44px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) 0 var(--space-5) var(--space-2);
+  background: linear-gradient(
+    180deg,
+    var(--color-accent-cyan) 0%,
+    var(--color-accent-amber) 33%,
+    var(--color-accent-green) 66%,
+    var(--color-accent-violet) 100%
+  );
 }
 
-.hero {
-  position: relative;
-  height: min(50vh, 460px);
-  border: var(--border-width) solid var(--color-border);
-  overflow: hidden;
+.railLabel {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #fff;
+  font-size: 1.2rem;
 }
 
-.heroOverlay {
-  position: absolute;
-  inset: auto 0 0 0;
-  padding: var(--space-6) var(--space-5) var(--space-5);
-  background: linear-gradient(180deg, rgba(20, 16, 26, 0) 0%, rgba(20, 16, 26, 0.85) 100%);
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-6) var(--space-5) var(--space-8);
 }
 
-.heroOverlay :global(.hud-label) {
-  color: #f5eef1;
+.mainInner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
 }
 
-.heroTitle {
-  font-family: var(--font-mono);
-  font-size: var(--font-size-3xl);
-  color: #f5eef1;
-  margin: var(--space-2) 0 0;
+.sectionLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--color-text-secondary);
+}
+
+.sectionMarker {
+  display: block;
+  width: 32px;
+  height: 3px;
+  margin-bottom: var(--space-2);
+}
+
+.sectionHeadRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.backLink {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.backLink:hover,
+.backLink:focus-visible {
+  color: var(--color-accent-cyan);
+}
+
+.backArrow {
+  color: var(--color-accent-cyan);
+  margin-right: var(--space-2);
+}
+
+/* 00 — Overview */
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.eyebrow {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
 }
 
 .title {
   font-family: var(--font-mono);
   font-size: var(--font-size-2xl);
-  margin: var(--space-3) 0;
+  margin-bottom: var(--space-4);
 }
 
-.meta {
+.metaRow {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-5);
   margin-bottom: var(--space-4);
+}
+
+.progressWrap {
+  flex: 1;
+  max-width: 260px;
 }
 
 .description {
   color: var(--color-text-secondary);
-  max-width: 70ch;
+  max-width: 62ch;
+  margin-bottom: var(--space-4);
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  margin-top: var(--space-4);
+  margin-bottom: var(--space-4);
 }
 
 .links {
   display: flex;
-  gap: var(--space-4);
-  margin-top: var(--space-4);
+  gap: var(--space-5);
 }
 
 .link {
   color: var(--color-accent-cyan);
-  text-decoration: none;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
 }
 
 .link:hover,
 .link:focus-visible {
-  text-decoration: underline;
+  color: var(--color-accent-secondary);
+}
+
+.coverWrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border: var(--border-width) solid var(--color-border);
+  overflow: hidden;
+}
+
+/* 02 — Details / 03 — Learnings */
+.detailsStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.panelIcon {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.panelNum {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  border: var(--border-width) solid currentColor;
+  flex-shrink: 0;
+}
+
+.panelLabel {
+  color: var(--color-text-secondary);
 }
 
 .text {
   color: var(--color-text-secondary);
   white-space: pre-wrap;
-  max-width: 70ch;
+}
+
+@media (max-width: 900px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .detailsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .sectionHeadRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
 }
