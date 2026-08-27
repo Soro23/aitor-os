@@ -1,0 +1,100 @@
+.wrapper {
+  overflow: auto;
+  max-height: 60vh;
+  border: var(--border-width) solid var(--color-border);
+}
+
+.empty {
+  padding: var(--space-5);
+  text-align: center;
+  color: var(--color-text-secondary);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+}
+
+.th {
+  position: sticky;
+  top: 0;
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--border-width) solid var(--color-border);
+  background-color: var(--color-bg-panel);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+}
+
+.row:not(:last-child) .td {
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.row {
+  cursor: grab;
+}
+
+.row.dragging {
+  opacity: 0.4;
+}
+
+.td {
+  padding: var(--space-3) var(--space-4);
+  vertical-align: middle;
+}
+
+.orderCell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dragHandle {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+  line-height: 1;
+}
+
+.reorderButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.reorderButton {
+  background: none;
+  border: var(--border-width) solid var(--color-border);
+  color: var(--color-accent-cyan);
+  font-size: 10px;
+  line-height: 1;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+
+.reorderButton:hover:not(:disabled),
+.reorderButton:focus-visible:not(:disabled) {
+  background-color: var(--color-accent-cyan);
+  color: var(--color-bg);
+}
+
+.reorderButton:disabled {
+  color: var(--color-text-secondary);
+  border-color: var(--color-border);
+  cursor: not-allowed;
+  opacity: 0.4;
+}
