@@ -1,7 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
 import type { Database } from "@/types/dto/database.types";
 import type { ProjectDTO } from "@/types/dto/project.dto";
-import type { CreateProjectInput, UpdateProjectInput } from "@/lib/validation/project.schema";
+import type {
+  CreateProjectInput,
+  ReorderProjectsInput,
+  UpdateProjectInput,
+} from "@/lib/validation/project.schema";
 
 type ProjectRow = Database["public"]["Tables"]["projects"]["Row"];
 
@@ -166,5 +170,17 @@ export const projectsRepository = {
 
   async setFeatured(id: string, value: boolean): Promise<ProjectDTO> {
     return projectsRepository.update(id, { isFeatured: value });
+  },
+
+  async reorder(items: ReorderProjectsInput): Promise<void> {
+    const supabase = await createClient();
+    const results = await Promise.all(
+      items.map(({ id, sortOrder }) =>
+        supabase.from("projects").update({ sort_order: sortOrder }).eq("id", id),
+      ),
+    );
+
+    const failed = results.find((result) => result.error);
+    if (failed?.error) throw failed.error;
   },
 };

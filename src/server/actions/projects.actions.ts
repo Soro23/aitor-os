@@ -2,7 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth/requireAdmin";
-import { createProjectSchema, updateProjectSchema } from "@/lib/validation/project.schema";
+import {
+  createProjectSchema,
+  reorderProjectsSchema,
+  updateProjectSchema,
+} from "@/lib/validation/project.schema";
 import { parseOrThrowReadable } from "@/lib/validation/parse-or-throw-readable";
 import { projectsRepository } from "@/server/repositories/projects.repository";
 import { projectImagesRepository } from "@/server/repositories/project-images.repository";
@@ -69,4 +73,12 @@ export async function setProjectFeatured(id: string, value: boolean) {
   const project = await projectsRepository.setFeatured(id, value);
   revalidateProjectPaths(project.slug);
   return { success: true, project };
+}
+
+export async function reorderProjects(items: { id: string; sortOrder: number }[]) {
+  await requireAdmin();
+  const data = parseOrThrowReadable(reorderProjectsSchema, items);
+  await projectsRepository.reorder(data);
+  revalidateProjectPaths();
+  return { success: true };
 }
