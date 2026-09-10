@@ -12,7 +12,8 @@ const nextConfig: NextConfig = {
             protocol: supabaseOrigin.protocol.replace(":", "") as "http" | "https",
             hostname: supabaseOrigin.hostname,
             port: supabaseOrigin.port,
-            pathname: "/storage/v1/object/public/project-images/**",
+            // Cubre todos los buckets públicos (project-images, ui-style-images).
+            pathname: "/storage/v1/object/public/**",
           },
         ]
       : [],

@@ -456,6 +456,111 @@ export type Database = {
           updated_at?: string;
         };
       };
+      ui_styles: {
+        Relationships: [];
+        Row: {
+          id: string;
+          slug: string;
+          name: string;
+          category: Database["public"]["Enums"]["ui_style_category"];
+          summary: string | null;
+          description: string | null;
+          characteristics: string | null;
+          use_cases: string | null;
+          cover_image_url: string | null;
+          is_published: boolean;
+          is_featured: boolean;
+          sort_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          name: string;
+          category: Database["public"]["Enums"]["ui_style_category"];
+          summary?: string | null;
+          description?: string | null;
+          characteristics?: string | null;
+          use_cases?: string | null;
+          cover_image_url?: string | null;
+          is_published?: boolean;
+          is_featured?: boolean;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          name?: string;
+          category?: Database["public"]["Enums"]["ui_style_category"];
+          summary?: string | null;
+          description?: string | null;
+          characteristics?: string | null;
+          use_cases?: string | null;
+          cover_image_url?: string | null;
+          is_published?: boolean;
+          is_featured?: boolean;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      ui_style_images: {
+        Relationships: [];
+        Row: {
+          id: string;
+          ui_style_id: string;
+          image_url: string;
+          alt_text: string | null;
+          sort_order: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          ui_style_id: string;
+          image_url: string;
+          alt_text?: string | null;
+          sort_order?: number;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          ui_style_id?: string;
+          image_url?: string;
+          alt_text?: string | null;
+          sort_order?: number;
+          created_at?: string;
+        };
+      };
+      ui_style_links: {
+        Relationships: [];
+        Row: {
+          id: string;
+          ui_style_id: string;
+          label: string;
+          url: string;
+          sort_order: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          ui_style_id: string;
+          label: string;
+          url: string;
+          sort_order?: number;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          ui_style_id?: string;
+          label?: string;
+          url?: string;
+          sort_order?: number;
+          created_at?: string;
+        };
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -487,6 +592,13 @@ export type Database = {
       stack_usage_level: "daily" | "frequent" | "learning" | "exploring";
       lead_pipeline_status: "nuevo" | "contactado" | "propuesta_enviada" | "ganado" | "perdido" | "spam";
       financial_entry_type: "ingreso" | "gasto";
+      ui_style_category:
+        | "minimalistas"
+        | "modernos"
+        | "expresivos"
+        | "retro"
+        | "futuristas"
+        | "editoriales";
     };
   };
 };

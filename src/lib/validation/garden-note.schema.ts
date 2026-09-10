@@ -3,12 +3,22 @@ import { z } from "zod";
 export const GARDEN_NOTE_CATEGORY_VALUES = ["sistemas", "desarrollo", "ia", "ideas"] as const;
 export const GARDEN_NOTE_STATUS_VALUES = ["seed", "growing", "evergreen"] as const;
 
+/**
+ * Slugs que ya son rutas propias bajo /garden y no puede ocupar una nota:
+ * la ruta estática ganaría siempre a /garden/[slug] y la nota quedaría oculta.
+ */
+export const RESERVED_GARDEN_SLUGS = ["estilos-ui"] as const;
+
 const slugSchema = z
   .string()
   .min(1, "El slug es obligatorio.")
   .regex(
     /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
     "El slug debe ser kebab-case (minúsculas, números y guiones).",
+  )
+  .refine(
+    (slug) => !RESERVED_GARDEN_SLUGS.includes(slug as (typeof RESERVED_GARDEN_SLUGS)[number]),
+    "Ese slug está reservado por otra sección del Garden.",
   );
 
 const baseGardenNoteFields = {
