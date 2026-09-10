@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ClipCard } from "@/components/ui/ClipCard/ClipCard";
 import { StatusBadge } from "@/components/ui/StatusBadge/StatusBadge";
 import { gardenNotesRepository } from "@/server/repositories/garden-notes.repository";
+import { uiStylesRepository } from "@/server/repositories/ui-styles.repository";
 import { GARDEN_NOTE_CATEGORY_VALUES } from "@/lib/validation/garden-note.schema";
 import { gardenNoteCategoryLabel, gardenNoteStatusLabel } from "@/lib/garden-note-labels";
 import { SectionIntro } from "../_components/SectionIntro";
@@ -12,7 +13,10 @@ const INTRO_DESCRIPTION =
   "Mi base de conocimiento pública: notas, apuntes, documentación y soluciones a problemas reales que escribo mientras aprendo. A diferencia de un blog, no son artículos cerrados — cada nota crece con el tiempo y lleva su estado (semilla, creciendo o evergreen) y su categoría.";
 
 export default async function GardenPage() {
-  const notes = await gardenNotesRepository.findPublished();
+  const [notes, uiStyles] = await Promise.all([
+    gardenNotesRepository.findPublished(),
+    uiStylesRepository.findPublished(),
+  ]);
 
   const intro = (
     <SectionIntro
@@ -24,10 +28,26 @@ export default async function GardenPage() {
     />
   );
 
+  const uiStylesEntry =
+    uiStyles.length > 0 ? (
+      <Link href="/garden/estilos-ui" className={styles.cardLink}>
+        <ClipCard
+          eyebrow="Colección"
+          title="Estilos UI"
+          accent="violet"
+          footer={<StatusBadge label={`${uiStyles.length} estilos`} tone="violet" />}
+        >
+          Catálogo de estilos visuales de interfaz agrupados por familia, con ejemplos y
+          referencias.
+        </ClipCard>
+      </Link>
+    ) : null;
+
   if (notes.length === 0) {
     return (
       <>
         {intro}
+        {uiStylesEntry}
         <EmptyNotice message="Todavía no hay notas publicadas." accent="violet" />
       </>
     );
@@ -37,6 +57,7 @@ export default async function GardenPage() {
     <>
       {intro}
       <div className={styles.stack}>
+        {uiStylesEntry}
         {GARDEN_NOTE_CATEGORY_VALUES.map((category) => {
           const notesInCategory = notes.filter((note) => note.category === category);
           if (notesInCategory.length === 0) return null;

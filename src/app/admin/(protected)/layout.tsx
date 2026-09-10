@@ -8,6 +8,7 @@ import styles from "./layout.module.css";
 const NAV_LINKS = [
   { href: "/admin/proyectos", label: "Proyectos" },
   { href: "/admin/garden", label: "Garden" },
+  { href: "/admin/estilos-ui", label: "Estilos UI" },
   { href: "/admin/lab", label: "Lab" },
   { href: "/admin/recursos", label: "Recursos" },
   { href: "/admin/now", label: "Now" },
