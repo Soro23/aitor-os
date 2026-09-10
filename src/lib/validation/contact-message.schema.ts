@@ -18,6 +18,7 @@ export const LEAD_PIPELINE_STATUS_VALUES = [
   "propuesta_enviada",
   "ganado",
   "perdido",
+  "spam",
 ] as const;
 
 export const createLeadManualSchema = z.object({

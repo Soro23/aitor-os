@@ -76,6 +76,20 @@ describe("submitContactMessage", () => {
     expect(createMock).not.toHaveBeenCalled();
   });
 
+  it("descarta en silencio un envio con el honeypot relleno", async () => {
+    const formData = formDataFrom({
+      name: "Bot",
+      email: "bot@example.com",
+      message: "Hola, quiero hablar de un proyecto interesante.",
+      website: "http://spam.example.com",
+    });
+
+    const result = await submitContactMessage({}, formData);
+
+    expect(result.success).toBe(true);
+    expect(createMock).not.toHaveBeenCalled();
+  });
+
   it("aplica rate limiting por IP tras varios envios seguidos", async () => {
     const formData = formDataFrom({
       name: "Visitante",
