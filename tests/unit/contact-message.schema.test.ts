@@ -80,6 +80,11 @@ describe("updateLeadPipelineSchema", () => {
     expect(result.success).toBe(true);
   });
 
+  it("acepta marcar como spam", () => {
+    const result = updateLeadPipelineSchema.safeParse({ pipelineStatus: "spam" });
+    expect(result.success).toBe(true);
+  });
+
   it("rechaza una fase que no existe", () => {
     const result = updateLeadPipelineSchema.safeParse({ pipelineStatus: "en_negociacion" });
     expect(result.success).toBe(false);
